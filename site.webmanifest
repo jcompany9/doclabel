@@ -1,0 +1,17 @@
+{
+  "name": "DocLabel",
+  "short_name": "DocLabel",
+  "lang": "ko-KR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "description": "화일철 라벨과 책등 라벨을 A4로 바로 출력할 수 있는 무료 웹 도구입니다.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

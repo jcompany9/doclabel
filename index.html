@@ -3,25 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>화일철 라벨 인쇄 도우미 | A4 라벨 출력</title>
+    <title>화일철 라벨 인쇄 도우미 | 책등 라벨 · 문서철 라벨 A4 무료 출력</title>
     <meta
       name="description"
-      content="화일철 라벨 문구를 입력하고 A4로 바로 인쇄할 수 있는 웹 도구입니다."
+      content="화일철 라벨, 책등 라벨, 문서철 라벨 문구를 입력하고 A4로 바로 인쇄할 수 있는 무료 웹 도구입니다. 연도, 업체명, 관리번호, 분류번호까지 한 번에 정리해 출력할 수 있습니다."
     />
     <meta
       name="keywords"
-      content="화일철 라벨, 책등 라벨, 문서철 라벨, A4 라벨 인쇄, 파일 라벨 출력"
+      content="화일철 라벨, 책등 라벨, 문서철 라벨, A4 라벨 인쇄, 파일 라벨 출력, 서류철 라벨, 문서 보관 라벨, 라벨 인쇄 도우미"
     />
-    <meta name="robots" content="index,follow" />
+    <meta name="author" content="DocLabel" />
+    <meta name="publisher" content="DocLabel" />
+    <meta name="application-name" content="DocLabel" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta
+      name="googlebot"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="화일철 라벨 인쇄 도우미 | A4 라벨 출력" />
+    <meta property="og:site_name" content="DocLabel" />
+    <meta property="og:title" content="화일철 라벨 인쇄 도우미 | 책등 라벨 · 문서철 라벨 A4 무료 출력" />
     <meta
       property="og:description"
-      content="화일철 라벨 문구를 입력하고 A4로 바로 인쇄할 수 있는 웹 도구입니다."
+      content="화일철 라벨, 책등 라벨, 문서철 라벨 문구를 입력하고 A4로 바로 인쇄할 수 있는 무료 웹 도구입니다."
     />
     <meta property="og:url" content="https://doclabel.vercel.app/" />
     <meta property="og:locale" content="ko_KR" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="화일철 라벨 인쇄 도우미" />
+    <meta
+      name="twitter:description"
+      content="책등 라벨과 문서철 라벨을 A4로 바로 출력할 수 있는 무료 웹 도구입니다."
+    />
     <link rel="canonical" href="https://doclabel.vercel.app/" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="shortcut icon" href="./favicon.svg" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://doclabel.vercel.app/#website",
+            "url": "https://doclabel.vercel.app/",
+            "name": "DocLabel",
+            "inLanguage": "ko-KR",
+            "description": "화일철 라벨과 책등 라벨을 A4로 바로 출력할 수 있는 무료 웹 도구"
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "https://doclabel.vercel.app/#webapp",
+            "name": "화일철 라벨 인쇄 도우미",
+            "url": "https://doclabel.vercel.app/",
+            "applicationCategory": "BusinessApplication",
+            "applicationSubCategory": "Printing Tool",
+            "operatingSystem": "Web Browser",
+            "browserRequirements": "HTML5, CSS3, JavaScript",
+            "inLanguage": "ko-KR",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "KRW"
+            },
+            "featureList": [
+              "화일철 라벨 입력",
+              "책등 라벨 편집",
+              "A4 실측 미리보기",
+              "브라우저 바로 인쇄",
+              "1EA/2EA 템플릿 지원"
+            ]
+          },
+          {
+            "@type": "Organization",
+            "@id": "https://doclabel.vercel.app/#organization",
+            "name": "DocLabel",
+            "url": "https://doclabel.vercel.app/"
+          }
+        ]
+      }
+    </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9FXPQD0WLY"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -76,175 +141,175 @@
 
         <section class="paper-wrap">
           <article class="paper template-photo-binder" id="printSheet" data-template="single">
-          <section class="label-box top-title-box">
-            <div
-              class="sheet-edit title-input"
-              data-field="topTitle"
-              contenteditable="plaintext-only"
-              spellcheck="false"
-            ></div>
-          </section>
+            <section class="label-box top-title-box">
+              <div
+                class="sheet-edit title-input"
+                data-field="topTitle"
+                contenteditable="plaintext-only"
+                spellcheck="false"
+              ></div>
+            </section>
 
-          <section class="label-box top-year-box">
-            <div
-              class="sheet-edit year-chip-input"
-              data-field="topYearLabel"
-              contenteditable="plaintext-only"
-              spellcheck="false"
-            ></div>
-          </section>
+            <section class="label-box top-year-box">
+              <div
+                class="sheet-edit year-chip-input"
+                data-field="topYearLabel"
+                contenteditable="plaintext-only"
+                spellcheck="false"
+              ></div>
+            </section>
 
-          <section class="label-box project-box">
-            <div
-              class="sheet-edit project-input"
-              data-field="projectName"
-              contenteditable="plaintext-only"
-              spellcheck="false"
-            ></div>
-          </section>
+            <section class="label-box project-box">
+              <div
+                class="sheet-edit project-input"
+                data-field="projectName"
+                contenteditable="plaintext-only"
+                spellcheck="false"
+              ></div>
+            </section>
 
-          <section class="label-box main-title-box">
-            <div
-              class="sheet-edit title-input main-title-input"
-              data-field="mainTitle"
-              contenteditable="plaintext-only"
-              spellcheck="false"
-            ></div>
-          </section>
+            <section class="label-box main-title-box">
+              <div
+                class="sheet-edit title-input main-title-input"
+                data-field="mainTitle"
+                contenteditable="plaintext-only"
+                spellcheck="false"
+              ></div>
+            </section>
 
-          <section class="label-box year-range-box">
-            <div
-              class="sheet-edit year-range-single-input"
-              data-field="yearRangeLabel"
-              contenteditable="plaintext-only"
-              spellcheck="false"
-            ></div>
-          </section>
+            <section class="label-box year-range-box">
+              <div
+                class="sheet-edit year-range-single-input"
+                data-field="yearRangeLabel"
+                contenteditable="plaintext-only"
+                spellcheck="false"
+              ></div>
+            </section>
 
-          <section class="label-box company-box">
-            <div
-              class="sheet-edit company-input"
-              data-field="companyName"
-              contenteditable="plaintext-only"
-              spellcheck="false"
-            ></div>
-          </section>
+            <section class="label-box company-box">
+              <div
+                class="sheet-edit company-input"
+                data-field="companyName"
+                contenteditable="plaintext-only"
+                spellcheck="false"
+              ></div>
+            </section>
 
-          <section class="spine-columns">
-            <div class="spine-column primary">
-              <div class="spine-small-box">
-                <div class="spine-mini-title">관리번호</div>
-                <div
-                  class="sheet-edit spine-detail-input"
-                  data-field="managementNo"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                ></div>
+            <section class="spine-columns">
+              <div class="spine-column primary">
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">관리번호</div>
+                  <div
+                    class="sheet-edit spine-detail-input"
+                    data-field="managementNo"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  ></div>
+                </div>
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">생산연도</div>
+                  <div
+                    class="sheet-edit spine-detail-input"
+                    data-field="productionYear"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  ></div>
+                </div>
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">보존기간</div>
+                  <div
+                    class="sheet-edit spine-detail-input"
+                    data-field="retentionPeriod"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  ></div>
+                </div>
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">분류번호</div>
+                  <div
+                    class="sheet-edit spine-detail-input"
+                    data-field="classificationNo"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  ></div>
+                </div>
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">제목</div>
+                </div>
+                <div class="spine-large-box">
+                  <div
+                    class="sheet-edit spine-title-input"
+                    data-field="spineTitle"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  ></div>
+                </div>
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">부서명</div>
+                </div>
+                <div class="spine-bottom-box">
+                  <div
+                    class="sheet-edit spine-bottom-input"
+                    data-field="departmentName"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  ></div>
+                </div>
               </div>
-              <div class="spine-small-box">
-                <div class="spine-mini-title">생산연도</div>
-                <div
-                  class="sheet-edit spine-detail-input"
-                  data-field="productionYear"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                ></div>
-              </div>
-              <div class="spine-small-box">
-                <div class="spine-mini-title">보존기간</div>
-                <div
-                  class="sheet-edit spine-detail-input"
-                  data-field="retentionPeriod"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                ></div>
-              </div>
-              <div class="spine-small-box">
-                <div class="spine-mini-title">분류번호</div>
-                <div
-                  class="sheet-edit spine-detail-input"
-                  data-field="classificationNo"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                ></div>
-              </div>
-              <div class="spine-small-box">
-                <div class="spine-mini-title">제목</div>
-              </div>
-              <div class="spine-large-box">
-                <div
-                  class="sheet-edit spine-title-input"
-                  data-field="spineTitle"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                ></div>
-              </div>
-              <div class="spine-small-box">
-                <div class="spine-mini-title">부서명</div>
-              </div>
-              <div class="spine-bottom-box">
-                <div
-                  class="sheet-edit spine-bottom-input"
-                  data-field="departmentName"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                ></div>
-              </div>
-            </div>
 
-            <div class="spine-column secondary">
-              <div class="spine-small-box">
-                <div class="spine-mini-title">관리번호</div>
-                <div
-                  class="sheet-edit spine-detail-input"
-                  data-field="managementNo2"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                ></div>
+              <div class="spine-column secondary">
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">관리번호</div>
+                  <div
+                    class="sheet-edit spine-detail-input"
+                    data-field="managementNo2"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  ></div>
+                </div>
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">생산연도</div>
+                  <div
+                    class="sheet-edit spine-detail-input"
+                    data-field="productionYear2"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  ></div>
+                </div>
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">보존기간</div>
+                  <div
+                    class="sheet-edit spine-detail-input"
+                    data-field="retentionPeriod2"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  ></div>
+                </div>
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">분류번호</div>
+                  <div
+                    class="sheet-edit spine-detail-input"
+                    data-field="classificationNo2"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  ></div>
+                </div>
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">제목</div>
+                </div>
+                <div class="spine-large-box blank-box"></div>
+                <div class="spine-small-box">
+                  <div class="spine-mini-title">부서명</div>
+                </div>
+                <div class="spine-bottom-box blank-box"></div>
               </div>
-              <div class="spine-small-box">
-                <div class="spine-mini-title">생산연도</div>
-                <div
-                  class="sheet-edit spine-detail-input"
-                  data-field="productionYear2"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                ></div>
-              </div>
-              <div class="spine-small-box">
-                <div class="spine-mini-title">보존기간</div>
-                <div
-                  class="sheet-edit spine-detail-input"
-                  data-field="retentionPeriod2"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                ></div>
-              </div>
-              <div class="spine-small-box">
-                <div class="spine-mini-title">분류번호</div>
-                <div
-                  class="sheet-edit spine-detail-input"
-                  data-field="classificationNo2"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                ></div>
-              </div>
-              <div class="spine-small-box">
-                <div class="spine-mini-title">제목</div>
-              </div>
-              <div class="spine-large-box blank-box"></div>
-              <div class="spine-small-box">
-                <div class="spine-mini-title">부서명</div>
-              </div>
-              <div class="spine-bottom-box blank-box"></div>
-            </div>
-          </section>
+            </section>
 
-          <div class="cut-guide cut-guide-v guide-left-spine"></div>
-          <div class="cut-guide cut-guide-v guide-right-spine"></div>
-          <div class="cut-guide cut-guide-h guide-top-main"></div>
-          <div class="cut-guide cut-guide-h guide-mid-main"></div>
-          <div class="cut-guide cut-guide-h guide-bottom-main"></div>
+            <div class="cut-guide cut-guide-v guide-left-spine"></div>
+            <div class="cut-guide cut-guide-v guide-right-spine"></div>
+            <div class="cut-guide cut-guide-h guide-top-main"></div>
+            <div class="cut-guide cut-guide-h guide-mid-main"></div>
+            <div class="cut-guide cut-guide-h guide-bottom-main"></div>
           </article>
         </section>
       </main>
