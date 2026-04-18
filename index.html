@@ -49,32 +49,33 @@
         </button>
       </header>
 
-      <div id="fieldToolbar" class="field-toolbar screen-only" hidden>
-        <label class="toolbar-select compact-select">
-          <span>폰트</span>
-          <select id="fontFamilySelect">
-            <option value="'Pretendard', sans-serif">Pretendard</option>
-            <option value="'Gowun Batang', serif">Gowun Batang</option>
-            <option value="'Black Han Sans', sans-serif">Black Han Sans</option>
-            <option value="'Noto Serif KR', serif">Noto Serif KR</option>
-          </select>
-        </label>
-        <label class="toolbar-check">
-          <input id="boldToggle" type="checkbox" />
-          <span>Bold</span>
-        </label>
-        <label class="toolbar-number">
-          <span>크기</span>
-          <input id="fontSizeInput" type="number" min="8" max="120" step="1" value="42" />
-        </label>
-        <label class="toolbar-number">
-          <span>자간</span>
-          <input id="letterSpacingInput" type="number" min="-10" max="40" step="0.5" value="8" />
-        </label>
-      </div>
+      <main class="page-body">
+        <div id="fieldToolbar" class="field-toolbar screen-only" hidden>
+          <label class="toolbar-select compact-select">
+            <span>폰트</span>
+            <select id="fontFamilySelect">
+              <option value="'Pretendard', sans-serif">Pretendard</option>
+              <option value="'Gowun Batang', serif">Gowun Batang</option>
+              <option value="'Black Han Sans', sans-serif">Black Han Sans</option>
+              <option value="'Noto Serif KR', serif">Noto Serif KR</option>
+            </select>
+          </label>
+          <label class="toolbar-check">
+            <input id="boldToggle" type="checkbox" />
+            <span>Bold</span>
+          </label>
+          <label class="toolbar-number">
+            <span>크기</span>
+            <input id="fontSizeInput" type="number" min="8" max="120" step="1" value="42" />
+          </label>
+          <label class="toolbar-number">
+            <span>자간</span>
+            <input id="letterSpacingInput" type="number" min="-10" max="40" step="0.5" value="8" />
+          </label>
+        </div>
 
-      <main class="paper-wrap">
-        <article class="paper template-photo-binder" id="printSheet" data-template="single">
+        <section class="paper-wrap">
+          <article class="paper template-photo-binder" id="printSheet" data-template="single">
           <section class="label-box top-title-box">
             <div
               class="sheet-edit title-input"
@@ -244,7 +245,8 @@
           <div class="cut-guide cut-guide-h guide-top-main"></div>
           <div class="cut-guide cut-guide-h guide-mid-main"></div>
           <div class="cut-guide cut-guide-h guide-bottom-main"></div>
-        </article>
+          </article>
+        </section>
       </main>
 
       <footer class="site-footer screen-only" aria-label="사이트 안내">
