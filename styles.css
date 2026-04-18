@@ -515,6 +515,88 @@ input {
   height: 24mm;
 }
 
+.site-footer {
+  width: min(100%, 860px);
+  margin: 20px auto 0;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.footer-links a,
+.policy-back,
+.policy-section a {
+  color: #0f172a;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-links a:hover,
+.policy-back:hover,
+.policy-section a:hover {
+  text-decoration: underline;
+}
+
+.footer-note {
+  margin: 6px 0 0;
+  color: var(--subtle);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.policy-page {
+  padding: 24px 16px 48px;
+}
+
+.policy-card {
+  width: min(100%, 860px);
+  margin: 0 auto;
+  padding: 28px 24px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.policy-card h1 {
+  margin: 0 0 12px;
+  font-size: 30px;
+}
+
+.policy-card > p {
+  margin: 0 0 20px;
+  color: var(--subtle);
+}
+
+.policy-back {
+  display: inline-flex;
+  margin-bottom: 18px;
+}
+
+.policy-section + .policy-section {
+  margin-top: 18px;
+}
+
+.policy-section h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.policy-section p {
+  margin: 0;
+  color: #1f2937;
+  line-height: 1.7;
+}
+
 @media screen {
   .paper {
     transform: scale(var(--screen-paper-scale));
@@ -528,6 +610,14 @@ input {
 
   .top-toolbar {
     justify-content: center;
+  }
+
+  .site-footer {
+    padding: 14px;
+  }
+
+  .policy-card {
+    padding: 22px 18px;
   }
 
   .field-toolbar {
