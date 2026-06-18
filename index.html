@@ -32,12 +32,17 @@
     />
     <meta property="og:url" content="https://doclabel.vercel.app/" />
     <meta property="og:locale" content="ko_KR" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://doclabel.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="화일철 라벨 인쇄 도우미 미리보기" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="화일철 라벨 인쇄 도우미" />
     <meta
       name="twitter:description"
       content="책등 라벨과 문서철 라벨을 A4로 바로 출력할 수 있는 무료 웹 도구입니다."
     />
+    <meta name="twitter:image" content="https://doclabel.vercel.app/og-image.png" />
     <link rel="canonical" href="https://doclabel.vercel.app/" />
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="shortcut icon" href="./favicon.svg" />
@@ -83,6 +88,53 @@
             "@id": "https://doclabel.vercel.app/#organization",
             "name": "DocLabel",
             "url": "https://doclabel.vercel.app/"
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://doclabel.vercel.app/#faq",
+            "inLanguage": "ko-KR",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "화일철 라벨 인쇄 도우미는 무료인가요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "네. 회원가입이나 로그인 없이 누구나 무료로 사용할 수 있습니다. 브라우저에서 문구를 입력하고 바로 인쇄하면 됩니다."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "어떤 용지에 인쇄하나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "A4 용지 한 장에 맞춰 설계되어 있습니다. 인쇄 창에서 배율을 100% 또는 실제 크기로 설정하면 화면 미리보기와 동일한 크기로 출력됩니다."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "입력한 라벨 내용이 외부로 전송되나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "아니요. 입력한 문구는 서버로 전송되지 않고 브라우저 안에서만 처리됩니다. 별도의 회원 정보도 수집하지 않습니다."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "1EA와 2EA 템플릿은 어떤 차이가 있나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "1EA는 A4 한 장에 라벨 1개를 크게 배치하고, 2EA는 한 장에 라벨 2개를 나란히 배치해 한 번에 두 개를 출력할 수 있습니다."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "책등(세로) 라벨도 만들 수 있나요?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "네. 관리번호, 생산연도, 보존기간, 분류번호와 함께 세로쓰기 제목이 들어간 책등 라벨을 함께 출력할 수 있습니다."
+                }
+              }
+            ]
           }
         ]
       }
@@ -313,6 +365,55 @@
           </article>
         </section>
       </main>
+
+      <section class="seo-content screen-only" aria-label="서비스 소개">
+        <h1>화일철 라벨 인쇄 도우미 — 책등·문서철 라벨 A4 무료 출력</h1>
+        <p class="seo-lead">
+          <strong>화일철 라벨 인쇄 도우미</strong>는 책등 라벨, 문서철 라벨, 서류철 라벨 문구를 브라우저에서 바로
+          입력하고 A4 용지 한 장으로 출력할 수 있는 무료 웹 도구입니다. 설치할 프로그램이나 회원가입 없이,
+          연도·업체명·관리번호·분류번호까지 한 번에 정리해 깔끔하게 인쇄할 수 있습니다.
+        </p>
+
+        <h2>이렇게 사용하세요</h2>
+        <ol class="seo-steps">
+          <li>상단의 <strong>1EA / 2EA</strong> 탭에서 한 장에 출력할 라벨 개수를 고릅니다.</li>
+          <li>라벨 위의 각 칸을 눌러 제목, 연도, 업체명, 관리번호 등 필요한 문구를 입력합니다.</li>
+          <li>칸을 선택하면 나타나는 도구막대에서 폰트·굵기·글자 크기·자간을 조절합니다.</li>
+          <li><strong>인쇄</strong> 버튼을 눌러 브라우저 인쇄 창을 열고, 배율을 100%(실제 크기)로 맞춰 출력합니다.</li>
+        </ol>
+
+        <h2>이런 점이 좋아요</h2>
+        <ul class="seo-features">
+          <li>A4 실측(mm) 기준으로 배치돼 화면 미리보기와 인쇄 결과가 동일합니다.</li>
+          <li>가로 라벨과 세로쓰기 책등 라벨을 한 장에 함께 출력할 수 있습니다.</li>
+          <li>입력 내용은 서버로 전송되지 않고 브라우저 안에서만 처리됩니다.</li>
+          <li>재단선 안내가 포함돼 출력 후 자르기 쉽습니다.</li>
+        </ul>
+
+        <h2>자주 묻는 질문</h2>
+        <div class="seo-faq">
+          <details>
+            <summary>화일철 라벨 인쇄 도우미는 무료인가요?</summary>
+            <p>네. 회원가입이나 로그인 없이 누구나 무료로 사용할 수 있습니다. 브라우저에서 문구를 입력하고 바로 인쇄하면 됩니다.</p>
+          </details>
+          <details>
+            <summary>어떤 용지에 인쇄하나요?</summary>
+            <p>A4 용지 한 장에 맞춰 설계되어 있습니다. 인쇄 창에서 배율을 100% 또는 실제 크기로 설정하면 화면 미리보기와 동일한 크기로 출력됩니다.</p>
+          </details>
+          <details>
+            <summary>입력한 라벨 내용이 외부로 전송되나요?</summary>
+            <p>아니요. 입력한 문구는 서버로 전송되지 않고 브라우저 안에서만 처리됩니다. 별도의 회원 정보도 수집하지 않습니다.</p>
+          </details>
+          <details>
+            <summary>1EA와 2EA 템플릿은 어떤 차이가 있나요?</summary>
+            <p>1EA는 A4 한 장에 라벨 1개를 크게 배치하고, 2EA는 한 장에 라벨 2개를 나란히 배치해 한 번에 두 개를 출력할 수 있습니다.</p>
+          </details>
+          <details>
+            <summary>책등(세로) 라벨도 만들 수 있나요?</summary>
+            <p>네. 관리번호, 생산연도, 보존기간, 분류번호와 함께 세로쓰기 제목이 들어간 책등 라벨을 함께 출력할 수 있습니다.</p>
+          </details>
+        </div>
+      </section>
 
       <footer class="site-footer screen-only" aria-label="사이트 안내">
         <div class="footer-links">
