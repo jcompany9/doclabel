@@ -1,5 +1,15 @@
 const STORAGE_KEY = "file-binder-label-printer-v5";
 
+// GA4 이벤트 전송 헬퍼: gtag가 아직 로드되지 않았거나 차단된 경우 조용히 무시합니다.
+function track(eventName, params = {}) {
+  if (typeof window.gtag === "function") {
+    window.gtag("event", eventName, params);
+  }
+}
+
+// 세션 동안 한 번이라도 편집된 필드를 기록해 중복 이벤트를 막습니다.
+const editedFields = new Set();
+
 const sampleData = {
   topTitle: "",
   topYearLabel: "",
@@ -210,6 +220,11 @@ function handleInput(event) {
   if (clampFieldValue(field)) {
     return;
   }
+  const key = getFieldKey(field);
+  if (!editedFields.has(key)) {
+    editedFields.add(key);
+    track("field_edit", { field: key, edited_fields_count: editedFields.size });
+  }
   saveData(getCurrentData());
 }
 
@@ -242,16 +257,22 @@ fields.forEach((field) => {
   field.addEventListener("click", () => setActiveField(field));
 });
 
+function activeFieldKey() {
+  return activeField ? getFieldKey(activeField) : "";
+}
+
 fontFamilySelect.addEventListener("change", () => {
   updateActiveFieldStyle((style) => {
     style.fontFamily = fontFamilySelect.value;
   });
+  track("style_change", { style_type: "font_family", value: fontFamilySelect.value, field: activeFieldKey() });
 });
 
 boldToggle.addEventListener("change", () => {
   updateActiveFieldStyle((style) => {
     style.fontWeight = boldToggle.checked ? "700" : "500";
   });
+  track("style_change", { style_type: "bold", value: boldToggle.checked ? "on" : "off", field: activeFieldKey() });
 });
 
 fontSizeInput.addEventListener("input", () => {
@@ -260,10 +281,18 @@ fontSizeInput.addEventListener("input", () => {
   });
 });
 
+fontSizeInput.addEventListener("change", () => {
+  track("style_change", { style_type: "font_size", value: fontSizeInput.value, field: activeFieldKey() });
+});
+
 letterSpacingInput.addEventListener("input", () => {
   updateActiveFieldStyle((style) => {
     style.letterSpacing = letterSpacingInput.value;
   });
+});
+
+letterSpacingInput.addEventListener("change", () => {
+  track("style_change", { style_type: "letter_spacing", value: letterSpacingInput.value, field: activeFieldKey() });
 });
 
 templateTabs.forEach((tab) => {
@@ -275,10 +304,15 @@ templateTabs.forEach((tab) => {
     });
     saveData(getCurrentData());
     setActiveField(null);
+    track("template_switch", { template });
   });
 });
 
 printButton.addEventListener("click", () => {
+  track("print", {
+    template: printSheet.dataset.template || "single",
+    edited_fields_count: editedFields.size,
+  });
   window.print();
 });
 
@@ -293,6 +327,21 @@ document.addEventListener("click", (event) => {
 
 window.addEventListener("resize", positionFieldToolbar);
 window.addEventListener("scroll", positionFieldToolbar, true);
+
+// SEO 본문의 FAQ 펼침 / 개인정보처리방침 이동 추적
+document.querySelectorAll(".seo-faq details").forEach((item) => {
+  item.addEventListener("toggle", () => {
+    if (item.open) {
+      track("faq_open", { question: item.querySelector("summary")?.textContent.trim() || "" });
+    }
+  });
+});
+
+document.querySelectorAll('.footer-links a[href*="privacy"]').forEach((link) => {
+  link.addEventListener("click", () => {
+    track("privacy_click", {});
+  });
+});
 
 const initialData = loadSavedData();
 applyState(initialData);
