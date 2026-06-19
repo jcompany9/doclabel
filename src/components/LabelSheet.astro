@@ -1,5 +1,6 @@
 ---
 // 화일철 라벨 전용 A4 시트 + 편집 도구막대. 시각 레이아웃은 서식별 bespoke 영역입니다.
+import FieldToolbar from "./FieldToolbar.astro";
 ---
 
 <header class="top-toolbar screen-only">
@@ -17,29 +18,7 @@
 </header>
 
 <main class="page-body">
-  <div id="fieldToolbar" class="field-toolbar screen-only" hidden>
-    <label class="toolbar-select compact-select">
-      <span>폰트</span>
-      <select id="fontFamilySelect">
-        <option value="'Pretendard', sans-serif">Pretendard</option>
-        <option value="'Gowun Batang', serif">Gowun Batang</option>
-        <option value="'Black Han Sans', sans-serif">Black Han Sans</option>
-        <option value="'Noto Serif KR', serif">Noto Serif KR</option>
-      </select>
-    </label>
-    <label class="toolbar-check">
-      <input id="boldToggle" type="checkbox" />
-      <span>Bold</span>
-    </label>
-    <label class="toolbar-number">
-      <span>크기</span>
-      <input id="fontSizeInput" type="number" min="8" max="120" step="1" value="42" />
-    </label>
-    <label class="toolbar-number">
-      <span>자간</span>
-      <input id="letterSpacingInput" type="number" min="-10" max="40" step="0.5" value="8" />
-    </label>
-  </div>
+  <FieldToolbar />
 
   <section class="paper-wrap">
     <article class="paper template-photo-binder" id="printSheet" data-template="single">

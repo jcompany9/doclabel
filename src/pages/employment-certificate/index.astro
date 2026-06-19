@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import EmploymentCertSheet from "../../components/EmploymentCertSheet.astro";
+import SeoContent from "../../components/SeoContent.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import form from "../../data/forms/employment-certificate";
+---
+
+<BaseLayout form={form}>
+  <div class="simple-app">
+    <EmploymentCertSheet />
+    <SeoContent form={form} />
+    <SiteFooter />
+  </div>
+  <script>
+    import "../../scripts/editor.js";
+  </script>
+</BaseLayout>

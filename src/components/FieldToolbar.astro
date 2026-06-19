@@ -1,0 +1,28 @@
+---
+// 선택된 편집 칸의 폰트/굵기/크기/자간을 조절하는 공용 도구막대.
+// editor.js 가 ID로 참조하므로 모든 서식 페이지에서 동일하게 재사용합니다.
+---
+
+<div id="fieldToolbar" class="field-toolbar screen-only" hidden>
+  <label class="toolbar-select compact-select">
+    <span>폰트</span>
+    <select id="fontFamilySelect">
+      <option value="'Pretendard', sans-serif">Pretendard</option>
+      <option value="'Gowun Batang', serif">Gowun Batang</option>
+      <option value="'Black Han Sans', sans-serif">Black Han Sans</option>
+      <option value="'Noto Serif KR', serif">Noto Serif KR</option>
+    </select>
+  </label>
+  <label class="toolbar-check">
+    <input id="boldToggle" type="checkbox" />
+    <span>Bold</span>
+  </label>
+  <label class="toolbar-number">
+    <span>크기</span>
+    <input id="fontSizeInput" type="number" min="8" max="120" step="1" value="42" />
+  </label>
+  <label class="toolbar-number">
+    <span>자간</span>
+    <input id="letterSpacingInput" type="number" min="-10" max="40" step="0.5" value="8" />
+  </label>
+</div>

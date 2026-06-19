@@ -513,6 +513,131 @@ input {
   height: 24mm;
 }
 
+/* ===== 재직증명서 서식 ===== */
+.template-employment-cert {
+  padding: 26mm 22mm;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--editor-font);
+  color: var(--ink);
+}
+
+.cert-title {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 2mm 0 16mm;
+}
+
+.cert-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.cert-table th,
+.cert-table td {
+  border: 0.4mm solid var(--line-strong);
+  height: 15mm;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.cert-table th {
+  width: 28mm;
+  background: #eef2f7;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cert-input {
+  height: 100%;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 0 4mm;
+}
+
+.cert-statement {
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.7;
+  margin: 16mm 0 14mm;
+}
+
+.cert-date {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18mm;
+}
+
+.cert-date-input {
+  width: 70mm;
+  height: 10mm;
+  justify-content: center;
+  text-align: center;
+}
+
+.cert-issuer {
+  width: 110mm;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3mm;
+}
+
+.cert-issuer-line {
+  display: grid;
+  grid-template-columns: 30mm 1fr;
+  align-items: center;
+  column-gap: 3mm;
+  min-height: 10mm;
+}
+
+.cert-issuer-line.cert-ceo {
+  grid-template-columns: 30mm 1fr auto;
+}
+
+.cert-issuer-line .lab {
+  font-size: 15px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.cert-issuer-line .sheet-edit {
+  height: 10mm;
+  justify-content: flex-start;
+  text-align: left;
+  border-bottom: 0.3mm solid var(--line);
+}
+
+.cert-seal {
+  font-size: 15px;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.cert-input:empty::before,
+.cert-date-input:empty::before {
+  content: attr(data-placeholder);
+  color: #cbd5e1;
+}
+
+.toolbar-home {
+  flex: 0 0 auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  text-decoration: none;
+}
+
+.toolbar-home:hover {
+  text-decoration: underline;
+}
+
 .site-footer {
   position: fixed;
   left: 0;
@@ -785,5 +910,11 @@ input {
     border: none;
     box-shadow: none;
     transform: none;
+  }
+
+  /* 빈 칸 안내문구는 인쇄에 나오지 않게 */
+  .cert-input:empty::before,
+  .cert-date-input:empty::before {
+    content: "";
   }
 }
