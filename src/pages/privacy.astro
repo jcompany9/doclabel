@@ -1,43 +1,19 @@
-<!doctype html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>개인정보처리방침 | 화일철 라벨 인쇄 도우미</title>
-    <meta
-      name="description"
-      content="화일철 라벨 인쇄 도우미의 개인정보처리방침입니다. 광고, 분석 도구, 쿠키 사용 및 기본 운영 정책을 안내합니다."
-    />
-    <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large" />
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="개인정보처리방침 | 화일철 라벨 인쇄 도우미" />
-    <meta
-      property="og:description"
-      content="광고, 분석 도구, 쿠키 사용 및 기본 운영 정책을 안내하는 개인정보처리방침 페이지입니다."
-    />
-    <meta property="og:url" content="https://doclabel.vercel.app/privacy.html" />
-    <meta property="og:locale" content="ko_KR" />
-    <link rel="canonical" href="https://doclabel.vercel.app/privacy.html" />
-    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css" />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "개인정보처리방침",
-        "url": "https://doclabel.vercel.app/privacy.html",
-        "isPartOf": {
-          "@type": "WebSite",
-          "name": "DocLabel",
-          "url": "https://doclabel.vercel.app/"
-        },
-        "inLanguage": "ko-KR"
-      }
-    </script>
-  </head>
-  <body class="policy-page">
-    <main class="policy-card">
-      <a class="policy-back" href="./index.html">메인으로 돌아가기</a>
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const meta = {
+  title: "개인정보처리방침 | 화일철 라벨 인쇄 도우미",
+  description:
+    "화일철 라벨 인쇄 도우미의 개인정보처리방침입니다. 광고, 분석 도구, 쿠키 사용 및 기본 운영 정책을 안내합니다.",
+  slug: "privacy",
+  ogType: "article",
+};
+---
+
+<BaseLayout meta={meta}>
+  <main class="policy-page">
+    <div class="policy-card">
+      <a class="policy-back" href="/">메인으로 돌아가기</a>
       <h1>개인정보처리방침</h1>
       <p>최종 업데이트: 2026년 4월 18일</p>
 
@@ -88,6 +64,6 @@
         <h2>6. 문의</h2>
         <p>문의 이메일은 추후 추가 예정입니다.</p>
       </section>
-    </main>
-  </body>
-</html>
+    </div>
+  </main>
+</BaseLayout>

@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LabelSheet from "../components/LabelSheet.astro";
+import SeoContent from "../components/SeoContent.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+import label from "../data/forms/label";
+---
+
+<BaseLayout form={label}>
+  <div class="simple-app">
+    <LabelSheet />
+    <SeoContent form={label} />
+    <SiteFooter />
+  </div>
+  <script>
+    import "../scripts/editor.js";
+  </script>
+</BaseLayout>

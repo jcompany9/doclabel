@@ -1,0 +1,174 @@
+---
+import "../styles/global.css";
+import { site, canonicalFor, type FormDef } from "../data/site";
+
+interface PageMeta {
+  title: string;
+  description: string;
+  slug: string;
+  ogType?: string;
+  keywords?: string[];
+}
+
+interface Props {
+  form?: FormDef; // 서식 페이지일 때
+  meta?: PageMeta; // 그 외 일반 페이지(예: 개인정보처리방침)
+}
+
+const { form, meta } = Astro.props;
+
+// 폼이든 일반 페이지든 동일한 메타 형태로 정규화
+const page: PageMeta = form
+  ? {
+      title: form.title,
+      description: form.description,
+      slug: form.slug,
+      ogType: form.ogType ?? "website",
+      keywords: form.keywords,
+    }
+  : meta!;
+
+const canonical = canonicalFor(page.slug);
+const ogType = page.ogType ?? "website";
+const ogImage = new URL(site.ogImage, site.url).href;
+const twitterTitle = form ? form.h1 : page.title;
+
+// 구조화 데이터(JSON-LD) — 사이트 공통 + 서식별 항목을 한 그래프로 생성
+const graph: Record<string, unknown>[] = [
+  {
+    "@type": "WebSite",
+    "@id": `${site.url}/#website`,
+    url: `${site.url}/`,
+    name: site.name,
+    inLanguage: site.lang,
+    description: site.description,
+  },
+  {
+    "@type": "Organization",
+    "@id": `${site.url}/#organization`,
+    name: site.name,
+    url: `${site.url}/`,
+  },
+];
+
+if (form) {
+  graph.push({
+    "@type": "WebApplication",
+    "@id": `${canonical}#webapp`,
+    name: form.title.split("|")[0].trim(),
+    url: canonical,
+    applicationCategory: form.applicationCategory ?? "BusinessApplication",
+    operatingSystem: "Web Browser",
+    browserRequirements: "HTML5, CSS3, JavaScript",
+    inLanguage: site.lang,
+    isAccessibleForFree: true,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "KRW" },
+    ...(form.featureList ? { featureList: form.featureList } : {}),
+  });
+
+  if (form.faq.length) {
+    graph.push({
+      "@type": "FAQPage",
+      "@id": `${canonical}#faq`,
+      inLanguage: site.lang,
+      mainEntity: form.faq.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    });
+  }
+} else {
+  graph.push({
+    "@type": "WebPage",
+    "@id": `${canonical}#webpage`,
+    name: page.title,
+    url: canonical,
+    inLanguage: site.lang,
+    isPartOf: { "@id": `${site.url}/#website` },
+  });
+}
+
+// 홈이 아닌 페이지는 브레드크럼 추가
+if (page.slug) {
+  graph.push({
+    "@type": "BreadcrumbList",
+    "@id": `${canonical}#breadcrumb`,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "홈", item: `${site.url}/` },
+      { "@type": "ListItem", position: 2, name: twitterTitle, item: canonical },
+    ],
+  });
+}
+
+const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": graph });
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{page.title}</title>
+    <meta name="description" content={page.description} />
+    {page.keywords && page.keywords.length > 0 && (
+      <meta name="keywords" content={page.keywords.join(", ")} />
+    )}
+    <meta name="author" content={site.name} />
+    <meta name="publisher" content={site.name} />
+    <meta name="application-name" content={site.name} />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={page.title} />
+    <meta property="og:description" content={page.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name} 미리보기`} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={twitterTitle} />
+    <meta name="twitter:description" content={page.description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="shortcut icon" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <script type="application/ld+json" set:html={jsonLd} />
+
+    {/* Google Analytics 4 */}
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.gaId}`}></script>
+    <script is:inline define:vars={{ gaId: site.gaId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", gaId);
+    </script>
+
+    {/* Google AdSense 로더 (게시자 ID가 설정된 경우에만) */}
+    {site.adsenseClient && (
+      <script
+        async
+        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${site.adsenseClient}`}
+        crossorigin="anonymous"></script>
+    )}
+  </head>
+  <body>
+    <slot />
+    <script>
+      import "../scripts/interactions.js";
+    </script>
+  </body>
+</html>

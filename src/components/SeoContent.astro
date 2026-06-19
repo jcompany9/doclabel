@@ -1,0 +1,61 @@
+---
+import { canonicalFor, type FormDef } from "../data/site";
+import { getForm } from "../data/forms";
+import AdSlot from "./AdSlot.astro";
+
+interface Props {
+  form: FormDef;
+}
+
+const { form } = Astro.props;
+
+// related slug -> 실제 서식으로 변환 (등록된 것만)
+const related = (form.related ?? [])
+  .map((slug) => getForm(slug))
+  .filter((f): f is FormDef => Boolean(f));
+---
+
+<section class="seo-content screen-only" aria-label="서비스 소개">
+  <h1>{form.h1}</h1>
+  <p class="seo-lead" set:html={form.intro} />
+
+  <h2>이렇게 사용하세요</h2>
+  <ol class="seo-steps">
+    {form.steps.map((step) => <li>{step}</li>)}
+  </ol>
+
+  <h2>이런 점이 좋아요</h2>
+  <ul class="seo-features">
+    {form.features.map((feature) => <li>{feature}</li>)}
+  </ul>
+
+  <h2>자주 묻는 질문</h2>
+  <div class="seo-faq">
+    {
+      form.faq.map((item) => (
+        <details>
+          <summary>{item.q}</summary>
+          <p>{item.a}</p>
+        </details>
+      ))
+    }
+  </div>
+
+  {/* 광고: 본문(FAQ) 아래, AdSense ID가 설정된 경우에만 노출 */}
+  <AdSlot />
+
+  {
+    related.length > 0 && (
+      <nav class="seo-related" aria-label="관련 서식">
+        <h2>이 서식도 많이 찾아요</h2>
+        <ul>
+          {related.map((f) => (
+            <li>
+              <a href={canonicalFor(f.slug)}>{f.h1}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )
+  }
+</section>

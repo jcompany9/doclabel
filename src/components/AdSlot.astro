@@ -1,0 +1,29 @@
+---
+import { site } from "../data/site";
+
+interface Props {
+  slot?: string; // AdSense 광고 단위 슬롯 ID
+}
+
+const { slot = "" } = Astro.props;
+// 게시자 ID가 비어 있으면 아무것도 렌더하지 않습니다(현재 광고 보류 상태).
+const enabled = Boolean(site.adsenseClient);
+---
+
+{
+  enabled && (
+    <aside class="ad-slot screen-only" aria-label="광고">
+      <ins
+        class="adsbygoogle"
+        style="display:block"
+        data-ad-client={site.adsenseClient}
+        data-ad-slot={slot}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
+      <script is:inline>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </aside>
+  )
+}
