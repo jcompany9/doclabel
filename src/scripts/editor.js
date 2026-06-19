@@ -278,5 +278,97 @@ if (printSheet && fields.length) {
   window.addEventListener("resize", positionFieldToolbar);
   window.addEventListener("scroll", positionFieldToolbar, true);
 
+  // ===== 날짜 선택(달력) → 칸에 형식화된 날짜 입력 (직접 타이핑도 그대로 가능) =====
+  function formatPickedDate(value, format) {
+    if (!value) return "";
+    const [y, m, d] = value.split("-");
+    if (format === "korean") return `${Number(y)}년 ${Number(m)}월 ${Number(d)}일`;
+    return `${y}.${m}.${d}`; // dot 형식 (ISO 부분이 이미 0 채움)
+  }
+
+  function setFieldText(field, text) {
+    field.textContent = text;
+    clampFieldValue(field);
+    const key = getFieldKey(field);
+    if (!editedFields.has(key)) {
+      editedFields.add(key);
+      track("field_edit", { field: key, edited_fields_count: editedFields.size });
+    }
+  }
+
+  const dateHiddenInputs = [...document.querySelectorAll(".date-input-hidden")];
+  const fieldByKey = (key) => fields.find((f) => getFieldKey(f) === key);
+  const findDateInput = (target, range) =>
+    dateHiddenInputs.find((i) => i.dataset.target === target && (i.dataset.range || "") === (range || ""));
+
+  document.querySelectorAll(".date-pick").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const input = findDateInput(btn.dataset.target, btn.dataset.range);
+      if (!input) return;
+      try {
+        input.showPicker();
+      } catch {
+        input.focus();
+        input.click();
+      }
+    });
+  });
+
+  dateHiddenInputs.forEach((input) => {
+    input.addEventListener("change", () => {
+      const field = fieldByKey(input.dataset.target);
+      if (!field) return;
+
+      if (input.dataset.range) {
+        // 재직기간: 시작 ~ 종료 (종료 미선택 시 '현재')
+        const startVal = findDateInput(input.dataset.target, "start")?.value;
+        const endVal = findDateInput(input.dataset.target, "end")?.value;
+        if (!startVal && !endVal) {
+          setFieldText(field, "");
+          return;
+        }
+        const startTxt = formatPickedDate(startVal, "dot");
+        const endTxt = endVal ? formatPickedDate(endVal, "dot") : "현재";
+        setFieldText(field, startTxt ? `${startTxt} ~ ${endTxt}` : `~ ${endTxt}`);
+      } else {
+        setFieldText(field, formatPickedDate(input.value, input.dataset.format));
+      }
+    });
+  });
+
+  // ===== 직인(인감) 이미지 첨부 — 브라우저 안에서만 처리, 인쇄 시 함께 출력 =====
+  document.querySelectorAll("[data-seal]").forEach((seal) => {
+    const fileInput = seal.querySelector(".seal-file");
+    const img = seal.querySelector(".seal-img");
+    const removeBtn = seal.querySelector(".seal-remove");
+    if (!fileInput || !img) return;
+
+    seal.addEventListener("click", (event) => {
+      if (event.target.closest(".seal-remove")) return;
+      fileInput.click();
+    });
+
+    fileInput.addEventListener("change", () => {
+      const file = fileInput.files && fileInput.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        img.src = reader.result;
+        seal.classList.add("has-seal");
+        track("seal_attach", {});
+      };
+      reader.readAsDataURL(file);
+    });
+
+    if (removeBtn) {
+      removeBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        img.removeAttribute("src");
+        fileInput.value = "";
+        seal.classList.remove("has-seal");
+      });
+    }
+  });
+
   applyInitialState();
 }

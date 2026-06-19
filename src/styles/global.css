@@ -615,15 +615,108 @@ input {
 }
 
 .cert-seal {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22mm;
+  height: 22mm;
   font-size: 15px;
   color: #94a3b8;
   white-space: nowrap;
+  cursor: pointer;
+}
+
+.cert-seal .seal-img {
+  display: none;
+  max-width: 24mm;
+  max-height: 22mm;
+  object-fit: contain;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.cert-seal.has-seal .seal-label {
+  display: none;
+}
+
+.cert-seal.has-seal .seal-img {
+  display: block;
+}
+
+.seal-remove {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: #b91c1c;
+  font-size: 11px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cert-seal.has-seal .seal-remove {
+  display: inline-flex;
 }
 
 .cert-input:empty::before,
 .cert-date-input:empty::before {
   content: attr(data-placeholder);
   color: #cbd5e1;
+}
+
+/* 날짜 선택(달력) 버튼 — 화면 전용 */
+.cert-datecell {
+  position: relative;
+}
+
+.date-tools {
+  position: absolute;
+  right: 2mm;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  gap: 4px;
+  z-index: 2;
+}
+
+.cert-date .date-tools {
+  right: 0;
+}
+
+.date-pick {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 6px;
+  cursor: pointer;
+  color: #475569;
+  white-space: nowrap;
+}
+
+.date-pick:hover {
+  background: #f1f5f9;
+}
+
+.date-input-hidden {
+  position: absolute;
+  right: 2mm;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  border: 0;
+  padding: 0;
 }
 
 .toolbar-home {

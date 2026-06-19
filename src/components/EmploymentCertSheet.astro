@@ -27,7 +27,13 @@ import FieldToolbar from "./FieldToolbar.astro";
             <th>성명</th>
             <td><div class="sheet-edit cert-input" data-field="name" data-placeholder="홍길동" contenteditable="plaintext-only" spellcheck="false"></div></td>
             <th>생년월일</th>
-            <td><div class="sheet-edit cert-input" data-field="birthDate" data-placeholder="1990.01.01" contenteditable="plaintext-only" spellcheck="false"></div></td>
+            <td class="cert-datecell">
+              <div class="sheet-edit cert-input" data-field="birthDate" data-placeholder="1990.01.01" contenteditable="plaintext-only" spellcheck="false"></div>
+              <span class="date-tools screen-only">
+                <button type="button" class="date-pick" data-target="birthDate" aria-label="생년월일 선택">📅</button>
+              </span>
+              <input type="date" class="date-input-hidden" data-target="birthDate" data-format="dot" tabindex="-1" aria-hidden="true" />
+            </td>
           </tr>
           <tr>
             <th>주소</th>
@@ -41,7 +47,15 @@ import FieldToolbar from "./FieldToolbar.astro";
           </tr>
           <tr>
             <th>재직기간</th>
-            <td colspan="3"><div class="sheet-edit cert-input" data-field="employmentPeriod" data-placeholder="2020.03.02 ~ 현재" contenteditable="plaintext-only" spellcheck="false"></div></td>
+            <td colspan="3" class="cert-datecell">
+              <div class="sheet-edit cert-input" data-field="employmentPeriod" data-placeholder="2020.03.02 ~ 현재" contenteditable="plaintext-only" spellcheck="false"></div>
+              <span class="date-tools screen-only">
+                <button type="button" class="date-pick" data-target="employmentPeriod" data-range="start" aria-label="입사일 선택">📅 입사일</button>
+                <button type="button" class="date-pick" data-target="employmentPeriod" data-range="end" aria-label="종료일 선택">📅 종료일</button>
+              </span>
+              <input type="date" class="date-input-hidden" data-target="employmentPeriod" data-range="start" tabindex="-1" aria-hidden="true" />
+              <input type="date" class="date-input-hidden" data-target="employmentPeriod" data-range="end" tabindex="-1" aria-hidden="true" />
+            </td>
           </tr>
           <tr>
             <th>담당업무</th>
@@ -56,8 +70,12 @@ import FieldToolbar from "./FieldToolbar.astro";
 
       <p class="cert-statement">위 사람은 위와 같이 본 회사에 재직하고 있음을 증명합니다.</p>
 
-      <div class="cert-date">
+      <div class="cert-date cert-datecell">
         <div class="sheet-edit cert-date-input" data-field="issueDate" data-placeholder="2026년 00월 00일" contenteditable="plaintext-only" spellcheck="false"></div>
+        <span class="date-tools screen-only">
+          <button type="button" class="date-pick" data-target="issueDate" aria-label="작성 날짜 선택">📅</button>
+        </span>
+        <input type="date" class="date-input-hidden" data-target="issueDate" data-format="korean" tabindex="-1" aria-hidden="true" />
       </div>
 
       <div class="cert-issuer">
@@ -65,22 +83,19 @@ import FieldToolbar from "./FieldToolbar.astro";
           <span class="lab">회사명</span>
           <div class="sheet-edit cert-input" data-field="companyName" data-placeholder="(주)회사이름" contenteditable="plaintext-only" spellcheck="false"></div>
         </div>
-        <div class="cert-issuer-line cert-ceo">
-          <span class="lab">대표자</span>
-          <div class="sheet-edit cert-input" data-field="ceoName" data-placeholder="대표자 성명" contenteditable="plaintext-only" spellcheck="false"></div>
-          <span class="cert-seal">(직인)</span>
-        </div>
         <div class="cert-issuer-line">
           <span class="lab">주소</span>
           <div class="sheet-edit cert-input" data-field="companyAddress" data-placeholder="회사 주소" contenteditable="plaintext-only" spellcheck="false"></div>
         </div>
-        <div class="cert-issuer-line">
-          <span class="lab">사업자등록번호</span>
-          <div class="sheet-edit cert-input" data-field="bizNumber" data-placeholder="000-00-00000" contenteditable="plaintext-only" spellcheck="false"></div>
-        </div>
-        <div class="cert-issuer-line">
-          <span class="lab">전화</span>
-          <div class="sheet-edit cert-input" data-field="companyPhone" data-placeholder="02-000-0000" contenteditable="plaintext-only" spellcheck="false"></div>
+        <div class="cert-issuer-line cert-ceo">
+          <span class="lab">대표자</span>
+          <div class="sheet-edit cert-input" data-field="ceoName" data-placeholder="대표자 성명" contenteditable="plaintext-only" spellcheck="false"></div>
+          <span class="cert-seal" data-seal title="클릭해서 인감(직인) 이미지를 올리세요">
+            <img class="seal-img" alt="직인 이미지" />
+            <span class="seal-label">(직인)</span>
+            <button type="button" class="seal-remove screen-only" aria-label="직인 이미지 삭제">✕</button>
+            <input type="file" class="seal-file" accept="image/*" hidden />
+          </span>
         </div>
       </div>
     </article>
