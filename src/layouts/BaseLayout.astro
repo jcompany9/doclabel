@@ -154,15 +154,18 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     <link rel="canonical" href={canonical} />
 
     {/*
-      검색엔진 소유확인. 현재는 파일 방식으로 확인됨:
+      검색엔진 소유확인. 현재는 파일 방식으로도 확인되어 있습니다:
         - Google: public/google5c4c59023bcf9a0b.html
         - Naver:  public/naver09c4663aaa004fd63445f861cafef7f7.html
-      메타태그 방식을 추가로 쓰려면 아래 주석을 풀고 값을 채우세요.
-      TODO(verification): Google Search Console content 값 입력
+      메타태그 방식을 병행하려면 환경변수 PUBLIC_GSC_VERIFICATION /
+      PUBLIC_NAVER_VERIFICATION 를 설정하세요. 값이 있을 때만 출력됩니다.
     */}
-    {/* <meta name="google-site-verification" content="" /> */}
-    {/* TODO(verification): 네이버 서치어드바이저 content 값 입력 */}
-    {/* <meta name="naver-site-verification" content="" /> */}
+    {site.gscVerification && (
+      <meta name="google-site-verification" content={site.gscVerification} />
+    )}
+    {site.naverVerification && (
+      <meta name="naver-site-verification" content={site.naverVerification} />
+    )}
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="shortcut icon" href="/favicon.svg" />

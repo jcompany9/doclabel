@@ -7,16 +7,31 @@ export const site = {
   description: "화일철 라벨과 책등 라벨을 A4로 바로 출력할 수 있는 무료 웹 도구",
   // Google Analytics 4 측정 ID
   gaId: "G-9FXPQD0WLY",
-  // AdSense 게시자 ID (ca-pub-XXXXXXXXXXXXXXXX). 비어 있으면 광고 슬롯은 렌더되지 않습니다.
-  adsenseClient: "",
+  // AdSense 게시자 ID (ca-pub-XXXXXXXXXXXXXXXX). 환경변수 PUBLIC_ADSENSE_CLIENT 우선,
+  // 비어 있으면 광고 로더/슬롯이 렌더되지 않습니다(현재 비활성).
+  adsenseClient: import.meta.env.PUBLIC_ADSENSE_CLIENT ?? "",
+  // 검색엔진 소유확인(메타태그 방식). 값이 있을 때만 <meta>가 출력됩니다. 파일 방식과 병행 가능.
+  // TODO(verification): 필요 시 환경변수 PUBLIC_GSC_VERIFICATION / PUBLIC_NAVER_VERIFICATION 설정.
+  gscVerification: import.meta.env.PUBLIC_GSC_VERIFICATION ?? "",
+  naverVerification: import.meta.env.PUBLIC_NAVER_VERIFICATION ?? "",
   // 기본 OG 이미지 (1200x630). 아직 파일이 없다면 제작 후 public/og-image.png 로 추가하세요.
   ogImage: "/og-image.png",
+  // 문의 이메일. 환경변수 PUBLIC_CONTACT_EMAIL 가 있으면 그 값을, 없으면 아래 기본값을 사용.
+  // TODO(contact): 운영 이메일을 환경변수(PUBLIC_CONTACT_EMAIL) 또는 아래에 직접 입력하세요.
+  contactEmail: import.meta.env.PUBLIC_CONTACT_EMAIL ?? "",
 };
 
 // 서식 1개를 정의하는 데이터 형태. 이 한 객체가 메타/JSON-LD/본문/사이트맵을 모두 생성합니다.
 export interface FormFaq {
   q: string;
   a: string;
+}
+
+// 폼 아래에 노출되는 사람이 읽는 원본 본문(작성법/항목/주의사항 등). 화면 전용(인쇄 제외).
+export interface GuideSection {
+  heading: string; // H2 제목
+  paragraphs: string[]; // 문단
+  bullets?: string[]; // 선택: 항목 목록
 }
 
 // ===== 제네릭 시트(DocumentSheet)용 — 폼 필드/미리보기를 데이터로 구동 =====
@@ -50,6 +65,7 @@ export interface FormDef {
   intro: string;
   steps: string[];
   features: string[];
+  guideSections?: GuideSection[]; // 폼 아래 원본 본문(작성법·항목·주의사항 등)
   faq: FormFaq[];
   related?: string[]; // 다른 서식 slug — 내부링크 자동 생성
   applicationCategory?: string;
