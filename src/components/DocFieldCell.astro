@@ -1,0 +1,64 @@
+---
+// 제네릭 시트(DocumentSheet)의 입력 칸 1개(td). editor.js 가 인식하는 동일한
+// 클래스/데이터 속성을 사용하므로 스크립트 추가 없이 편집·달력·클램프가 작동합니다.
+import type { FormField } from "../data/site";
+
+interface Props {
+  field: FormField;
+  colspan?: number;
+}
+
+const { field, colspan } = Astro.props;
+const isDate = field.type === "date";
+const isRange = field.type === "daterange";
+const isMulti = field.type === "textarea";
+const inputClass = ["sheet-edit", "doc-input", isMulti ? "doc-input-multi" : ""]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<td colspan={colspan} class={isDate || isRange ? "doc-datecell" : undefined}>
+  <div
+    class={inputClass}
+    data-field={field.key}
+    data-placeholder={field.placeholder ?? ""}
+    contenteditable="plaintext-only"
+    spellcheck="false"></div>
+
+  {
+    isDate && (
+      <>
+        <span class="date-tools screen-only">
+          <button type="button" class="date-pick" data-target={field.key} aria-label={`${field.label} 선택`}>
+            📅
+          </button>
+        </span>
+        <input
+          type="date"
+          class="date-input-hidden"
+          data-target={field.key}
+          data-format={field.dateFormat ?? "dot"}
+          tabindex="-1"
+          aria-hidden="true"
+        />
+      </>
+    )
+  }
+
+  {
+    isRange && (
+      <>
+        <span class="date-tools screen-only">
+          <button type="button" class="date-pick" data-target={field.key} data-range="start" aria-label="시작일 선택">
+            📅 시작
+          </button>
+          <button type="button" class="date-pick" data-target={field.key} data-range="end" aria-label="종료일 선택">
+            📅 종료
+          </button>
+        </span>
+        <input type="date" class="date-input-hidden" data-target={field.key} data-range="start" tabindex="-1" aria-hidden="true" />
+        <input type="date" class="date-input-hidden" data-target={field.key} data-range="end" tabindex="-1" aria-hidden="true" />
+      </>
+    )
+  }
+</td>

@@ -1011,3 +1011,143 @@ input {
     content: "";
   }
 }
+
+/* ===== 위임장 등 제네릭 문서 서식(DocumentSheet) ===== */
+.template-power-of-attorney {
+  padding: 16mm 16mm;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--editor-font);
+  color: var(--ink);
+}
+
+.doc-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin: 2mm 0 6mm;
+}
+
+.doc-statement {
+  font-size: 14.5px;
+  line-height: 1.65;
+  margin: 0 0 6mm;
+  color: #1f2937;
+}
+
+.doc-section + .doc-section {
+  margin-top: 5mm;
+}
+
+.doc-section-heading {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 2mm;
+}
+
+.doc-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.doc-table th,
+.doc-table td {
+  border: 0.3mm solid var(--line-strong);
+  height: 10mm;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.doc-table th {
+  width: 26mm;
+  background: #eef2f7;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-align: center;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.doc-input {
+  height: 100%;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 0 3mm;
+}
+
+.doc-input-multi {
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: 16mm;
+  padding: 2mm 3mm;
+  line-height: 1.45;
+  white-space: normal;
+}
+
+.doc-datecell {
+  position: relative;
+}
+
+.doc-sign {
+  width: 120mm;
+  margin: 9mm 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3mm;
+}
+
+.doc-sign-line {
+  display: grid;
+  grid-template-columns: 24mm 1fr;
+  align-items: center;
+  column-gap: 3mm;
+  min-height: 11mm;
+}
+
+.doc-sign-line.doc-sign-seal {
+  grid-template-columns: 24mm 1fr auto;
+}
+
+.doc-sign-line .lab {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.doc-sign-line .sheet-edit {
+  height: 10mm;
+  justify-content: flex-start;
+  text-align: left;
+  border-bottom: 0.3mm solid var(--line);
+}
+
+.doc-attachments {
+  margin-top: 7mm;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #475569;
+}
+
+.doc-attachments-label {
+  font-weight: 700;
+  color: #334155;
+}
+
+.doc-attachments ul {
+  margin: 2px 0 0;
+  padding-left: 18px;
+}
+
+.doc-input:empty::before {
+  content: attr(data-placeholder);
+  color: #cbd5e1;
+}
+
+@media print {
+  .doc-input:empty::before {
+    content: "";
+  }
+}

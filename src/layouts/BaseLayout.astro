@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { site, canonicalFor, type FormDef } from "../data/site";
+import { getForm } from "../data/forms";
 
 interface PageMeta {
   title: string;
@@ -89,15 +90,26 @@ if (form) {
   });
 }
 
-// 홈이 아닌 페이지는 브레드크럼 추가
+// 홈이 아닌 페이지는 브레드크럼 추가. parent(상위 허브)가 있으면 3단계로 확장.
 if (page.slug) {
+  const crumbs: { name: string; item: string }[] = [
+    { name: "홈", item: `${site.url}/` },
+  ];
+  const parent = form?.parent ? getForm(form.parent) : undefined;
+  if (parent) {
+    crumbs.push({ name: parent.h1, item: canonicalFor(parent.slug) });
+  }
+  crumbs.push({ name: twitterTitle, item: canonical });
+
   graph.push({
     "@type": "BreadcrumbList",
     "@id": `${canonical}#breadcrumb`,
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "홈", item: `${site.url}/` },
-      { "@type": "ListItem", position: 2, name: twitterTitle, item: canonical },
-    ],
+    itemListElement: crumbs.map((crumb, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: crumb.name,
+      item: crumb.item,
+    })),
   });
 }
 
@@ -140,6 +152,18 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     <meta name="twitter:image" content={ogImage} />
 
     <link rel="canonical" href={canonical} />
+
+    {/*
+      검색엔진 소유확인. 현재는 파일 방식으로 확인됨:
+        - Google: public/google5c4c59023bcf9a0b.html
+        - Naver:  public/naver09c4663aaa004fd63445f861cafef7f7.html
+      메타태그 방식을 추가로 쓰려면 아래 주석을 풀고 값을 채우세요.
+      TODO(verification): Google Search Console content 값 입력
+    */}
+    {/* <meta name="google-site-verification" content="" /> */}
+    {/* TODO(verification): 네이버 서치어드바이저 content 값 입력 */}
+    {/* <meta name="naver-site-verification" content="" /> */}
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="shortcut icon" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />

@@ -1,0 +1,130 @@
+---
+// 데이터로 구동되는 범용 A4 문서 시트. form.sections / signature / attachments 를 읽어
+// 입력 칸·미리보기·인쇄 레이아웃을 자동 생성합니다. 위임장 5종이 이 하나를 공유합니다.
+import type { FormDef, FormField } from "../data/site";
+import FieldToolbar from "./FieldToolbar.astro";
+import DocFieldCell from "./DocFieldCell.astro";
+
+interface Props {
+  form: FormDef;
+}
+
+const { form } = Astro.props;
+const sections = form.sections ?? [];
+const signature = form.signature ?? [];
+const attachments = form.attachments ?? [];
+const templateClass = `template-${form.template ?? "document"}`;
+const toolbarTitle = (form.docTitle ?? "").replace(/\s+/g, "");
+
+// 일반 필드는 2개씩 짝지어 한 행에, full/textarea/daterange 는 한 행을 통째로 사용.
+function isSolo(f: FormField): boolean {
+  return Boolean(f.full) || f.type === "textarea" || f.type === "daterange";
+}
+function buildRows(fields: FormField[]): FormField[][] {
+  const rows: FormField[][] = [];
+  let i = 0;
+  while (i < fields.length) {
+    const f = fields[i];
+    const next = fields[i + 1];
+    if (!isSolo(f) && next && !isSolo(next)) {
+      rows.push([f, next]);
+      i += 2;
+    } else {
+      rows.push([f]);
+      i += 1;
+    }
+  }
+  return rows;
+}
+---
+
+<header class="top-toolbar screen-only">
+  <a class="toolbar-home" href="/">← DocLabel</a>
+  <div class="toolbar-title">{toolbarTitle}</div>
+  <button class="print-button" type="button" data-action="print" aria-label="인쇄하기">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 3h10v4H7V3zm10 14v4H7v-4h10zm2-8H5a2 2 0 0 0-2 2v5h4v-3h10v3h4v-5a2 2 0 0 0-2-2zm-3 3H8V9h8v3z"></path>
+    </svg>
+    <span>인쇄</span>
+  </button>
+</header>
+
+<main class="page-body">
+  <FieldToolbar />
+
+  <section class="paper-wrap">
+    <article class={`paper ${templateClass}`} id="printSheet" data-template="single">
+      {form.docTitle && <div class="doc-title">{form.docTitle}</div>}
+      {form.statement && <p class="doc-statement">{form.statement}</p>}
+
+      {
+        sections.map((section) => (
+          <section class="doc-section">
+            {section.heading && <h2 class="doc-section-heading">{section.heading}</h2>}
+            <table class="doc-table">
+              <tbody>
+                {buildRows(section.fields).map((row) =>
+                  row.length === 2 ? (
+                    <tr>
+                      <th>{row[0].label}</th>
+                      <DocFieldCell field={row[0]} />
+                      <th>{row[1].label}</th>
+                      <DocFieldCell field={row[1]} />
+                    </tr>
+                  ) : (
+                    <tr>
+                      <th>{row[0].label}</th>
+                      <DocFieldCell field={row[0]} colspan={3} />
+                    </tr>
+                  ),
+                )}
+              </tbody>
+            </table>
+          </section>
+        ))
+      }
+
+      {
+        signature.length > 0 && (
+          <div class="doc-sign">
+            {signature.map((sig, index) => (
+              <div class={`doc-sign-line${sig.seal ? " doc-sign-seal" : ""}`}>
+                <span class="lab">{sig.role}</span>
+                <div
+                  class="sheet-edit doc-input"
+                  data-field={`signName${index}`}
+                  data-placeholder="성명"
+                  contenteditable="plaintext-only"
+                  spellcheck="false"
+                />
+                {sig.seal && (
+                  <span class="cert-seal" data-seal title="클릭해서 인감(직인) 이미지를 올리세요">
+                    <img class="seal-img" alt="인감 이미지" />
+                    <span class="seal-label">(인)</span>
+                    <button type="button" class="seal-remove screen-only" aria-label="인감 이미지 삭제">
+                      ✕
+                    </button>
+                    <input type="file" class="seal-file" accept="image/*" hidden />
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        )
+      }
+
+      {
+        attachments.length > 0 && (
+          <div class="doc-attachments">
+            <span class="doc-attachments-label">첨부서류</span>
+            <ul>
+              {attachments.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </article>
+  </section>
+</main>

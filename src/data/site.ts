@@ -19,8 +19,29 @@ export interface FormFaq {
   a: string;
 }
 
+// ===== 제네릭 시트(DocumentSheet)용 — 폼 필드/미리보기를 데이터로 구동 =====
+// label / employment-certificate 는 전용 시트를 그대로 쓰므로 아래 항목을 사용하지 않습니다(선택적).
+export interface FormField {
+  key: string; // data-field 키 (시트 안에서 고유)
+  label: string; // 표의 항목명(th)
+  placeholder?: string;
+  type?: "text" | "date" | "daterange" | "textarea"; // 기본 text
+  full?: boolean; // true면 한 행 전체 차지
+  dateFormat?: "dot" | "korean"; // type=date 일 때 달력 → 칸 채움 형식
+}
+
+export interface FormSection {
+  heading?: string; // 섹션 제목(예: "위임인(본인)")
+  fields: FormField[];
+}
+
+export interface FormSignature {
+  role: string; // 서명 주체(예: "위임인")
+  seal?: boolean; // 직인/인감 날인란 표시
+}
+
 export interface FormDef {
-  slug: string; // "" 이면 홈("/")에 매핑
+  slug: string; // "" 이면 홈("/")에 매핑. 다단계 경로는 "a/b" 형태 허용
   title: string; // <title> 및 og:title
   description: string; // meta description
   keywords: string[];
@@ -33,6 +54,15 @@ export interface FormDef {
   related?: string[]; // 다른 서식 slug — 내부링크 자동 생성
   applicationCategory?: string;
   featureList?: string[];
+
+  // ↓ 제네릭 시트(DocumentSheet)를 쓰는 서식만 채웁니다. 없으면 전용 시트를 사용.
+  parent?: string; // 상위(허브) slug — 브레드크럼 3단계용
+  template?: string; // paper 클래스(.template-<x>) 및 상단 제목용 식별자
+  docTitle?: string; // 시트 상단 큰 제목(예: "위 임 장")
+  statement?: string; // 본문 안내 문장
+  sections?: FormSection[]; // 입력 칸 묶음 → 시트가 자동 렌더
+  signature?: FormSignature[]; // 서명/날인란
+  attachments?: string[]; // 첨부서류 안내(인쇄에도 노출)
 }
 
 export function canonicalFor(slug: string): string {
