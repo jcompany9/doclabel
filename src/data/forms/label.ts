@@ -62,7 +62,7 @@ const label: FormDef = {
       a: "네. 관리번호, 생산연도, 보존기간, 분류번호와 함께 세로쓰기 제목이 들어간 책등 라벨을 함께 출력할 수 있습니다.",
     },
   ],
-  related: ["employment-certificate"],
+  related: ["employment-certificate", "power-of-attorney"],
 };
 
 export default label;

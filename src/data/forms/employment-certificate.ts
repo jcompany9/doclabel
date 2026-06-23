@@ -63,7 +63,7 @@ const employmentCertificate: FormDef = {
       a: "네. 인쇄 창에서 프린터 대신 'PDF로 저장'을 선택하면 A4 크기의 PDF 파일로 저장됩니다.",
     },
   ],
-  related: [""],
+  related: ["", "power-of-attorney"],
 };
 
 export default employmentCertificate;
