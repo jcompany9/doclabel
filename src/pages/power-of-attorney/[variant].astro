@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DocumentSheet from "../../components/DocumentSheet.astro";
+import SeoContent from "../../components/SeoContent.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import type { FormDef } from "../../data/site";
+import { powerOfAttorneyVariants } from "../../data/forms/power-of-attorney";
+
+// 변형 4종을 각각 별도 URL(/power-of-attorney/<variant>/)로 정적 생성.
+export function getStaticPaths() {
+  return powerOfAttorneyVariants.map((form) => ({
+    params: { variant: form.slug.split("/").pop() },
+    props: { form },
+  }));
+}
+
+interface Props {
+  form: FormDef;
+}
+const { form } = Astro.props;
+---
+
+<BaseLayout form={form}>
+  <div class="simple-app">
+    <DocumentSheet form={form} />
+    <SeoContent form={form} />
+    <SiteFooter />
+  </div>
+  <script>
+    import "../../scripts/editor.js";
+  </script>
+</BaseLayout>
