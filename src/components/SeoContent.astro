@@ -29,6 +29,24 @@ const related = (form.related ?? [])
     {form.features.map((feature) => <li>{feature}</li>)}
   </ul>
 
+  {
+    (form.guideSections ?? []).map((section) => (
+      <section class="seo-guide">
+        <h2>{section.heading}</h2>
+        {section.paragraphs.map((p) => (
+          <p set:html={p} />
+        ))}
+        {section.bullets && section.bullets.length > 0 && (
+          <ul class="seo-guide-list">
+            {section.bullets.map((item) => (
+              <li set:html={item} />
+            ))}
+          </ul>
+        )}
+      </section>
+    ))
+  }
+
   <h2>자주 묻는 질문</h2>
   <div class="seo-faq">
     {
