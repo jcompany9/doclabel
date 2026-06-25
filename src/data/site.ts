@@ -17,8 +17,7 @@ export const site = {
   // 기본 OG 이미지 (1200x630). 아직 파일이 없다면 제작 후 public/og-image.png 로 추가하세요.
   ogImage: "/og-image.png",
   // 문의 이메일. 환경변수 PUBLIC_CONTACT_EMAIL 가 있으면 그 값을, 없으면 아래 기본값을 사용.
-  // TODO(contact): 운영 이메일을 환경변수(PUBLIC_CONTACT_EMAIL) 또는 아래에 직접 입력하세요.
-  contactEmail: import.meta.env.PUBLIC_CONTACT_EMAIL ?? "",
+  contactEmail: import.meta.env.PUBLIC_CONTACT_EMAIL ?? "doclabel.help@gmail.com",
 };
 
 // 서식 1개를 정의하는 데이터 형태. 이 한 객체가 메타/JSON-LD/본문/사이트맵을 모두 생성합니다.
