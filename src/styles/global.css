@@ -1126,14 +1126,15 @@ input {
   position: relative;
 }
 
-/* 작성일: 표가 아니라 서명(위임인) 바로 위, 가운데 정렬 */
+/* 작성일: 표가 아니라 서명(위임인) 바로 위, 가운데 정렬.
+   margin-top:auto 로 닫는 영역(작성일·서명·첨부)을 페이지 아래쪽으로 밀어 배치합니다. */
 .doc-dateline {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 6px;
-  margin: 9mm 0 4mm;
+  margin: auto 0 6mm;
 }
 
 .doc-dateline-input {
@@ -1188,7 +1189,7 @@ input {
 }
 
 .doc-attachments {
-  margin-top: 5mm;
+  margin-top: 9mm;
   font-size: 12.5px;
   line-height: 1.6;
   color: #475569;
