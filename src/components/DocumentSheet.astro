@@ -86,6 +86,24 @@ function buildRows(fields: FormField[]): FormField[][] {
 
       {
         signature.length > 0 && (
+          <div class="doc-dateline">
+            <div
+              class="sheet-edit doc-dateline-input"
+              data-field="issueDate"
+              data-placeholder="0000년 00월 00일"
+              contenteditable="plaintext-only"
+              spellcheck="false"
+            />
+            <button type="button" class="date-pick doc-dateline-pick screen-only" data-target="issueDate" aria-label="작성일 선택">
+              📅
+            </button>
+            <input type="date" class="date-input-hidden" data-target="issueDate" data-format="korean" tabindex="-1" aria-hidden="true" />
+          </div>
+        )
+      }
+
+      {
+        signature.length > 0 && (
           <div class="doc-sign">
             {signature.map((sig, index) => (
               <div class={`doc-sign-line${sig.seal ? " doc-sign-seal" : ""}`}>

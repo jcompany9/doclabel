@@ -1048,7 +1048,7 @@ input {
 
 /* ===== 위임장 등 제네릭 문서 서식(DocumentSheet) ===== */
 .template-power-of-attorney {
-  padding: 16mm 16mm;
+  padding: 15mm 13mm;
   display: flex;
   flex-direction: column;
   font-family: var(--editor-font);
@@ -1126,9 +1126,37 @@ input {
   position: relative;
 }
 
+/* 작성일: 표가 아니라 서명(위임인) 바로 위, 가운데 정렬 */
+.doc-dateline {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 9mm 0 4mm;
+}
+
+.doc-dateline-input {
+  min-width: 60mm;
+  height: 9mm;
+  justify-content: center;
+  text-align: center;
+  font-size: 16px;
+}
+
+.doc-dateline-input:empty::before {
+  content: attr(data-placeholder);
+  color: #cbd5e1;
+}
+
+.doc-dateline-pick {
+  position: static;
+}
+
 .doc-sign {
-  width: 120mm;
-  margin: 7mm 0 0 auto;
+  width: 140mm;
+  max-width: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 3mm;
@@ -1136,14 +1164,14 @@ input {
 
 .doc-sign-line {
   display: grid;
-  grid-template-columns: 24mm 1fr;
+  grid-template-columns: 26mm 1fr;
   align-items: center;
-  column-gap: 3mm;
+  column-gap: 4mm;
   min-height: 11mm;
 }
 
 .doc-sign-line.doc-sign-seal {
-  grid-template-columns: 24mm 1fr auto;
+  grid-template-columns: 26mm 1fr auto;
 }
 
 .doc-sign-line .lab {
@@ -1182,7 +1210,8 @@ input {
 }
 
 @media print {
-  .doc-input:empty::before {
+  .doc-input:empty::before,
+  .doc-dateline-input:empty::before {
     content: "";
   }
 }

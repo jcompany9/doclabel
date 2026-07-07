@@ -24,7 +24,8 @@ export const agentSection: FormSection = {
   ],
 };
 
-// 위임 사항(권한 범위)·사유·기간·작성일. 권한 범위 안내문구는 용도마다 달라 인자로 받습니다.
+// 위임 사항(권한 범위)·사유·기간. 작성일은 표가 아니라 서명(위임인) 위 날짜란에서 입력합니다.
+// 권한 범위 안내문구는 용도마다 달라 인자로 받습니다.
 export function delegationSection(scopePlaceholder: string): FormSection {
   return {
     heading: "위임 내용",
@@ -32,7 +33,6 @@ export function delegationSection(scopePlaceholder: string): FormSection {
       { key: "scope", label: "위임 사항(권한 범위)", placeholder: scopePlaceholder, type: "textarea", full: true },
       { key: "reason", label: "위임 사유", placeholder: "예) 본인의 해외 체류로 직접 처리가 어려움", full: true },
       { key: "period", label: "위임 기간", type: "daterange", full: true },
-      { key: "issueDate", label: "작성일", type: "date", dateFormat: "korean", full: true },
     ],
   };
 }
