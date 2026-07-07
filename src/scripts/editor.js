@@ -342,6 +342,76 @@ if (printSheet && fields.length) {
     });
   });
 
+  // ===== 날짜 칸 직접 입력 시 자동 형식화 (칸을 벗어날 때) =====
+  // "2026.6.29", "2026-6-29", "2026 6 29", "20260629" 등 어떻게 입력하든
+  // 그 칸의 형식(년 월 일 / 점)에 맞춰 정리합니다.
+  function dateMetaForField(key) {
+    const inputs = dateHiddenInputs.filter((i) => i.dataset.target === key);
+    if (!inputs.length) return null;
+    const isRange = inputs.some((i) => i.dataset.range);
+    return { isRange, format: isRange ? "dot" : inputs[0].dataset.format || "dot" };
+  }
+
+  function formatDatePieces(y, m, d, format) {
+    if (!y) return "";
+    if (format === "korean") {
+      let s = `${Number(y)}년`;
+      if (m) s += ` ${Number(m)}월`;
+      if (d) s += ` ${Number(d)}일`;
+      return s;
+    }
+    let s = y.padStart(4, "0");
+    if (m) s += `.${m.padStart(2, "0")}`;
+    if (d) s += `.${d.padStart(2, "0")}`;
+    return s;
+  }
+
+  function normalizeOneDate(text, format) {
+    const t = text.trim();
+    if (!/\d/.test(t)) return t; // 숫자가 없으면(예: '현재') 그대로 둡니다.
+    const groups = t.match(/\d+/g) || [];
+    let y = "";
+    let m = "";
+    let d = "";
+    if (groups.length === 1 && groups[0].length >= 5) {
+      const g = groups[0]; // 구분자 없이 붙여 쓴 경우
+      y = g.slice(0, 4);
+      m = g.slice(4, 6);
+      d = g.slice(6, 8);
+    } else {
+      y = (groups[0] || "").slice(0, 4);
+      m = (groups[1] || "").slice(0, 2);
+      d = (groups[2] || "").slice(0, 2);
+    }
+    return formatDatePieces(y, m, d, format);
+  }
+
+  function normalizeDateField(field) {
+    const meta = dateMetaForField(getFieldKey(field));
+    if (!meta) return;
+    const text = field.textContent;
+    let out;
+    if (meta.isRange) {
+      const idx = text.indexOf("~");
+      const leftRaw = idx >= 0 ? text.slice(0, idx) : text;
+      const rightRaw = idx >= 0 ? text.slice(idx + 1) : "";
+      const left = normalizeOneDate(leftRaw, "dot");
+      const right = /\d/.test(rightRaw) ? normalizeOneDate(rightRaw, "dot") : rightRaw.trim();
+      out = right ? `${left} ~ ${right}` : left;
+    } else {
+      out = normalizeOneDate(text, meta.format);
+    }
+    if (out && out !== text) {
+      setFieldText(field, out);
+    }
+  }
+
+  fields.forEach((field) => {
+    if (dateMetaForField(getFieldKey(field))) {
+      field.addEventListener("blur", () => normalizeDateField(field));
+    }
+  });
+
   // ===== 직인(인감) 이미지 첨부 — 브라우저 안에서만 처리, 인쇄 시 함께 출력 =====
   document.querySelectorAll("[data-seal]").forEach((seal) => {
     const fileInput = seal.querySelector(".seal-file");
