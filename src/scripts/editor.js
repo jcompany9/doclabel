@@ -80,7 +80,13 @@ if (printSheet && fields.length) {
       return false;
     }
 
-    field.textContent = field.textContent.replace(/\n/g, "");
+    // 줄바꿈이 실제로 있을 때만 textContent를 손댑니다. 매 입력마다 재할당하면
+    // 커서가 맨 앞으로 튀어(글자 역순 입력) 한글 IME 조합도 깨지기 때문입니다.
+    const cleaned = field.textContent.replace(/\n/g, "");
+    if (cleaned !== field.textContent) {
+      field.textContent = cleaned;
+      placeCaretAtEnd(field);
+    }
 
     if (!fieldOverflows(field)) {
       rememberValue(field);
