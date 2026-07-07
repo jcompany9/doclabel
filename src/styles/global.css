@@ -1096,11 +1096,12 @@ input {
 }
 
 .doc-table th {
-  width: 26mm;
+  width: 34mm;
   background: #eef2f7;
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 600;
   text-align: center;
+  padding: 0 1.5mm;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
