@@ -4,11 +4,21 @@ const controls = document.querySelectorAll("[data-add-row], [data-del-row]");
 
 if (controls.length) {
   const rowsOf = (group) => [...document.querySelectorAll(`tr[data-row-group="${group}"]`)];
+  const sheet = document.getElementById("printSheet");
+  // 용지(A4 한 장)를 넘치면 true. scrollHeight/clientHeight는 화면 배율(transform)과 무관.
+  const overflows = () => sheet && sheet.scrollHeight > sheet.clientHeight + 2;
 
   document.querySelectorAll("[data-add-row]").forEach((btn) => {
     btn.addEventListener("click", () => {
       const hidden = rowsOf(btn.dataset.addRow).find((r) => r.classList.contains("row-hidden"));
-      if (hidden) hidden.classList.remove("row-hidden");
+      if (!hidden) return;
+      hidden.classList.remove("row-hidden");
+      // 한 페이지를 넘치면 되돌립니다(용지는 늘어나지 않음).
+      if (overflows()) {
+        hidden.classList.add("row-hidden");
+        btn.classList.add("resume-row-full");
+        setTimeout(() => btn.classList.remove("resume-row-full"), 600);
+      }
     });
   });
 

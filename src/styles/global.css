@@ -1604,21 +1604,13 @@ input {
   background: #f1f5f9;
 }
 
+.resume-row-controls button.resume-row-full {
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
 .resume-table tr.row-hidden {
   display: none;
-}
-
-/* 이력서는 행 추가 시 여러 장으로 자연스럽게 넘어가도록 높이 고정을 해제 */
-.paper.template-resume {
-  height: auto;
-  min-height: 297mm;
-  overflow: visible;
-}
-
-.template-resume .resume-table tr,
-.template-resume .resume-info tr {
-  break-inside: avoid;
-  page-break-inside: avoid;
 }
 
 .resume-table {
