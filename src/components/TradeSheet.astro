@@ -1,0 +1,144 @@
+---
+// 견적서 / 거래명세서 공용 A4 시트. 품목표(수량×단가=금액)와 합계를 trade.js가 자동계산합니다.
+import type { FormDef } from "../data/site";
+import FieldToolbar from "./FieldToolbar.astro";
+
+interface Props {
+  form: FormDef;
+}
+const { form } = Astro.props;
+const toolbarTitle = (form.docTitle ?? "").replace(/\s+/g, "");
+const dateLabel = form.dateLabel ?? "작성일자";
+const ROWS = Array.from({ length: 10 }, (_, i) => i + 1);
+
+const supplierFields = [
+  { key: "bizNo", label: "등록번호", placeholder: "000-00-00000" },
+  { key: "company", label: "상호", placeholder: "○○ 주식회사" },
+  { key: "ceo", label: "대표자", placeholder: "홍길동" },
+  { key: "phone", label: "연락처", placeholder: "010-0000-0000" },
+  { key: "addr", label: "주소", placeholder: "서울특별시 ○○구 ○○로 00", full: true },
+  { key: "sector", label: "업태", placeholder: "도소매 등" },
+  { key: "item", label: "종목", placeholder: "○○ 등" },
+];
+---
+
+<header class="top-toolbar screen-only">
+  <a class="toolbar-home" href="/">← DocLabel</a>
+  <div class="toolbar-title">{toolbarTitle}</div>
+  <button class="print-button" type="button" data-action="print" aria-label="인쇄하기">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 3h10v4H7V3zm10 14v4H7v-4h10zm2-8H5a2 2 0 0 0-2 2v5h4v-3h10v3h4v-5a2 2 0 0 0-2-2zm-3 3H8V9h8v3z"></path>
+    </svg>
+    <span>인쇄</span>
+  </button>
+</header>
+
+<main class="page-body">
+  <FieldToolbar />
+
+  <section class="paper-wrap">
+    <article class="paper doc-sheet template-trade" id="printSheet" data-template="single">
+      <div class="trade-head">
+        <div class="doc-title">{form.docTitle}</div>
+        <div class="trade-date doc-datecell">
+          <span class="trade-date-label">{dateLabel}</span>
+          <div class="sheet-edit trade-date-input" data-field="issueDate" data-placeholder="0000.00.00" contenteditable="plaintext-only" spellcheck="false"></div>
+          <button type="button" class="date-pick screen-only" data-target="issueDate" aria-label={`${dateLabel} 선택`}>📅</button>
+          <input type="date" class="date-input-hidden" data-target="issueDate" data-format="dot" tabindex="-1" aria-hidden="true" />
+        </div>
+      </div>
+
+      {form.statement && <p class="trade-subtitle">{form.statement}</p>}
+
+      <div class="trade-parties">
+        <div class="trade-receiver">
+          <span class="lab">수신</span>
+          <div class="sheet-edit trade-input" data-field="recipient" data-placeholder="공급받는자 상호" contenteditable="plaintext-only" spellcheck="false"></div>
+          <span class="lab">귀하</span>
+        </div>
+
+        <div class="trade-supplier">
+          <div class="trade-supplier-title">공급자<span class="trade-seal-wrap"><span class="cert-seal" data-seal title="클릭해서 도장(인감) 이미지를 올리세요"><img class="seal-img" alt="도장 이미지" /><span class="seal-label">(인)</span><button type="button" class="seal-remove screen-only" aria-label="도장 이미지 삭제">✕</button><input type="file" class="seal-file" accept="image/*" hidden /></span></span></div>
+          <table class="trade-supplier-table">
+            <tbody>
+              <tr>
+                <th>등록번호</th>
+                <td><div class="sheet-edit trade-input" data-field="bizNo" data-placeholder="000-00-00000" contenteditable="plaintext-only" spellcheck="false"></div></td>
+                <th>상호</th>
+                <td><div class="sheet-edit trade-input" data-field="company" data-placeholder="○○ 주식회사" contenteditable="plaintext-only" spellcheck="false"></div></td>
+              </tr>
+              <tr>
+                <th>대표자</th>
+                <td><div class="sheet-edit trade-input" data-field="ceo" data-placeholder="홍길동" contenteditable="plaintext-only" spellcheck="false"></div></td>
+                <th>연락처</th>
+                <td><div class="sheet-edit trade-input" data-field="phone" data-placeholder="010-0000-0000" contenteditable="plaintext-only" spellcheck="false"></div></td>
+              </tr>
+              <tr>
+                <th>주소</th>
+                <td colspan="3"><div class="sheet-edit trade-input" data-field="addr" data-placeholder="서울특별시 ○○구 ○○로 00" contenteditable="plaintext-only" spellcheck="false"></div></td>
+              </tr>
+              <tr>
+                <th>업태</th>
+                <td><div class="sheet-edit trade-input" data-field="sector" data-placeholder="도소매 등" contenteditable="plaintext-only" spellcheck="false"></div></td>
+                <th>종목</th>
+                <td><div class="sheet-edit trade-input" data-field="item" data-placeholder="○○ 등" contenteditable="plaintext-only" spellcheck="false"></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="trade-total-top">
+        <span class="lab">합계금액</span>
+        <span class="trade-total-top-value"><span data-trade-total>0</span> 원</span>
+        <span class="trade-total-top-note">(부가세 포함)</span>
+      </div>
+
+      <table class="trade-table">
+        <thead>
+          <tr>
+            <th class="c-no">No</th>
+            <th class="c-name">품 명</th>
+            <th class="c-spec">규격</th>
+            <th class="c-qty">수량</th>
+            <th class="c-price">단가</th>
+            <th class="c-amt">금액</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            ROWS.map((i) => (
+              <tr data-trade-row={i}>
+                <td class="c-no">{i}</td>
+                <td class="c-name"><div class="sheet-edit trade-input trade-cell" data-field={`name${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td class="c-spec"><div class="sheet-edit trade-input trade-cell" data-field={`spec${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td class="c-qty"><div class="sheet-edit trade-input trade-cell trade-num" data-field={`qty${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td class="c-price"><div class="sheet-edit trade-input trade-cell trade-num" data-field={`price${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td class="c-amt"><span class="trade-amt" data-trade-amt={i} /></td>
+              </tr>
+            ))
+          }
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="trade-sum-label" colspan="5">공급가액</td>
+            <td class="c-amt"><span class="trade-amt" data-trade-supply>0</span></td>
+          </tr>
+          <tr>
+            <td class="trade-sum-label" colspan="5">부가세 (10%)</td>
+            <td class="c-amt"><span class="trade-amt" data-trade-vat>0</span></td>
+          </tr>
+          <tr class="trade-grand">
+            <td class="trade-sum-label" colspan="5">합계 금액</td>
+            <td class="c-amt"><span class="trade-amt" data-trade-total>0</span></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="trade-note">
+        <span class="lab">비고</span>
+        <div class="sheet-edit trade-input" data-field="note" data-placeholder="특이사항·유효기간 등" contenteditable="plaintext-only" spellcheck="false"></div>
+      </div>
+    </article>
+  </section>
+</main>

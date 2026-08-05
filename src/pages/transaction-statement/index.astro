@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import TradeSheet from "../../components/TradeSheet.astro";
+import SeoContent from "../../components/SeoContent.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import form from "../../data/forms/transaction-statement";
+---
+
+<BaseLayout form={form}>
+  <div class="simple-app">
+    <TradeSheet form={form} />
+    <SeoContent form={form} />
+    <SiteFooter />
+  </div>
+  <script>
+    import "../../scripts/editor.js";
+    import "../../scripts/trade.js";
+  </script>
+</BaseLayout>

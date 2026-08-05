@@ -25,6 +25,12 @@ if (printSheet && fields.length) {
   }
 
   function getDefaultStyleForField(field) {
+    if (field.classList.contains("trade-cell")) {
+      return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "14", letterSpacing: "0" };
+    }
+    if (field.classList.contains("trade-input")) {
+      return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "15", letterSpacing: "0" };
+    }
     if (field.classList.contains("title-input")) {
       return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "42", letterSpacing: "8" };
     }

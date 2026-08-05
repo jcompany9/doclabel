@@ -1255,3 +1255,250 @@ input {
     content: "";
   }
 }
+
+/* ===== 견적서 / 거래명세서 (TradeSheet) ===== */
+.template-trade {
+  font-size: 14px;
+}
+
+.trade-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8mm;
+}
+
+.template-trade .doc-title {
+  margin: 0;
+  text-align: left;
+}
+
+.trade-date {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.trade-date-input {
+  min-width: 34mm;
+  height: 8mm;
+  justify-content: flex-start;
+}
+
+.trade-subtitle {
+  margin: 3mm 0 6mm;
+  color: #334155;
+}
+
+.trade-parties {
+  display: flex;
+  flex-direction: column;
+  gap: 4mm;
+  margin-bottom: 5mm;
+}
+
+.trade-receiver {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.trade-receiver .lab,
+.trade-note .lab {
+  white-space: nowrap;
+}
+
+.trade-receiver .trade-input {
+  min-width: 60mm;
+  height: 8mm;
+  border-bottom: 0.3mm solid var(--line);
+  justify-content: flex-start;
+}
+
+.trade-supplier {
+  border: 0.4mm solid var(--line-strong);
+}
+
+.trade-supplier-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5mm 3mm;
+  font-weight: 700;
+  background: #eef2f7;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.trade-seal-wrap .cert-seal {
+  min-width: 16mm;
+  height: 16mm;
+}
+
+.trade-seal-wrap .cert-seal .seal-img {
+  max-width: 18mm;
+  max-height: 16mm;
+}
+
+.trade-supplier-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.trade-supplier-table th,
+.trade-supplier-table td {
+  border-top: 0.3mm solid var(--line);
+  height: 8mm;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.trade-supplier-table th {
+  width: 22mm;
+  background: #f8fafc;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+  border-right: 0.3mm solid var(--line);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.trade-supplier-table td {
+  border-right: 0.3mm solid var(--line);
+}
+
+.trade-supplier-table td:last-child {
+  border-right: none;
+}
+
+.trade-input {
+  height: 100%;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 0 3mm;
+}
+
+.trade-total-top {
+  display: flex;
+  align-items: baseline;
+  gap: 3mm;
+  margin: 0 0 3mm;
+  font-weight: 700;
+}
+
+.trade-total-top .lab {
+  font-size: 14px;
+}
+
+.trade-total-top-value {
+  font-size: 20px;
+  color: var(--accent);
+}
+
+.trade-total-top-note {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--subtle);
+}
+
+.trade-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.trade-table th,
+.trade-table td {
+  border: 0.3mm solid var(--line-strong);
+  height: 8mm;
+  padding: 0;
+  vertical-align: middle;
+}
+
+.trade-table thead th {
+  background: #eef2f7;
+  font-size: 12.5px;
+  font-weight: 600;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.trade-table .c-no {
+  width: 9mm;
+  text-align: center;
+  font-size: 12.5px;
+}
+.trade-table .c-spec { width: 22mm; }
+.trade-table .c-qty { width: 16mm; }
+.trade-table .c-price { width: 26mm; }
+.trade-table .c-amt { width: 28mm; }
+
+.trade-cell {
+  padding: 0 2mm;
+}
+
+.trade-num {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.trade-amt {
+  display: block;
+  padding: 0 2mm;
+  text-align: right;
+  font-size: 14px;
+}
+
+.trade-table tfoot .trade-sum-label {
+  text-align: right;
+  padding: 0 3mm;
+  font-weight: 600;
+  background: #f8fafc;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.trade-table tfoot .trade-grand td {
+  font-weight: 700;
+  background: #eef2f7;
+}
+
+.trade-note {
+  display: flex;
+  align-items: center;
+  gap: 3mm;
+  margin-top: 4mm;
+  font-size: 13px;
+}
+
+.trade-note .lab {
+  font-weight: 600;
+  color: #334155;
+}
+
+.trade-note .trade-input {
+  flex: 1 1 auto;
+  height: 9mm;
+  border-bottom: 0.3mm solid var(--line);
+}
+
+.trade-input:empty::before,
+.trade-date-input:empty::before {
+  content: attr(data-placeholder);
+  color: #cbd5e1;
+}
+
+@media print {
+  .trade-input:empty::before,
+  .trade-date-input:empty::before {
+    content: "";
+  }
+}

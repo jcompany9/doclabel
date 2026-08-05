@@ -76,6 +76,7 @@ export interface FormDef {
   template?: string; // paper 클래스(.template-<x>) 및 상단 제목용 식별자
   docTitle?: string; // 시트 상단 큰 제목(예: "위 임 장")
   statement?: string; // 상단 본문 안내 문장(표 위)
+  dateLabel?: string; // 날짜 라인 라벨(예: 견적일자/거래일자). TradeSheet용
   sections?: FormSection[]; // 입력 칸 묶음 → 시트가 자동 렌더
   closingStatement?: string; // 표 아래·서명 위 마무리 문장(예: "위와 같이 사직하고자…")
   signature?: FormSignature[]; // 서명/날인란
