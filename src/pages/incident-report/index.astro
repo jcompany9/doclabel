@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import DocumentSheet from "../../components/DocumentSheet.astro";
+import SeoContent from "../../components/SeoContent.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import form from "../../data/forms/incident-report";
+---
+
+<BaseLayout form={form}>
+  <div class="simple-app">
+    <DocumentSheet form={form} />
+    <SeoContent form={form} />
+    <SiteFooter />
+  </div>
+  <script>
+    import "../../scripts/editor.js";
+  </script>
+</BaseLayout>

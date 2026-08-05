@@ -42,6 +42,7 @@ export interface FormField {
   type?: "text" | "date" | "daterange" | "textarea"; // 기본 text
   full?: boolean; // true면 한 행 전체 차지
   dateFormat?: "dot" | "korean"; // type=date 일 때 달력 → 칸 채움 형식
+  heightMm?: number; // type=textarea 일 때 칸 높이(mm). 긴 본문용
 }
 
 export interface FormSection {

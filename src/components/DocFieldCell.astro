@@ -15,11 +15,13 @@ const isMulti = field.type === "textarea";
 const inputClass = ["sheet-edit", "doc-input", isMulti ? "doc-input-multi" : ""]
   .filter(Boolean)
   .join(" ");
+const inputStyle = isMulti && field.heightMm ? `height:${field.heightMm}mm` : undefined;
 ---
 
 <td colspan={colspan} class={isDate || isRange ? "doc-datecell" : undefined}>
   <div
     class={inputClass}
+    style={inputStyle}
     data-field={field.key}
     data-placeholder={field.placeholder ?? ""}
     contenteditable="plaintext-only"
