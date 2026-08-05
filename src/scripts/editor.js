@@ -31,6 +31,9 @@ if (printSheet && fields.length) {
     if (field.classList.contains("trade-input")) {
       return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "15", letterSpacing: "0" };
     }
+    if (field.closest && field.closest(".resume-table")) {
+      return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "15", letterSpacing: "0" };
+    }
     if (field.classList.contains("title-input")) {
       return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "42", letterSpacing: "8" };
     }

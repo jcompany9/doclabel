@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ResumeSheet from "../../components/ResumeSheet.astro";
+import SeoContent from "../../components/SeoContent.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import form from "../../data/forms/resume";
+---
+
+<BaseLayout form={form}>
+  <div class="simple-app">
+    <ResumeSheet form={form} />
+    <SeoContent form={form} />
+    <SiteFooter />
+  </div>
+  <script>
+    import "../../scripts/editor.js";
+  </script>
+</BaseLayout>

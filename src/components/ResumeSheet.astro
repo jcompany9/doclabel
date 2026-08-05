@@ -1,0 +1,152 @@
+---
+// 이력서 A4 시트 — 증명사진 + 인적사항 + 학력/경력/자격 반복 행 + 작성 서약/서명.
+import type { FormDef } from "../data/site";
+import FieldToolbar from "./FieldToolbar.astro";
+
+interface Props {
+  form: FormDef;
+}
+const { form } = Astro.props;
+const toolbarTitle = (form.docTitle ?? "").replace(/\s+/g, "");
+const eduRows = [1, 2, 3, 4];
+const careerRows = [1, 2, 3, 4];
+const certRows = [1, 2, 3];
+---
+
+<header class="top-toolbar screen-only">
+  <a class="toolbar-home" href="/">← DocLabel</a>
+  <div class="toolbar-title">{toolbarTitle}</div>
+  <button class="print-button" type="button" data-action="print" aria-label="인쇄하기">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 3h10v4H7V3zm10 14v4H7v-4h10zm2-8H5a2 2 0 0 0-2 2v5h4v-3h10v3h4v-5a2 2 0 0 0-2-2zm-3 3H8V9h8v3z"></path>
+    </svg>
+    <span>인쇄</span>
+  </button>
+</header>
+
+<main class="page-body">
+  <FieldToolbar />
+
+  <section class="paper-wrap">
+    <article class="paper doc-sheet template-resume" id="printSheet" data-template="single">
+      <div class="doc-title">{form.docTitle}</div>
+
+      <div class="resume-top">
+        <table class="resume-info">
+          <tbody>
+            <tr>
+              <th>성명</th>
+              <td><div class="sheet-edit doc-input" data-field="name" data-placeholder="홍길동" contenteditable="plaintext-only" spellcheck="false"></div></td>
+            </tr>
+            <tr>
+              <th>생년월일</th>
+              <td class="doc-datecell">
+                <div class="sheet-edit doc-input" data-field="birth" data-placeholder="1990.01.01" contenteditable="plaintext-only" spellcheck="false"></div>
+                <span class="date-tools screen-only"><button type="button" class="date-pick" data-target="birth" aria-label="생년월일 선택">📅</button></span>
+                <input type="date" class="date-input-hidden" data-target="birth" data-format="dot" tabindex="-1" aria-hidden="true" />
+              </td>
+            </tr>
+            <tr>
+              <th>주소</th>
+              <td><div class="sheet-edit doc-input" data-field="address" data-placeholder="서울특별시 ○○구 ○○로 00" contenteditable="plaintext-only" spellcheck="false"></div></td>
+            </tr>
+            <tr>
+              <th>연락처</th>
+              <td><div class="sheet-edit doc-input" data-field="phone" data-placeholder="010-0000-0000" contenteditable="plaintext-only" spellcheck="false"></div></td>
+            </tr>
+            <tr>
+              <th>이메일</th>
+              <td><div class="sheet-edit doc-input" data-field="email" data-placeholder="example@email.com" contenteditable="plaintext-only" spellcheck="false"></div></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="resume-photo-box">
+          <span class="cert-seal resume-photo" data-seal title="클릭해서 증명사진을 올리세요">
+            <img class="seal-img" alt="증명사진" />
+            <span class="seal-label">사진<br />(3 × 4)</span>
+            <button type="button" class="seal-remove screen-only" aria-label="사진 삭제">✕</button>
+            <input type="file" class="seal-file" accept="image/*" hidden />
+          </span>
+        </div>
+      </div>
+
+      <h2 class="resume-heading">학력사항</h2>
+      <table class="resume-table">
+        <thead>
+          <tr><th class="w-period">재학기간</th><th>학교명</th><th class="w-major">전공</th><th class="w-status">졸업구분</th></tr>
+        </thead>
+        <tbody>
+          {
+            eduRows.map((i) => (
+              <tr>
+                <td><div class="sheet-edit doc-input" data-field={`eduPeriod${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td><div class="sheet-edit doc-input" data-field={`school${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td><div class="sheet-edit doc-input" data-field={`major${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td><div class="sheet-edit doc-input" data-field={`eduStatus${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+
+      <h2 class="resume-heading">경력사항</h2>
+      <table class="resume-table">
+        <thead>
+          <tr><th class="w-period">근무기간</th><th>회사명</th><th class="w-major">직위</th><th>담당업무</th></tr>
+        </thead>
+        <tbody>
+          {
+            careerRows.map((i) => (
+              <tr>
+                <td><div class="sheet-edit doc-input" data-field={`workPeriod${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td><div class="sheet-edit doc-input" data-field={`company${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td><div class="sheet-edit doc-input" data-field={`position${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td><div class="sheet-edit doc-input" data-field={`duty${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+
+      <h2 class="resume-heading">자격 · 면허</h2>
+      <table class="resume-table">
+        <thead>
+          <tr><th class="w-period">취득일</th><th>자격 · 면허명</th><th class="w-org">발급기관</th></tr>
+        </thead>
+        <tbody>
+          {
+            certRows.map((i) => (
+              <tr>
+                <td><div class="sheet-edit doc-input" data-field={`certDate${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td><div class="sheet-edit doc-input" data-field={`certName${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+                <td><div class="sheet-edit doc-input" data-field={`certOrg${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+
+      <div class="resume-closing">
+        <p class="resume-oath">위 기재 내용은 사실과 다름이 없습니다.</p>
+        <div class="doc-dateline">
+          <div class="sheet-edit doc-dateline-input" data-field="issueDate" data-placeholder="0000년 00월 00일" contenteditable="plaintext-only" spellcheck="false"></div>
+          <button type="button" class="date-pick screen-only" data-target="issueDate" aria-label="작성일 선택">📅</button>
+          <input type="date" class="date-input-hidden" data-target="issueDate" data-format="korean" tabindex="-1" aria-hidden="true" />
+        </div>
+        <div class="doc-sign">
+          <div class="doc-sign-line doc-sign-seal">
+            <span class="lab">작성자</span>
+            <div class="sheet-edit doc-input" data-field="signName0" data-placeholder="성명" contenteditable="plaintext-only" spellcheck="false"></div>
+            <span class="cert-seal" data-seal title="클릭해서 인감(도장) 이미지를 올리세요">
+              <img class="seal-img" alt="인감 이미지" />
+              <span class="seal-label">(인)</span>
+              <button type="button" class="seal-remove screen-only" aria-label="인감 이미지 삭제">✕</button>
+              <input type="file" class="seal-file" accept="image/*" hidden />
+            </span>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+</main>
