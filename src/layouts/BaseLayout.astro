@@ -177,11 +177,12 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.gaId}`}></script>
     <script is:inline define:vars={{ gaId: site.gaId }}>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", gaId);
+      // window.gtag 로 전역 노출해야 커스텀 이벤트(track)에서 호출할 수 있습니다.
+      window.gtag = function gtag() {
+        window.dataLayer.push(arguments);
+      };
+      window.gtag("js", new Date());
+      window.gtag("config", gaId);
     </script>
 
     {/* Google AdSense 로더 (게시자 ID가 설정된 경우에만) */}
