@@ -53,7 +53,7 @@ function buildRows(fields: FormField[]): FormField[][] {
   <FieldToolbar />
 
   <section class="paper-wrap">
-    <article class={`paper ${templateClass}`} id="printSheet" data-template="single">
+    <article class={`paper doc-sheet ${templateClass}`} id="printSheet" data-template="single">
       {form.docTitle && <div class="doc-title">{form.docTitle}</div>}
       {form.statement && <p class="doc-statement">{form.statement}</p>}
 
@@ -84,65 +84,84 @@ function buildRows(fields: FormField[]): FormField[][] {
         ))
       }
 
-      {
-        signature.length > 0 && (
-          <div class="doc-dateline">
-            <div
-              class="sheet-edit doc-dateline-input"
-              data-field="issueDate"
-              data-placeholder="0000년 00월 00일"
-              contenteditable="plaintext-only"
-              spellcheck="false"
-            />
-            <button type="button" class="date-pick doc-dateline-pick screen-only" data-target="issueDate" aria-label="작성일 선택">
-              📅
-            </button>
-            <input type="date" class="date-input-hidden" data-target="issueDate" data-format="korean" tabindex="-1" aria-hidden="true" />
-          </div>
-        )
-      }
+      <div class="doc-closing">
+        {form.closingStatement && <p class="doc-statement doc-closing-statement">{form.closingStatement}</p>}
 
-      {
-        signature.length > 0 && (
-          <div class="doc-sign">
-            {signature.map((sig, index) => (
-              <div class={`doc-sign-line${sig.seal ? " doc-sign-seal" : ""}`}>
-                <span class="lab">{sig.role}</span>
-                <div
-                  class="sheet-edit doc-input"
-                  data-field={`signName${index}`}
-                  data-placeholder="성명"
-                  contenteditable="plaintext-only"
-                  spellcheck="false"
-                />
-                {sig.seal && (
-                  <span class="cert-seal" data-seal title="클릭해서 인감(직인) 이미지를 올리세요">
-                    <img class="seal-img" alt="인감 이미지" />
-                    <span class="seal-label">(인)</span>
-                    <button type="button" class="seal-remove screen-only" aria-label="인감 이미지 삭제">
-                      ✕
-                    </button>
-                    <input type="file" class="seal-file" accept="image/*" hidden />
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-        )
-      }
+        {
+          signature.length > 0 && (
+            <div class="doc-dateline">
+              <div
+                class="sheet-edit doc-dateline-input"
+                data-field="issueDate"
+                data-placeholder="0000년 00월 00일"
+                contenteditable="plaintext-only"
+                spellcheck="false"
+              />
+              <button type="button" class="date-pick doc-dateline-pick screen-only" data-target="issueDate" aria-label="작성일 선택">
+                📅
+              </button>
+              <input type="date" class="date-input-hidden" data-target="issueDate" data-format="korean" tabindex="-1" aria-hidden="true" />
+            </div>
+          )
+        }
 
-      {
-        attachments.length > 0 && (
-          <div class="doc-attachments">
-            <span class="doc-attachments-label">첨부서류</span>
-            <ul>
-              {attachments.map((item) => (
-                <li>{item}</li>
+        {
+          signature.length > 0 && (
+            <div class="doc-sign">
+              {signature.map((sig, index) => (
+                <div class={`doc-sign-line${sig.seal ? " doc-sign-seal" : ""}`}>
+                  <span class="lab">{sig.role}</span>
+                  <div
+                    class="sheet-edit doc-input"
+                    data-field={`signName${index}`}
+                    data-placeholder="성명"
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  />
+                  {sig.seal && (
+                    <span class="cert-seal" data-seal title="클릭해서 인감(직인) 이미지를 올리세요">
+                      <img class="seal-img" alt="인감 이미지" />
+                      <span class="seal-label">(인)</span>
+                      <button type="button" class="seal-remove screen-only" aria-label="인감 이미지 삭제">
+                        ✕
+                      </button>
+                      <input type="file" class="seal-file" accept="image/*" hidden />
+                    </span>
+                  )}
+                </div>
               ))}
-            </ul>
-          </div>
-        )
-      }
+            </div>
+          )
+        }
+
+        {
+          form.recipient && (
+            <div class="doc-recipient">
+              <div
+                class="sheet-edit doc-input doc-recipient-input"
+                data-field="recipient"
+                data-placeholder={form.recipient}
+                contenteditable="plaintext-only"
+                spellcheck="false"
+              />
+              <span class="doc-recipient-suffix">귀하</span>
+            </div>
+          )
+        }
+
+        {
+          attachments.length > 0 && (
+            <div class="doc-attachments">
+              <span class="doc-attachments-label">첨부서류</span>
+              <ul>
+                {attachments.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
     </article>
   </section>
 </main>

@@ -74,9 +74,11 @@ export interface FormDef {
   parent?: string; // 상위(허브) slug — 브레드크럼 3단계용
   template?: string; // paper 클래스(.template-<x>) 및 상단 제목용 식별자
   docTitle?: string; // 시트 상단 큰 제목(예: "위 임 장")
-  statement?: string; // 본문 안내 문장
+  statement?: string; // 상단 본문 안내 문장(표 위)
   sections?: FormSection[]; // 입력 칸 묶음 → 시트가 자동 렌더
+  closingStatement?: string; // 표 아래·서명 위 마무리 문장(예: "위와 같이 사직하고자…")
   signature?: FormSignature[]; // 서명/날인란
+  recipient?: string; // 받는 사람 라인 placeholder(예: "○○ 주식회사 대표이사") → "귀하" 자동 부기
   attachments?: string[]; // 첨부서류 안내(인쇄에도 노출)
 }
 

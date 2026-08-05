@@ -1047,12 +1047,19 @@ input {
 }
 
 /* ===== 위임장 등 제네릭 문서 서식(DocumentSheet) ===== */
-.template-power-of-attorney {
+.doc-sheet {
   padding: 15mm 13mm;
   display: flex;
   flex-direction: column;
   font-family: var(--editor-font);
   color: var(--ink);
+}
+
+/* 닫는 영역(마무리 문장·작성일·서명·받는사람·첨부)을 페이지 아래쪽으로 밀어 배치 */
+.doc-closing {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .doc-title {
@@ -1126,15 +1133,47 @@ input {
   position: relative;
 }
 
-/* 작성일: 표가 아니라 서명(위임인) 바로 위, 가운데 정렬.
-   margin-top:auto 로 닫는 영역(작성일·서명·첨부)을 페이지 아래쪽으로 밀어 배치합니다. */
+/* 작성일: 표가 아니라 서명 바로 위, 가운데 정렬 (페이지 하단 배치는 .doc-closing 담당) */
 .doc-dateline {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 6px;
-  margin: auto 0 6mm;
+  margin: 0 0 6mm;
+}
+
+/* 마무리 문장(예: 위와 같이 사직하고자 하오니…) */
+.doc-closing-statement {
+  text-align: center;
+  margin: 0 0 8mm;
+}
+
+/* 받는 사람 라인(예: ○○ 주식회사 대표이사 귀하) */
+.doc-recipient {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3mm;
+  margin: 7mm 0 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.doc-recipient-input {
+  width: auto;
+  min-width: 70mm;
+  flex: 0 0 auto;
+  height: 9mm;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  border-bottom: 0.3mm solid var(--line);
+  padding: 0 4mm;
+}
+
+.doc-recipient-suffix {
+  white-space: nowrap;
 }
 
 .doc-dateline-input {
