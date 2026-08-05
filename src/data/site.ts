@@ -8,8 +8,8 @@ export const site = {
   // Google Analytics 4 측정 ID
   gaId: "G-9FXPQD0WLY",
   // AdSense 게시자 ID (ca-pub-XXXXXXXXXXXXXXXX). 환경변수 PUBLIC_ADSENSE_CLIENT 우선,
-  // 비어 있으면 광고 로더/슬롯이 렌더되지 않습니다(현재 비활성).
-  adsenseClient: import.meta.env.PUBLIC_ADSENSE_CLIENT ?? "",
+  // 비어 있으면 광고 로더/슬롯이 렌더되지 않습니다.
+  adsenseClient: import.meta.env.PUBLIC_ADSENSE_CLIENT ?? "ca-pub-8499788425348927",
   // 검색엔진 소유확인(메타태그 방식). 값이 있을 때만 <meta>가 출력됩니다. 파일 방식과 병행 가능.
   // TODO(verification): 필요 시 환경변수 PUBLIC_GSC_VERIFICATION / PUBLIC_NAVER_VERIFICATION 설정.
   gscVerification: import.meta.env.PUBLIC_GSC_VERIFICATION ?? "",
