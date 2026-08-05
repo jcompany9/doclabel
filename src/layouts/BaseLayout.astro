@@ -185,7 +185,10 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
       window.gtag("config", gaId);
     </script>
 
-    {/* Google AdSense 로더 (게시자 ID가 설정된 경우에만) */}
+    {/* Google AdSense — 게시자 ID가 설정된 경우에만 소유확인 메타 + 로더 출력 */}
+    {site.adsenseClient && (
+      <meta name="google-adsense-account" content={site.adsenseClient} />
+    )}
     {site.adsenseClient && (
       <script
         async
