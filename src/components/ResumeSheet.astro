@@ -1,5 +1,5 @@
 ---
-// 이력서 A4 시트 — 증명사진 + 인적사항 + 학력/경력/자격 반복 행 + 작성 서약/서명.
+// 이력서 A4 시트 — 증명사진 + 인적사항 + 학력/경력/자격(행 추가·삭제 가능, 다중 페이지 지원).
 import type { FormDef } from "../data/site";
 import FieldToolbar from "./FieldToolbar.astro";
 
@@ -8,9 +8,11 @@ interface Props {
 }
 const { form } = Astro.props;
 const toolbarTitle = (form.docTitle ?? "").replace(/\s+/g, "");
-const eduRows = [1, 2, 3, 4];
-const careerRows = [1, 2, 3, 4];
-const certRows = [1, 2, 3];
+
+const MAX_ROWS = 10; // 미리 렌더해 두는 행 수(편집 엔진이 전부 연결)
+const VISIBLE = 3; // 처음 보이는 행 수
+const rows = Array.from({ length: MAX_ROWS }, (_, i) => i + 1);
+const hiddenFrom = (i: number) => (i > VISIBLE ? "resume-row row-hidden" : "resume-row");
 ---
 
 <header class="top-toolbar screen-only">
@@ -71,15 +73,21 @@ const certRows = [1, 2, 3];
         </div>
       </div>
 
-      <h2 class="resume-heading">학력사항</h2>
+      <div class="resume-section-head">
+        <h2 class="resume-heading">학력사항</h2>
+        <span class="resume-row-controls screen-only">
+          <button type="button" data-del-row="edu" aria-label="학력 행 삭제">− 행</button>
+          <button type="button" data-add-row="edu" aria-label="학력 행 추가">+ 행</button>
+        </span>
+      </div>
       <table class="resume-table">
         <thead>
           <tr><th class="w-period">재학기간</th><th>학교명</th><th class="w-major">전공</th><th class="w-status">졸업구분</th></tr>
         </thead>
         <tbody>
           {
-            eduRows.map((i) => (
-              <tr>
+            rows.map((i) => (
+              <tr class={hiddenFrom(i)} data-row-group="edu">
                 <td><div class="sheet-edit doc-input" data-field={`eduPeriod${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
                 <td><div class="sheet-edit doc-input" data-field={`school${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
                 <td><div class="sheet-edit doc-input" data-field={`major${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
@@ -90,15 +98,21 @@ const certRows = [1, 2, 3];
         </tbody>
       </table>
 
-      <h2 class="resume-heading">경력사항</h2>
+      <div class="resume-section-head">
+        <h2 class="resume-heading">경력사항</h2>
+        <span class="resume-row-controls screen-only">
+          <button type="button" data-del-row="career" aria-label="경력 행 삭제">− 행</button>
+          <button type="button" data-add-row="career" aria-label="경력 행 추가">+ 행</button>
+        </span>
+      </div>
       <table class="resume-table">
         <thead>
           <tr><th class="w-period">근무기간</th><th>회사명</th><th class="w-major">직위</th><th>담당업무</th></tr>
         </thead>
         <tbody>
           {
-            careerRows.map((i) => (
-              <tr>
+            rows.map((i) => (
+              <tr class={hiddenFrom(i)} data-row-group="career">
                 <td><div class="sheet-edit doc-input" data-field={`workPeriod${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
                 <td><div class="sheet-edit doc-input" data-field={`company${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
                 <td><div class="sheet-edit doc-input" data-field={`position${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
@@ -109,15 +123,21 @@ const certRows = [1, 2, 3];
         </tbody>
       </table>
 
-      <h2 class="resume-heading">자격 · 면허</h2>
+      <div class="resume-section-head">
+        <h2 class="resume-heading">자격 · 면허</h2>
+        <span class="resume-row-controls screen-only">
+          <button type="button" data-del-row="cert" aria-label="자격 행 삭제">− 행</button>
+          <button type="button" data-add-row="cert" aria-label="자격 행 추가">+ 행</button>
+        </span>
+      </div>
       <table class="resume-table">
         <thead>
           <tr><th class="w-period">취득일</th><th>자격 · 면허명</th><th class="w-org">발급기관</th></tr>
         </thead>
         <tbody>
           {
-            certRows.map((i) => (
-              <tr>
+            rows.map((i) => (
+              <tr class={hiddenFrom(i)} data-row-group="cert">
                 <td><div class="sheet-edit doc-input" data-field={`certDate${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
                 <td><div class="sheet-edit doc-input" data-field={`certName${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
                 <td><div class="sheet-edit doc-input" data-field={`certOrg${i}`} contenteditable="plaintext-only" spellcheck="false" /></td>
@@ -126,27 +146,6 @@ const certRows = [1, 2, 3];
           }
         </tbody>
       </table>
-
-      <div class="resume-closing">
-        <p class="resume-oath">위 기재 내용은 사실과 다름이 없습니다.</p>
-        <div class="doc-dateline">
-          <div class="sheet-edit doc-dateline-input" data-field="issueDate" data-placeholder="0000년 00월 00일" contenteditable="plaintext-only" spellcheck="false"></div>
-          <button type="button" class="date-pick screen-only" data-target="issueDate" aria-label="작성일 선택">📅</button>
-          <input type="date" class="date-input-hidden" data-target="issueDate" data-format="korean" tabindex="-1" aria-hidden="true" />
-        </div>
-        <div class="doc-sign">
-          <div class="doc-sign-line doc-sign-seal">
-            <span class="lab">작성자</span>
-            <div class="sheet-edit doc-input" data-field="signName0" data-placeholder="성명" contenteditable="plaintext-only" spellcheck="false"></div>
-            <span class="cert-seal" data-seal title="클릭해서 인감(도장) 이미지를 올리세요">
-              <img class="seal-img" alt="인감 이미지" />
-              <span class="seal-label">(인)</span>
-              <button type="button" class="seal-remove screen-only" aria-label="인감 이미지 삭제">✕</button>
-              <input type="file" class="seal-file" accept="image/*" hidden />
-            </span>
-          </div>
-        </div>
-      </div>
     </article>
   </section>
 </main>

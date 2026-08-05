@@ -1570,11 +1570,55 @@ input {
   max-height: 40mm;
 }
 
+.resume-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 4mm 0 1.5mm;
+}
+
 .resume-heading {
   font-size: 13px;
   font-weight: 700;
   color: #0f172a;
-  margin: 4mm 0 1.5mm;
+  margin: 0;
+}
+
+.resume-row-controls {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.resume-row-controls button {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  padding: 2px 9px;
+  cursor: pointer;
+}
+
+.resume-row-controls button:hover {
+  background: #f1f5f9;
+}
+
+.resume-table tr.row-hidden {
+  display: none;
+}
+
+/* 이력서는 행 추가 시 여러 장으로 자연스럽게 넘어가도록 높이 고정을 해제 */
+.paper.template-resume {
+  height: auto;
+  min-height: 297mm;
+  overflow: visible;
+}
+
+.template-resume .resume-table tr,
+.template-resume .resume-info tr {
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 
 .resume-table {
@@ -1592,12 +1636,3 @@ input {
 .resume-table .w-major { width: 26mm; }
 .resume-table .w-status { width: 22mm; }
 .resume-table .w-org { width: 34mm; }
-
-.resume-closing {
-  margin-top: 7mm;
-}
-
-.resume-oath {
-  text-align: center;
-  margin: 0 0 5mm;
-}
