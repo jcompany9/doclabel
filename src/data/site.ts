@@ -1,7 +1,7 @@
 // 사이트 전역 설정 — 모든 페이지의 메타/구조화데이터/광고/분석이 여기서 파생됩니다.
 export const site = {
   name: "DocLabel",
-  url: "https://doclabel.vercel.app",
+  url: "https://doclabel.cloud",
   locale: "ko_KR",
   lang: "ko-KR",
   description: "화일철 라벨과 책등 라벨을 A4로 바로 출력할 수 있는 무료 웹 도구",
