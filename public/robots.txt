@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://doclabel.cloud/sitemap-index.xml
+Sitemap: https://www.doclabel.cloud/sitemap-index.xml

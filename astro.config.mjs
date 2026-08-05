@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 
 // 정적 출력(기본). Vercel이 Astro를 자동 감지해 dist/를 서빙합니다.
 export default defineConfig({
-  site: "https://doclabel.cloud",
+  site: "https://www.doclabel.cloud",
   trailingSlash: "always",
   integrations: [
     sitemap({
