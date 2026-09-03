@@ -273,12 +273,16 @@ if (printSheet && fields.length) {
     });
   });
 
-  printButton.addEventListener("click", () => {
+  // 인쇄 버튼은 인쇄 창만 엽니다. 실제 집계는 beforeprint 로 해서
+  // 버튼 인쇄와 Ctrl+P(브라우저 인쇄)를 모두 한 번씩 정확히 기록합니다.
+  if (printButton) {
+    printButton.addEventListener("click", () => window.print());
+  }
+  window.addEventListener("beforeprint", () => {
     track("print", {
       template: printSheet.dataset.template || "single",
       edited_fields_count: editedFields.size,
     });
-    window.print();
   });
 
   document.addEventListener("click", (event) => {
