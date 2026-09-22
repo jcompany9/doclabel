@@ -24,7 +24,6 @@ const powerOfAttorney: FormDef = {
     "위임장 작성",
     "위임장 인쇄",
     "표준 위임장",
-    "위임장 다운로드",
     "온라인 위임장",
   ],
   ogType: "website",

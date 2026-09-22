@@ -14,7 +14,6 @@ const quote: FormDef = {
     "견적서 작성",
     "자동계산 견적서",
     "견적서 인쇄",
-    "견적서 다운로드",
     "견적서 엑셀",
   ],
   ogType: "website",

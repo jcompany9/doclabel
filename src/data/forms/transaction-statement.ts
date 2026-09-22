@@ -14,7 +14,6 @@ const transactionStatement: FormDef = {
     "거래명세표",
     "거래명세서 작성",
     "거래명세서 인쇄",
-    "거래명세서 다운로드",
     "물품 거래명세서",
   ],
   ogType: "website",

@@ -6,8 +6,9 @@ interface Props {
 }
 
 const { slot = "" } = Astro.props;
-// 게시자 ID가 비어 있으면 아무것도 렌더하지 않습니다(현재 광고 보류 상태).
-const enabled = Boolean(site.adsenseClient);
+// 게시자 ID와 광고 단위 슬롯 ID가 모두 있을 때만 렌더합니다.
+// 슬롯 없이 빈 광고 자리를 두면 관련 서식 링크 목록 옆의 탐색 요소처럼 보일 수 있어 정책상 피합니다.
+const enabled = Boolean(site.adsenseClient && slot);
 ---
 
 {
