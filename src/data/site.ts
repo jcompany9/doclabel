@@ -50,6 +50,11 @@ export interface FormSection {
   fields: FormField[];
 }
 
+export interface FormClause {
+  label: string; // 조항 제목(굵게)
+  text: string; // 조항 본문
+}
+
 export interface FormSignature {
   role: string; // 서명 주체(예: "위임인")
   seal?: boolean; // 직인/인감 날인란 표시
@@ -78,6 +83,7 @@ export interface FormDef {
   statement?: string; // 상단 본문 안내 문장(표 위)
   dateLabel?: string; // 날짜 라인 라벨(예: 견적일자/거래일자). TradeSheet용
   sections?: FormSection[]; // 입력 칸 묶음 → 시트가 자동 렌더
+  clauses?: FormClause[]; // 표 아래 고정 조항(인쇄에도 그대로 출력). 예: 근로계약서의 연차·교부 조항
   closingStatement?: string; // 표 아래·서명 위 마무리 문장(예: "위와 같이 사직하고자…")
   signature?: FormSignature[]; // 서명/날인란
   recipient?: string; // 받는 사람 라인 placeholder(예: "○○ 주식회사 대표이사") → "귀하" 자동 부기

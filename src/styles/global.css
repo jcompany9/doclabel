@@ -1102,6 +1102,10 @@ input {
   vertical-align: middle;
 }
 
+.doc-col-th {
+  width: 34mm;
+}
+
 .doc-table th {
   width: 34mm;
   background: #eef2f7;
@@ -1254,6 +1258,79 @@ input {
   .doc-dateline-input:empty::before {
     content: "";
   }
+}
+
+/* 표 아래 고정 조항(근로계약서의 연차·교부 등) — 입력칸이 아니라 인쇄에도 그대로 나옴 */
+.doc-clauses {
+  list-style: none;
+  margin: 4mm 0 0;
+  padding: 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #1f2937;
+}
+
+.doc-clauses li {
+  display: grid;
+  grid-template-columns: 34mm 1fr;
+  column-gap: 3mm;
+}
+
+.doc-clauses li + li {
+  margin-top: 1mm;
+}
+
+.doc-clauses strong {
+  font-weight: 700;
+}
+
+/* ===== 근로계약서: 항목이 많아 A4 한 장에 들어가도록 촘촘하게 ===== */
+.template-labor {
+  padding: 12mm 13mm;
+}
+
+.template-labor .doc-title {
+  font-size: 28px;
+  margin: 0 0 4mm;
+}
+
+.template-labor .doc-statement {
+  font-size: 13.5px;
+  margin: 0 0 3mm;
+}
+
+.template-labor .doc-section + .doc-section {
+  margin-top: 3mm;
+}
+
+.template-labor .doc-section-heading {
+  font-size: 13px;
+  margin: 0 0 1mm;
+}
+
+.template-labor .doc-table th,
+.template-labor .doc-table td {
+  height: 7.6mm;
+}
+
+.template-labor .doc-table th {
+  font-size: 12.5px;
+}
+
+.template-labor .doc-closing-statement {
+  margin: 4mm 0 4mm;
+}
+
+.template-labor .doc-dateline {
+  margin: 0 0 3mm;
+}
+
+.template-labor .doc-sign {
+  gap: 1mm;
+}
+
+.template-labor .doc-sign-line {
+  min-height: 10mm;
 }
 
 /* ===== 견적서 / 거래명세서 (TradeSheet) ===== */

@@ -90,7 +90,7 @@ const resignation: FormDef = {
       a: "회원가입 없이 무료로 사용할 수 있으며, 입력한 내용은 서버로 전송되지 않고 브라우저 안에서만 처리됩니다.",
     },
   ],
-  related: ["employment-certificate", "power-of-attorney", ""],
+  related: ["employment-certificate", "employment-contract", "power-of-attorney", ""],
   docTitle: "사 직 서",
   sections: [
     {

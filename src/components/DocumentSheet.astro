@@ -13,6 +13,7 @@ const { form } = Astro.props;
 const sections = form.sections ?? [];
 const signature = form.signature ?? [];
 const attachments = form.attachments ?? [];
+const clauses = form.clauses ?? [];
 const templateClass = `template-${form.template ?? "document"}`;
 const toolbarTitle = (form.docTitle ?? "").replace(/\s+/g, "");
 
@@ -62,6 +63,13 @@ function buildRows(fields: FormField[]): FormField[][] {
           <section class="doc-section">
             {section.heading && <h2 class="doc-section-heading">{section.heading}</h2>}
             <table class="doc-table">
+              {/* 첫 행이 한 칸짜리(colspan)여도 항목명 열 너비가 표마다 같도록 열 너비를 고정 */}
+              <colgroup>
+                <col class="doc-col-th" />
+                <col />
+                <col class="doc-col-th" />
+                <col />
+              </colgroup>
               <tbody>
                 {buildRows(section.fields).map((row) =>
                   row.length === 2 ? (
@@ -82,6 +90,19 @@ function buildRows(fields: FormField[]): FormField[][] {
             </table>
           </section>
         ))
+      }
+
+      {
+        clauses.length > 0 && (
+          <ul class="doc-clauses">
+            {clauses.map((clause) => (
+              <li>
+                <strong>{clause.label}</strong>
+                <span>{clause.text}</span>
+              </li>
+            ))}
+          </ul>
+        )
       }
 
       <div class="doc-closing">

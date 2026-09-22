@@ -31,6 +31,10 @@ if (printSheet && fields.length) {
     if (field.classList.contains("trade-input")) {
       return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "15", letterSpacing: "0" };
     }
+    if (field.closest && field.closest(".template-labor .doc-table")) {
+      // 근로계약서는 칸이 많고 촘촘해서 기본 글자를 작게
+      return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "14", letterSpacing: "0" };
+    }
     if (field.closest && field.closest(".resume-table")) {
       return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "15", letterSpacing: "0" };
     }
