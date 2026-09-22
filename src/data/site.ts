@@ -13,7 +13,7 @@ export const site = {
   // 검색엔진 소유확인(메타태그 방식). 값이 있을 때만 <meta>가 출력됩니다. 파일 방식과 병행 가능.
   // TODO(verification): 필요 시 환경변수 PUBLIC_GSC_VERIFICATION / PUBLIC_NAVER_VERIFICATION 설정.
   gscVerification: import.meta.env.PUBLIC_GSC_VERIFICATION ?? "",
-  naverVerification: import.meta.env.PUBLIC_NAVER_VERIFICATION ?? "",
+  naverVerification: import.meta.env.PUBLIC_NAVER_VERIFICATION ?? "cab14220837d9fc2d79f5a7852ae8239072b6718",
   // 기본 OG 이미지 (1200x630). 아직 파일이 없다면 제작 후 public/og-image.png 로 추가하세요.
   ogImage: "/og-image.png",
   // 문의 이메일. 환경변수 PUBLIC_CONTACT_EMAIL 가 있으면 그 값을, 없으면 아래 기본값을 사용.
