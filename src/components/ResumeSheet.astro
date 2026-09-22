@@ -13,10 +13,11 @@ const MAX_ROWS = 10; // 미리 렌더해 두는 행 수(편집 엔진이 전부 
 const VISIBLE = 3; // 처음 보이는 행 수
 const rows = Array.from({ length: MAX_ROWS }, (_, i) => i + 1);
 const hiddenFrom = (i: number) => (i > VISIBLE ? "resume-row row-hidden" : "resume-row");
+import SiteMenu from "./SiteMenu.astro";
 ---
 
 <header class="top-toolbar screen-only">
-  <a class="toolbar-home" href="/">← DocLabel</a>
+  <SiteMenu />
   <div class="toolbar-title">{toolbarTitle}</div>
   <button class="print-button" type="button" data-action="print" aria-label="인쇄하기">
     <svg viewBox="0 0 24 24" aria-hidden="true">

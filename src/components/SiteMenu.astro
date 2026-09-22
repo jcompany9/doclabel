@@ -1,0 +1,49 @@
+---
+// 상단 바 왼쪽: 브랜드 + "전체 서식" 드롭다운. JS 없이 <details>로 열고 닫으며,
+// 바깥 클릭·Esc 로 닫히는 동작만 짧은 스크립트로 보탭니다.
+import { navCategories, navHref } from "../data/nav";
+
+const current = Astro.url.pathname;
+---
+
+<div class="site-menu-group">
+  <a class="site-brand" href="/forms/">DocLabel</a>
+  <details class="site-menu">
+    <summary>전체 서식</summary>
+    <nav class="site-menu-panel" aria-label="전체 서식">
+      {
+        navCategories.map((category) => (
+          <div class="site-menu-col">
+            <div class="site-menu-cat">{category.name}</div>
+            <ul>
+              {category.items.map((item) => {
+                const href = navHref(item.slug);
+                return (
+                  <li>
+                    <a href={href} aria-current={current === href ? "page" : undefined}>
+                      {item.name}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))
+      }
+      <a class="site-menu-all" href="/forms/">전체 서식 한눈에 보기 →</a>
+    </nav>
+  </details>
+</div>
+
+<script is:inline>
+  (() => {
+    const menu = document.currentScript.previousElementSibling.querySelector(".site-menu");
+    if (!menu) return;
+    document.addEventListener("click", (event) => {
+      if (menu.open && !menu.contains(event.target)) menu.open = false;
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") menu.open = false;
+    });
+  })();
+</script>

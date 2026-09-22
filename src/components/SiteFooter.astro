@@ -1,10 +1,30 @@
 ---
+// 하단 푸터: 분류별 전체 서식 링크 + 사이트 안내 링크. 화면 전용(인쇄 제외).
+import { navCategories, navHref } from "../data/nav";
 ---
 
 <footer class="site-footer screen-only" aria-label="사이트 안내">
+  <nav class="footer-forms" aria-label="전체 서식">
+    {
+      navCategories.map((category) => (
+        <div class="footer-col">
+          <div class="footer-cat">{category.name}</div>
+          <ul>
+            {category.items.map((item) => (
+              <li>
+                <a href={navHref(item.slug)}>{item.name}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </nav>
   <div class="footer-links">
+    <a href="/forms/">전체 서식</a>
     <a href="/about/">소개</a>
     <a href="/contact/">문의</a>
     <a href="/privacy/">개인정보처리방침</a>
+    <span class="footer-copy">© DocLabel · 무료 문서 서식 작성·인쇄</span>
   </div>
 </footer>

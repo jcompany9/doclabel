@@ -1,10 +1,11 @@
 ---
 // 재직증명서 전용 A4 문서 시트 + 상단 도구막대.
 import FieldToolbar from "./FieldToolbar.astro";
+import SiteMenu from "./SiteMenu.astro";
 ---
 
 <header class="top-toolbar screen-only">
-  <a class="toolbar-home" href="/">← DocLabel</a>
+  <SiteMenu />
   <div class="toolbar-title">재직증명서</div>
   <button class="print-button" type="button" data-action="print" aria-label="인쇄하기">
     <svg viewBox="0 0 24 24" aria-hidden="true">

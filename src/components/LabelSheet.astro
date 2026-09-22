@@ -1,12 +1,16 @@
 ---
 // 화일철 라벨 전용 A4 시트 + 편집 도구막대. 시각 레이아웃은 서식별 bespoke 영역입니다.
 import FieldToolbar from "./FieldToolbar.astro";
+import SiteMenu from "./SiteMenu.astro";
 ---
 
 <header class="top-toolbar screen-only">
-  <div class="template-tabs" role="tablist" aria-label="템플릿 선택">
-    <button class="template-tab" type="button" data-template-tab="single" aria-pressed="true">1EA</button>
-    <button class="template-tab" type="button" data-template-tab="double" aria-pressed="false">2EA</button>
+  <div class="toolbar-left">
+    <SiteMenu />
+    <div class="template-tabs" role="tablist" aria-label="템플릿 선택">
+      <button class="template-tab" type="button" data-template-tab="single" aria-pressed="true">1EA</button>
+      <button class="template-tab" type="button" data-template-tab="double" aria-pressed="false">2EA</button>
+    </div>
   </div>
   <div class="toolbar-title">화일철 라벨 인쇄 도우미</div>
   <button class="print-button" type="button" data-action="print" aria-label="인쇄하기">

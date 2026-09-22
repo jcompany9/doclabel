@@ -1,0 +1,58 @@
+---
+// 전체 서식 허브: 분류별 카드로 모든 서식을 한눈에 보여 주는 탐색 페이지.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteMenu from "../../components/SiteMenu.astro";
+import SiteFooter from "../../components/SiteFooter.astro";
+import { navCategories, navHref } from "../../data/nav";
+import { forms } from "../../data/forms";
+
+// 위임장 세부 양식(자동차·부동산 등)까지 포함한 실제 서식 페이지 수
+const total = forms.length;
+
+const meta = {
+  title: "무료 문서 서식 모음 | 근로계약서·재직증명서·위임장·견적서 온라인 작성 | DocLabel",
+  description: `근로계약서, 재직증명서, 이력서, 사직서, 위임장, 견적서, 거래명세서 등 자주 쓰는 문서 서식 ${total}종을 설치·회원가입 없이 브라우저에서 바로 작성하고 A4로 인쇄하세요.`,
+  slug: "forms",
+  keywords: ["문서 서식", "무료 서식", "양식 모음", "서식 온라인 작성", "무료 양식"],
+};
+---
+
+<BaseLayout meta={meta}>
+  <div class="simple-app hub-app">
+    <header class="top-toolbar screen-only">
+      <SiteMenu />
+      <div class="toolbar-title">전체 서식</div>
+      <span class="toolbar-spacer" aria-hidden="true"></span>
+    </header>
+
+    <main class="hub-page">
+      <section class="hub-hero">
+        <h1>무료 문서 서식 모음</h1>
+        <p>
+          자주 쓰는 문서 서식 {total}종을 설치나 회원가입 없이 브라우저에서 바로 작성하고 A4로 인쇄하거나 PDF로
+          저장하세요. 입력한 내용은 서버로 전송되지 않고 내 브라우저 안에서만 처리됩니다.
+        </p>
+      </section>
+
+      {
+        navCategories.map((category) => (
+          <section class="hub-section">
+            <h2>{category.name}</h2>
+            <ul class="hub-grid">
+              {category.items.map((item) => (
+                <li>
+                  <a class="hub-card" href={navHref(item.slug)}>
+                    <strong>{item.name}</strong>
+                    <span>{item.desc}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </main>
+
+    <SiteFooter />
+  </div>
+</BaseLayout>
