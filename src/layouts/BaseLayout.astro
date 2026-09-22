@@ -173,16 +173,23 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
 
     <script type="application/ld+json" set:html={jsonLd} />
 
-    {/* Google Analytics 4 */}
-    <script async src={`https://www.googletagmanager.com/gtag/js?id=${site.gaId}`}></script>
-    <script is:inline define:vars={{ gaId: site.gaId }}>
+    {/* Google Analytics 4 — 실제 도메인에서만 로드(로컬 개발·미리보기 방문은 집계 제외) */}
+    <script is:inline define:vars={{ gaId: site.gaId, siteHost: new URL(site.url).hostname }}>
       window.dataLayer = window.dataLayer || [];
       // window.gtag 로 전역 노출해야 커스텀 이벤트(track)에서 호출할 수 있습니다.
+      // 로컬에서는 gtag.js 를 불러오지 않으므로 이벤트가 dataLayer 에만 쌓이고 전송되지 않습니다.
       window.gtag = function gtag() {
         window.dataLayer.push(arguments);
       };
-      window.gtag("js", new Date());
-      window.gtag("config", gaId);
+      const host = location.hostname;
+      if (host === siteHost || host === siteHost.replace(/^www\./, "")) {
+        const loader = document.createElement("script");
+        loader.async = true;
+        loader.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+        document.head.appendChild(loader);
+        window.gtag("js", new Date());
+        window.gtag("config", gaId);
+      }
     </script>
 
     {/* Google AdSense — 게시자 ID가 설정된 경우에만 소유확인 메타 + 로더 출력 */}

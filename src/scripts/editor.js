@@ -31,6 +31,9 @@ if (printSheet && fields.length) {
     if (field.classList.contains("trade-input")) {
       return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "15", letterSpacing: "0" };
     }
+    if (field.closest && field.closest(".resign-sheet")) {
+      return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "17", letterSpacing: "0" };
+    }
     if (field.closest && field.closest(".template-labor .doc-table")) {
       // 근로계약서는 칸이 많고 촘촘해서 기본 글자를 작게
       return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "14", letterSpacing: "0" };
@@ -101,7 +104,11 @@ if (printSheet && fields.length) {
       placeCaretAtEnd(field);
     }
 
-    if (!fieldOverflows(field)) {
+    // 문장 속 인라인 칸(예: 사직서 사유)은 폭으로 넘침을 잴 수 없어 글자 수로 제한
+    const maxLength = Number(field.dataset.maxlength) || 0;
+    const tooLong = maxLength > 0 && field.textContent.length > maxLength;
+
+    if (!tooLong && !fieldOverflows(field)) {
       rememberValue(field);
       return false;
     }

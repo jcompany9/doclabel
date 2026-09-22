@@ -1,0 +1,114 @@
+---
+// 사직서 전용 A4 시트. 테두리 안에 제목, ○ 항목(소속·직위·성명·생년월일·퇴사예정일),
+// "상기 본인은 ( ) 사유로 사직서를 제출합니다." 문장, 작성일, "위 본인 ○○○ (인)"을
+// 여백 넓게 배치한 간결한 양식입니다. editor.js 가 data-field 로 편집을 처리합니다.
+import FieldToolbar from "./FieldToolbar.astro";
+import SiteMenu from "./SiteMenu.astro";
+
+const items = [
+  { key: "dept", label: "소속", placeholder: "○○팀" },
+  { key: "position", label: "직위", placeholder: "부장" },
+  { key: "name", label: "성명", placeholder: "홍길동" },
+  { key: "birth", label: "생년월일", placeholder: "1990년 1월 1일", date: true },
+  { key: "resignDate", label: "퇴사예정일", placeholder: "2026년 10월 31일", date: true },
+];
+---
+
+<header class="top-toolbar screen-only">
+  <SiteMenu />
+  <div class="toolbar-title">사직서</div>
+  <button class="print-button" type="button" data-action="print" aria-label="인쇄하기">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 3h10v4H7V3zm10 14v4H7v-4h10zm2-8H5a2 2 0 0 0-2 2v5h4v-3h10v3h4v-5a2 2 0 0 0-2-2zm-3 3H8V9h8v3z"></path>
+    </svg>
+    <span>인쇄</span>
+  </button>
+</header>
+
+<main class="page-body">
+  <FieldToolbar />
+
+  <section class="paper-wrap">
+    <article class="paper resign-sheet" id="printSheet" data-template="single">
+      <div class="resign-frame">
+        <div class="resign-title">사 직 서</div>
+
+        <ul class="resign-items">
+          {
+            items.map((item) => (
+              <li>
+                <span class="resign-bullet" aria-hidden="true">○</span>
+                {/* 한 글자씩 나눠 양끝 맞춤(직    위 / 생년월일) — 크롬은 한글 글자 간 justify 를 지원하지 않음 */}
+                <span class="resign-label">
+                  {[...item.label].map((char) => (
+                    <span>{char}</span>
+                  ))}
+                </span>
+                <span class="resign-colon">:</span>
+                <span class="resign-blank resign-blank-item">
+                  <span
+                    class="sheet-edit resign-input"
+                    data-field={item.key}
+                    data-placeholder={item.placeholder}
+                    contenteditable="plaintext-only"
+                    spellcheck="false"
+                  />
+                  {item.date && (
+                    <>
+                      <button type="button" class="date-pick resign-pick screen-only" data-target={item.key} aria-label={`${item.label} 선택`}>
+                        📅
+                      </button>
+                      <input type="date" class="date-input-hidden" data-target={item.key} data-format="korean" tabindex="-1" aria-hidden="true" />
+                    </>
+                  )}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+
+        {/* 사유는 칸이 아니라 문장 속 글자로 흐르게(길면 보통 글처럼 줄바꿈). 길이는 data-maxlength 로 제한 */}
+        <p class="resign-sentence">
+          상기 본인은 (<span
+            class="sheet-edit resign-reason"
+            data-field="reason"
+            data-placeholder="일신상의"
+            data-print-blank="                              "
+            data-maxlength="60"
+            contenteditable="plaintext-only"
+            spellcheck="false"></span>) 사유로 사직서를 제출합니다.
+        </p>
+
+        <div class="resign-dateline">
+          <span
+            class="sheet-edit resign-input"
+            data-field="issueDate"
+            data-placeholder="0000년 00월 00일"
+            data-print-blank="        년        월        일"
+            contenteditable="plaintext-only"
+            spellcheck="false"></span>
+          <button type="button" class="date-pick resign-pick screen-only" data-target="issueDate" aria-label="작성일 선택">
+            📅
+          </button>
+          <input type="date" class="date-input-hidden" data-target="issueDate" data-format="korean" tabindex="-1" aria-hidden="true" />
+        </div>
+
+        <div class="resign-sign">
+          <span class="resign-sign-label">위&nbsp;&nbsp;본인</span>
+          <span
+            class="sheet-edit resign-input resign-sign-name"
+            data-field="signName0"
+            data-placeholder="성명"
+            contenteditable="plaintext-only"
+            spellcheck="false"></span>
+          <span class="cert-seal" data-seal title="클릭해서 도장 이미지를 올리세요">
+            <img class="seal-img" alt="도장 이미지" />
+            <span class="seal-label">(인)</span>
+            <button type="button" class="seal-remove screen-only" aria-label="도장 이미지 삭제">✕</button>
+            <input type="file" class="seal-file" accept="image/*" hidden />
+          </span>
+        </div>
+      </div>
+    </article>
+  </section>
+</main>

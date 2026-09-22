@@ -43,6 +43,7 @@ export interface FormField {
   full?: boolean; // true면 한 행 전체 차지
   dateFormat?: "dot" | "korean"; // type=date 일 때 달력 → 칸 채움 형식
   heightMm?: number; // type=textarea 일 때 칸 높이(mm). 긴 본문용
+  printBlank?: string; // 비워 둔 채 인쇄할 때 대신 찍을 틀(예: "년 월 일") — 손으로 적을 수 있게
 }
 
 export interface FormSection {

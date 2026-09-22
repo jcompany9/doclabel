@@ -24,6 +24,7 @@ const inputStyle = isMulti && field.heightMm ? `height:${field.heightMm}mm` : un
     style={inputStyle}
     data-field={field.key}
     data-placeholder={field.placeholder ?? ""}
+    data-print-blank={field.printBlank}
     contenteditable="plaintext-only"
     spellcheck="false"></div>
 
