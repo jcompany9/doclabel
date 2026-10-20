@@ -23,6 +23,20 @@ const current = Astro.url.pathname;
                     <a href={href} aria-current={current === href ? "page" : undefined}>
                       {item.name}
                     </a>
+                    {item.children && (
+                      <ul class="site-menu-sub">
+                        {item.children.map((child) => {
+                          const childHref = navHref(child.slug);
+                          return (
+                            <li>
+                              <a href={childHref} aria-current={current === childHref ? "page" : undefined}>
+                                {child.name}
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
                   </li>
                 );
               })}

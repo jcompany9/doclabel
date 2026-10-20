@@ -9,6 +9,7 @@ interface PageMeta {
   slug: string;
   ogType?: string;
   keywords?: string[];
+  noindex?: boolean; // 404 등 색인에서 제외할 페이지
 }
 
 interface Props {
@@ -132,7 +133,11 @@ const jsonLd = JSON.stringify({ "@context": "https://schema.org", "@graph": grap
     <meta name="theme-color" content="#ffffff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="format-detection" content="telephone=no, address=no, email=no" />
-    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    {page.noindex ? (
+      <meta name="robots" content="noindex,follow" />
+    ) : (
+      <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+    )}
     <meta name="googlebot" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
 
     <meta property="og:type" content={ogType} />

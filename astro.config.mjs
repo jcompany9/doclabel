@@ -8,6 +8,8 @@ export default defineConfig({
   trailingSlash: "always",
   integrations: [
     sitemap({
+      // 404 는 색인 대상이 아니므로 사이트맵에서 제외
+      filter: (page) => !page.endsWith("/404/"),
       // privacy 등 색인은 하되, 가중치는 페이지별 기본값을 사용
       changefreq: "weekly",
       lastmod: new Date(),

@@ -3,14 +3,14 @@ import type { FormDef } from "../site";
 // 재직증명서 — 두 번째 서식. 공통 엔진(메타/JSON-LD/사이트맵/광고)을 그대로 재사용합니다.
 const employmentCertificate: FormDef = {
   slug: "employment-certificate",
-  title: "재직증명서 양식 무료 작성·인쇄 | 온라인 재직증명서 발급 | DocLabel",
+  title: "재직증명서 양식 무료 작성·인쇄 | 온라인 재직증명서 양식 | DocLabel",
   description:
     "재직증명서 양식을 브라우저에서 바로 작성하고 A4로 인쇄하거나 PDF로 저장할 수 있는 무료 도구입니다. 성명·부서·직위·재직기간·발급기관 정보를 입력하고 직인을 날인해 사용하세요.",
   keywords: [
     "재직증명서",
     "재직증명서 양식",
     "재직증명서 무료",
-    "재직증명서 발급",
+    "재직증명서 양식 작성",
     "온라인 재직증명서",
     "재직증명서 인쇄",
     "재직증명서 작성법",
