@@ -13,12 +13,6 @@ const meta = {
   slug: "forms",
   keywords: ["문서 서식", "무료 서식", "양식 모음", "서식 온라인 작성", "무료 양식"],
 };
-
-const stats = [
-  { value: `${total}종`, label: "바로 쓰는 문서 서식" },
-  { value: "0원", label: "가입도 설치도 없음" },
-  { value: "A4", label: "그대로 인쇄·PDF 저장" },
-];
 ---
 
 <BaseLayout meta={meta}>
@@ -26,42 +20,19 @@ const stats = [
     <header class="top-toolbar screen-only">
       <SiteMenu />
       <div class="toolbar-title">전체 서식</div>
-      <a class="print-button toolbar-cta" href="#서식-고르기">서식 고르기</a>
+      <span class="toolbar-spacer" aria-hidden="true"></span>
     </header>
 
     <main>
-      <section class="lp-hero">
-        <div class="lp-hero-text">
-          <h1>필요한 문서 서식,<br />지금 바로 작성하세요</h1>
-          <p>
-            근로계약서·이력서·위임장·견적서까지 {total}종. 프로그램 설치도 회원가입도 없이
-            브라우저에서 칸을 채우고 A4로 인쇄하면 끝입니다.
-          </p>
-          <div class="lp-cta">
-            <a class="lp-btn lp-btn-primary" href="#서식-고르기">서식 고르기</a>
-            <a class="lp-btn lp-btn-ghost" href="/employment-contract/">근로계약서 바로 쓰기 →</a>
-          </div>
-          <p class="lp-note">입력한 내용은 서버로 전송되지 않고 내 브라우저 안에서만 처리됩니다.</p>
-        </div>
+      <header class="lp-head">
+        <h1>무료 문서 서식 모음</h1>
+        <p>
+          근로계약서·이력서·위임장·견적서까지 {total}종. 설치도 회원가입도 없이 브라우저에서 칸을 채우고
+          A4로 인쇄하세요. 입력한 내용은 서버로 전송되지 않고 내 브라우저 안에서만 처리됩니다.
+        </p>
+      </header>
 
-        <div class="lp-hero-art" aria-hidden="true">
-          <img src={thumbFor("employment-contract")} alt="" width="420" height="594" />
-          <img src={thumbFor("resume")} alt="" width="420" height="594" />
-        </div>
-      </section>
-
-      <section class="lp-stats">
-        {
-          stats.map((stat) => (
-            <div>
-              <strong>{stat.value}</strong>
-              <span>{stat.label}</span>
-            </div>
-          ))
-        }
-      </section>
-
-      <div id="서식-고르기" class="lp-forms">
+      <div class="lp-forms">
         {
           navCategories.map((category) => (
             <section class="lp-section">

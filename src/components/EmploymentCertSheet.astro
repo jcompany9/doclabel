@@ -1,6 +1,7 @@
 ---
 // 재직증명서 전용 A4 문서 시트 + 상단 도구막대.
 import FieldToolbar from "./FieldToolbar.astro";
+import FormDrawer from "./FormDrawer.astro";
 import SiteMenu from "./SiteMenu.astro";
 ---
 
@@ -15,8 +16,10 @@ import SiteMenu from "./SiteMenu.astro";
   </button>
 </header>
 
+<FieldToolbar />
+
 <main class="page-body">
-  <FieldToolbar />
+  <FormDrawer />
 
   <section class="paper-wrap">
     <article class="paper template-employment-cert" id="printSheet" data-template="single">

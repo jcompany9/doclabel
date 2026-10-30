@@ -3,6 +3,7 @@
 // "상기 본인은 ( ) 사유로 사직서를 제출합니다." 문장, 작성일, "위 본인 ○○○ (인)"을
 // 여백 넓게 배치한 간결한 양식입니다. editor.js 가 data-field 로 편집을 처리합니다.
 import FieldToolbar from "./FieldToolbar.astro";
+import FormDrawer from "./FormDrawer.astro";
 import SiteMenu from "./SiteMenu.astro";
 
 const items = [
@@ -25,8 +26,10 @@ const items = [
   </button>
 </header>
 
+<FieldToolbar />
+
 <main class="page-body">
-  <FieldToolbar />
+  <FormDrawer />
 
   <section class="paper-wrap">
     <article class="paper resign-sheet" id="printSheet" data-template="single">

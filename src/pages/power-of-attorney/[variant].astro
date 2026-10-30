@@ -1,8 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import DocumentSheet from "../../components/DocumentSheet.astro";
-import SeoContent from "../../components/SeoContent.astro";
-import SiteFooter from "../../components/SiteFooter.astro";
 import type { FormDef } from "../../data/site";
 import { powerOfAttorneyVariants } from "../../data/forms/power-of-attorney";
 
@@ -23,8 +21,6 @@ const { form } = Astro.props;
 <BaseLayout form={form}>
   <div class="simple-app">
     <DocumentSheet form={form} />
-    <SeoContent form={form} />
-    <SiteFooter />
   </div>
   <script>
     import "../../scripts/editor.js";

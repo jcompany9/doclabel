@@ -1,0 +1,45 @@
+---
+// 왼쪽에 항상 열려 있는 서식 목록. 넓은 화면에서만 보이고,
+// 좁은 화면에서는 상단 바의 '전체 서식' 메뉴가 같은 역할을 합니다.
+import { navCategories, navHref } from "../data/nav";
+
+const current = Astro.url.pathname;
+---
+
+<nav class="form-drawer screen-only" aria-label="서식 목록">
+  <div class="form-drawer-head">서식 선택</div>
+  {
+    navCategories.map((category) => (
+      <div class="form-drawer-group">
+        <div class="form-drawer-cat">{category.name}</div>
+        <ul>
+          {category.items.map((item) => {
+            const href = navHref(item.slug);
+            return (
+              <li>
+                <a href={href} aria-current={current === href ? "page" : undefined}>
+                  {item.name}
+                </a>
+                {item.children && (
+                  <ul class="form-drawer-sub">
+                    {item.children.map((child) => {
+                      const childHref = navHref(child.slug);
+                      return (
+                        <li>
+                          <a href={childHref} aria-current={current === childHref ? "page" : undefined}>
+                            {child.name}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ))
+  }
+  <a class="form-drawer-all" href="/forms/">전체 서식 보기 →</a>
+</nav>

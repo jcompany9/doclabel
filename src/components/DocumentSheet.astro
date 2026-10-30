@@ -3,6 +3,7 @@
 // 입력 칸·미리보기·인쇄 레이아웃을 자동 생성합니다. 위임장 5종이 이 하나를 공유합니다.
 import type { FormDef, FormField } from "../data/site";
 import FieldToolbar from "./FieldToolbar.astro";
+import FormDrawer from "./FormDrawer.astro";
 import DocFieldCell from "./DocFieldCell.astro";
 
 interface Props {
@@ -51,8 +52,10 @@ import SiteMenu from "./SiteMenu.astro";
   </button>
 </header>
 
+<FieldToolbar />
+
 <main class="page-body">
-  <FieldToolbar />
+  <FormDrawer />
 
   <section class="paper-wrap">
     <article class={`paper doc-sheet ${templateClass}`} id="printSheet" data-template="single">

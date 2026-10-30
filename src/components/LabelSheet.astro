@@ -1,6 +1,7 @@
 ---
 // 화일철 라벨 전용 A4 시트 + 편집 도구막대. 시각 레이아웃은 서식별 bespoke 영역입니다.
 import FieldToolbar from "./FieldToolbar.astro";
+import FormDrawer from "./FormDrawer.astro";
 import SiteMenu from "./SiteMenu.astro";
 ---
 
@@ -21,8 +22,10 @@ import SiteMenu from "./SiteMenu.astro";
   </button>
 </header>
 
+<FieldToolbar />
+
 <main class="page-body">
-  <FieldToolbar />
+  <FormDrawer />
 
   <section class="paper-wrap">
     <article class="paper template-photo-binder" id="printSheet" data-template="single">
