@@ -83,7 +83,7 @@ input {
 /* ===== 상단 리본 (엑셀·워드식 글자 서식 막대) ===== */
 .ribbon {
   position: fixed;
-  left: 0;
+  left: var(--sidebar-w);
   right: 0;
   top: var(--topbar-h);
   z-index: 29;
@@ -199,7 +199,7 @@ input {
   display: none;
   position: fixed;
   left: 0;
-  top: var(--chrome-h);
+  top: var(--topbar-h);
   bottom: 0;
   width: var(--sidebar-w);
   overflow-y: auto;

@@ -34,13 +34,13 @@ export const navCategories: NavCategory[] = [
     items: [
       {
         slug: "power-of-attorney",
-        name: "위임장",
+        name: "위임장(일반)",
         desc: "위임인·수임인·위임 사항 기본 양식",
         children: [
-          { slug: "power-of-attorney/vehicle", name: "자동차", desc: "이전등록 등 자동차 관련 업무 위임" },
-          { slug: "power-of-attorney/real-estate", name: "부동산", desc: "매매·임대차 등 부동산 업무 위임" },
-          { slug: "power-of-attorney/government", name: "관공서", desc: "민원·서류 발급 대리 신청" },
-          { slug: "power-of-attorney/business", name: "업무용", desc: "회사 업무 처리 권한 위임" },
+          { slug: "power-of-attorney/vehicle", name: "자동차 명의이전 위임장", desc: "이전등록 등 자동차 관련 업무 위임" },
+          { slug: "power-of-attorney/real-estate", name: "부동산 위임장", desc: "매매·임대차 등 부동산 업무 위임" },
+          { slug: "power-of-attorney/government", name: "관공서 위임장", desc: "민원·서류 발급 대리 신청" },
+          { slug: "power-of-attorney/business", name: "업무용 위임장", desc: "회사 업무 처리 권한 위임" },
         ],
       },
       { slug: "fact-confirmation", name: "사실확인서", desc: "사실관계를 확인하는 문서" },
