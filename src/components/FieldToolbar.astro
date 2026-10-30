@@ -1,28 +1,64 @@
 ---
-// 선택된 편집 칸의 폰트/굵기/크기/자간을 조절하는 공용 도구막대.
-// editor.js 가 ID로 참조하므로 모든 서식 페이지에서 동일하게 재사용합니다.
+// 편집 사이드 패널 — 선택한 칸의 글꼴/굵기/크기/자간을 조절하고, 다른 서식으로 바로 이동합니다.
+// editor.js 가 #fieldToolbar 및 각 컨트롤 ID 를 그대로 참조하므로 ID 는 바꾸지 않습니다.
+import { navCategories, navHref } from "../data/nav";
+
+const current = Astro.url.pathname;
+
+// 지금 보고 있는 서식을 뺀 나머지에서 앞쪽 6개만 바로가기로 노출
+const quickLinks = navCategories
+  .flatMap((category) => category.items)
+  .filter((item) => navHref(item.slug) !== current)
+  .slice(0, 6);
 ---
 
-<div id="fieldToolbar" class="field-toolbar screen-only" hidden>
-  <label class="toolbar-select compact-select">
-    <span>폰트</span>
-    <select id="fontFamilySelect">
-      <option value="'Pretendard', sans-serif">Pretendard</option>
-      <option value="'Gowun Batang', serif">Gowun Batang</option>
-      <option value="'Black Han Sans', sans-serif">Black Han Sans</option>
-      <option value="'Noto Serif KR', serif">Noto Serif KR</option>
-    </select>
-  </label>
-  <label class="toolbar-check">
-    <input id="boldToggle" type="checkbox" />
-    <span>Bold</span>
-  </label>
-  <label class="toolbar-number">
-    <span>크기</span>
-    <input id="fontSizeInput" type="number" min="8" max="120" step="1" value="42" />
-  </label>
-  <label class="toolbar-number">
-    <span>자간</span>
-    <input id="letterSpacingInput" type="number" min="-10" max="40" step="0.5" value="8" />
-  </label>
-</div>
+<aside id="fieldToolbar" class="field-panel screen-only">
+  <section class="panel-block">
+    <h2 class="panel-title">글자 스타일</h2>
+    <p class="panel-hint">칸을 클릭하면 그 칸의 글자를 바꿀 수 있습니다.</p>
+
+    <div class="panel-controls">
+      <label class="panel-row">
+        <span>글꼴</span>
+        <select id="fontFamilySelect">
+          <option value="'Pretendard', sans-serif">Pretendard</option>
+          <option value="'Gowun Batang', serif">고운바탕</option>
+          <option value="'Black Han Sans', sans-serif">검은고딕</option>
+          <option value="'Noto Serif KR', serif">본명조</option>
+        </select>
+      </label>
+
+      <div class="panel-row panel-row-split">
+        <label>
+          <span>크기</span>
+          <input id="fontSizeInput" type="number" min="8" max="120" step="1" value="42" />
+        </label>
+        <label>
+          <span>자간</span>
+          <input id="letterSpacingInput" type="number" min="-10" max="40" step="0.5" value="8" />
+        </label>
+      </div>
+
+      <label class="panel-check">
+        <input id="boldToggle" type="checkbox" />
+        <span>굵게</span>
+      </label>
+    </div>
+  </section>
+
+  {
+    quickLinks.length > 0 && (
+      <section class="panel-block">
+        <h2 class="panel-title">다른 서식</h2>
+        <ul class="panel-links">
+          {quickLinks.map((item) => (
+            <li>
+              <a href={navHref(item.slug)}>{item.name}</a>
+            </li>
+          ))}
+        </ul>
+        <a class="panel-all" href="/forms/">전체 서식 보기 →</a>
+      </section>
+    )
+  }
+</aside>

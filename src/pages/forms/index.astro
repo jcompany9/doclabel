@@ -1,11 +1,10 @@
 ---
-// 전체 서식 허브: 분류별 카드로 모든 서식을 한눈에 보여 주는 탐색 페이지.
+// 전체 서식 허브 — 서식 미리보기 썸네일로 고르는 랜딩 페이지.
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteMenu from "../../components/SiteMenu.astro";
 import SiteFooter from "../../components/SiteFooter.astro";
-import { navCategories, navHref, navFormCount } from "../../data/nav";
+import { navCategories, navHref, navFormCount, thumbFor } from "../../data/nav";
 
-// 허브에 실제로 링크된 서식 수(위임장 세부 양식 포함) — 안내 문구와 항상 일치
 const total = navFormCount;
 
 const meta = {
@@ -14,53 +13,93 @@ const meta = {
   slug: "forms",
   keywords: ["문서 서식", "무료 서식", "양식 모음", "서식 온라인 작성", "무료 양식"],
 };
+
+const stats = [
+  { value: `${total}종`, label: "바로 쓰는 문서 서식" },
+  { value: "0원", label: "가입도 설치도 없음" },
+  { value: "A4", label: "그대로 인쇄·PDF 저장" },
+];
 ---
 
 <BaseLayout meta={meta}>
-  <div class="simple-app hub-app">
+  <div class="hub-shell">
     <header class="top-toolbar screen-only">
       <SiteMenu />
       <div class="toolbar-title">전체 서식</div>
-      <span class="toolbar-spacer" aria-hidden="true"></span>
+      <a class="print-button toolbar-cta" href="#서식-고르기">서식 고르기</a>
     </header>
 
-    <main class="hub-page">
-      <section class="hub-hero">
-        <h1>무료 문서 서식 모음</h1>
-        <p>
-          자주 쓰는 문서 서식 {total}종을 설치나 회원가입 없이 브라우저에서 바로 작성하고 A4로 인쇄하거나 PDF로
-          저장하세요. 입력한 내용은 서버로 전송되지 않고 내 브라우저 안에서만 처리됩니다.
-        </p>
+    <main>
+      <section class="lp-hero">
+        <div class="lp-hero-text">
+          <h1>필요한 문서 서식,<br />지금 바로 작성하세요</h1>
+          <p>
+            근로계약서·이력서·위임장·견적서까지 {total}종. 프로그램 설치도 회원가입도 없이
+            브라우저에서 칸을 채우고 A4로 인쇄하면 끝입니다.
+          </p>
+          <div class="lp-cta">
+            <a class="lp-btn lp-btn-primary" href="#서식-고르기">서식 고르기</a>
+            <a class="lp-btn lp-btn-ghost" href="/employment-contract/">근로계약서 바로 쓰기 →</a>
+          </div>
+          <p class="lp-note">입력한 내용은 서버로 전송되지 않고 내 브라우저 안에서만 처리됩니다.</p>
+        </div>
+
+        <div class="lp-hero-art" aria-hidden="true">
+          <img src={thumbFor("employment-contract")} alt="" width="420" height="594" />
+          <img src={thumbFor("resume")} alt="" width="420" height="594" />
+        </div>
       </section>
 
-      {
-        navCategories.map((category) => (
-          <section class="hub-section">
-            <h2>{category.name}</h2>
-            <ul class="hub-grid">
-              {category.items.map((item) => (
-                <li>
-                  <div class="hub-card">
-                    <a class="hub-card-main" href={navHref(item.slug)}>
-                      <strong>{item.name}</strong>
-                      <span>{item.desc}</span>
-                    </a>
-                    {item.children && (
-                      <ul class="hub-sub">
-                        {item.children.map((child) => (
-                          <li>
-                            <a href={navHref(child.slug)}>{child.name}</a>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))
-      }
+      <section class="lp-stats">
+        {
+          stats.map((stat) => (
+            <div>
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </div>
+          ))
+        }
+      </section>
+
+      <div id="서식-고르기" class="lp-forms">
+        {
+          navCategories.map((category) => (
+            <section class="lp-section">
+              <h2>{category.name}</h2>
+              <ul class="lp-grid">
+                {category.items.map((item) => (
+                  <li>
+                    <div class="lp-card">
+                      <a class="lp-card-main" href={navHref(item.slug)}>
+                        <span class="lp-thumb">
+                          <img
+                            src={thumbFor(item.slug)}
+                            alt={`${item.name} 미리보기`}
+                            width="420"
+                            height="594"
+                            loading="lazy"
+                          />
+                        </span>
+                        <strong>{item.name}</strong>
+                        <span class="lp-desc">{item.desc}</span>
+                      </a>
+                      {item.children && (
+                        <ul class="hub-sub">
+                          {item.children.map((child) => (
+                            <li>
+                              <a href={navHref(child.slug)}>{child.name}</a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
     </main>
 
     <SiteFooter />

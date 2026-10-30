@@ -57,6 +57,11 @@ export function navHref(slug: string): string {
   return slug ? `/${slug}/` : "/";
 }
 
+// 서식 썸네일 경로 — scripts/make-thumbs.mjs 가 만든 파일명 규칙과 같아야 합니다.
+export function thumbFor(slug: string): string {
+  return `/thumbs/${slug === "" ? "label" : slug.replace(/\//g, "-")}.png`;
+}
+
 // 허브·안내 문구에 쓰는 실제 서식 페이지 수(세부 양식 포함)
 export const navFormCount = navCategories.reduce(
   (sum, category) =>

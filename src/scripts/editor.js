@@ -120,7 +120,8 @@ if (printSheet && fields.length) {
 
   function updateTextControls() {
     const disabled = !activeField;
-    fieldToolbar.hidden = disabled;
+    // 사이드 패널은 늘 보이고, 선택된 칸이 없을 때는 컨트롤만 잠급니다.
+    fieldToolbar.classList.toggle("is-idle", disabled);
     fontFamilySelect.disabled = disabled;
     boldToggle.disabled = disabled;
     fontSizeInput.disabled = disabled;
@@ -137,19 +138,8 @@ if (printSheet && fields.length) {
     letterSpacingInput.value = style.letterSpacing;
   }
 
-  function positionFieldToolbar() {
-    if (!activeField || fieldToolbar.hidden) {
-      return;
-    }
-
-    const rect = activeField.getBoundingClientRect();
-    const toolbarRect = fieldToolbar.getBoundingClientRect();
-    const top = Math.max(12, rect.top - toolbarRect.height - 10);
-    const left = Math.min(Math.max(12, rect.left), window.innerWidth - toolbarRect.width - 12);
-
-    fieldToolbar.style.top = `${top}px`;
-    fieldToolbar.style.left = `${left}px`;
-  }
+  // 패널이 화면 오른쪽에 고정돼 있어 따라다닐 필요가 없습니다(기존 호출부 유지용 빈 함수).
+  function positionFieldToolbar() {}
 
   function setActiveField(field) {
     activeField = field;
