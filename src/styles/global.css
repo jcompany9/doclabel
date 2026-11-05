@@ -912,8 +912,8 @@ input {
 }
 
 .cert-issuer {
-  width: 110mm;
-  margin-left: auto;
+  width: 120mm;
+  margin: 0 auto; /* 발급기관 블록을 용지 가운데로 */
   display: flex;
   flex-direction: column;
   gap: 3mm;
@@ -921,14 +921,24 @@ input {
 
 .cert-issuer-line {
   display: grid;
-  grid-template-columns: 30mm 1fr;
+  grid-template-columns: 24mm 1fr;
   align-items: center;
   column-gap: 3mm;
-  min-height: 10mm;
+  min-height: 11mm;
 }
 
+/* 대표자 줄의 직인은 줄 높이를 키우지 않도록 떼어내 세로 가운데에 둡니다
+   (직인이 22mm 라 그냥 두면 이 줄만 높아져 상하 간격이 어긋납니다). */
 .cert-issuer-line.cert-ceo {
-  grid-template-columns: 30mm 1fr auto;
+  position: relative;
+  padding-right: 26mm;
+}
+
+.cert-issuer-line.cert-ceo .cert-seal {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .cert-issuer-line .lab {
@@ -2233,15 +2243,11 @@ input {
 }
 
 .trade-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 8mm;
+  text-align: center;
 }
 
 .template-trade .doc-title {
   margin: 0;
-  text-align: left;
 }
 
 .trade-date {
@@ -2261,35 +2267,60 @@ input {
 }
 
 .trade-subtitle {
-  margin: 3mm 0 6mm;
+  margin: 2mm 0 7mm;
   color: #334155;
 }
 
+/* 윗단: 왼쪽(수신·일자·합계) + 오른쪽(공급자) */
 .trade-parties {
-  display: flex;
-  flex-direction: column;
-  gap: 4mm;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 112mm;
+  align-items: start;
+  gap: 6mm;
   margin-bottom: 5mm;
 }
 
-.trade-receiver {
+.trade-meta {
   display: flex;
+  flex-direction: column;
+  gap: 2mm;
+  padding-top: 2mm;
+}
+
+.trade-meta-row {
+  display: grid;
+  grid-template-columns: 20mm minmax(0, 1fr);
   align-items: center;
-  gap: 3mm;
+  column-gap: 3mm;
+  min-height: 9mm;
   font-size: 15px;
   font-weight: 600;
 }
 
-.trade-receiver .lab,
-.trade-note .lab {
+.trade-meta-row .lab {
   white-space: nowrap;
+  text-align: right;
+  color: #334155;
 }
 
-.trade-receiver .trade-input {
-  min-width: 60mm;
+.trade-meta-input {
   height: 8mm;
   border-bottom: 0.3mm solid var(--line);
   justify-content: flex-start;
+}
+
+/* 날짜 줄은 달력 버튼까지 한 줄에 */
+.trade-meta-row.trade-date {
+  grid-template-columns: 20mm minmax(0, 1fr) auto;
+  position: relative;
+}
+
+.trade-meta-row.trade-date .date-pick {
+  position: static;
+}
+
+.trade-note .lab {
+  white-space: nowrap;
 }
 
 .trade-supplier {
@@ -2332,7 +2363,8 @@ input {
 }
 
 .trade-supplier-table th {
-  width: 22mm;
+  width: 20mm;
+  white-space: nowrap;
   background: #f8fafc;
   font-size: 12.5px;
   font-weight: 600;
@@ -2346,6 +2378,11 @@ input {
   border-right: 0.3mm solid var(--line);
 }
 
+.trade-supplier-table .trade-input {
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .trade-supplier-table td:last-child {
   border-right: none;
 }
@@ -2357,11 +2394,11 @@ input {
   padding: 0 3mm;
 }
 
+/* 합계금액 줄은 왼쪽 열 안에서 값과 괄호주석이 한 줄에 오도록 */
 .trade-total-top {
-  display: flex;
+  grid-template-columns: 20mm auto auto;
   align-items: baseline;
-  gap: 3mm;
-  margin: 0 0 3mm;
+  margin: 1mm 0 0;
   font-weight: 700;
 }
 

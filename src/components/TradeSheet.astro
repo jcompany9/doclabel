@@ -46,21 +46,29 @@ import SiteMenu from "./SiteMenu.astro";
     <article class="paper doc-sheet template-trade" id="printSheet" data-template="single">
       <div class="trade-head">
         <div class="doc-title">{form.docTitle}</div>
-        <div class="trade-date doc-datecell">
-          <span class="trade-date-label">{dateLabel}</span>
-          <div class="sheet-edit trade-date-input" data-field="issueDate" data-placeholder="0000.00.00" contenteditable="plaintext-only" spellcheck="false"></div>
-          <button type="button" class="date-pick screen-only" data-target="issueDate" aria-label={`${dateLabel} 선택`}>📅</button>
-          <input type="date" class="date-input-hidden" data-target="issueDate" data-format="dot" tabindex="-1" aria-hidden="true" />
-        </div>
+        {form.statement && <p class="trade-subtitle">{form.statement}</p>}
       </div>
 
-      {form.statement && <p class="trade-subtitle">{form.statement}</p>}
-
       <div class="trade-parties">
-        <div class="trade-receiver">
-          <span class="lab">수신</span>
-          <div class="sheet-edit trade-input" data-field="recipient" data-placeholder="공급받는자 상호" contenteditable="plaintext-only" spellcheck="false"></div>
-          <span class="lab">귀하</span>
+        {/* 왼쪽: 수신·일자·합계 / 오른쪽: 공급자 */}
+        <div class="trade-meta">
+          <div class="trade-meta-row">
+            <span class="lab">수신</span>
+            <div class="sheet-edit trade-input trade-meta-input" data-field="recipient" data-placeholder="공급받는자 상호" contenteditable="plaintext-only" spellcheck="false"></div>
+          </div>
+
+          <div class="trade-meta-row trade-date doc-datecell">
+            <span class="lab">{dateLabel}</span>
+            <div class="sheet-edit trade-input trade-meta-input" data-field="issueDate" data-placeholder="0000.00.00" contenteditable="plaintext-only" spellcheck="false"></div>
+            <button type="button" class="date-pick screen-only" data-target="issueDate" aria-label={`${dateLabel} 선택`}>📅</button>
+            <input type="date" class="date-input-hidden" data-target="issueDate" data-format="dot" tabindex="-1" aria-hidden="true" />
+          </div>
+
+          <div class="trade-meta-row trade-total-top">
+            <span class="lab">합계금액</span>
+            <span class="trade-total-top-value"><span data-trade-total>0</span> 원</span>
+            <span class="trade-total-top-note">(부가세 포함)</span>
+          </div>
         </div>
 
         <div class="trade-supplier">
@@ -92,12 +100,6 @@ import SiteMenu from "./SiteMenu.astro";
             </tbody>
           </table>
         </div>
-      </div>
-
-      <div class="trade-total-top">
-        <span class="lab">합계금액</span>
-        <span class="trade-total-top-value"><span data-trade-total>0</span> 원</span>
-        <span class="trade-total-top-note">(부가세 포함)</span>
       </div>
 
       <table class="trade-table">
