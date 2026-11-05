@@ -1,0 +1,14 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import VehicleDeedSheet from "../../components/VehicleDeedSheet.astro";
+import form from "../../data/forms/vehicle-deed";
+---
+
+<BaseLayout form={form}>
+  <div class="simple-app">
+    <VehicleDeedSheet />
+  </div>
+  <script>
+    import "../../scripts/editor.js";
+  </script>
+</BaseLayout>

@@ -46,6 +46,10 @@ if (printSheet && fields.length) {
     if (field.closest && field.closest(".resume-table")) {
       return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "15", letterSpacing: "0" };
     }
+    // 법정서식(이전등록 신청서·자동차양도증명서)은 칸이 좁아 기본 글자를 작게
+    if (field.classList.contains("gov-input") || field.classList.contains("gov-ruled-input")) {
+      return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "13", letterSpacing: "0" };
+    }
     if (field.classList.contains("title-input")) {
       return { fontFamily: "'Pretendard', sans-serif", fontWeight: "500", fontSize: "42", letterSpacing: "8" };
     }
@@ -89,6 +93,12 @@ if (printSheet && fields.length) {
   }
 
   function fieldOverflows(field) {
+    // 빈 칸은 안내문구(:empty::before)가 칸보다 넓어도 넘친 것이 아닙니다.
+    // 이걸 넘침으로 보면 첫 렌더에서 커서가 그 칸으로 끌려갑니다.
+    if (!field.textContent) {
+      return false;
+    }
+
     const tolerance = 1;
     return (
       field.scrollWidth > field.clientWidth + tolerance ||

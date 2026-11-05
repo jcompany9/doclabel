@@ -2655,3 +2655,510 @@ input {
 .resume-table .w-major { width: 26mm; }
 .resume-table .w-status { width: 22mm; }
 .resume-table .w-org { width: 34mm; }
+
+/* ===== 법정서식 공통(자동차 이전등록 신청서·자동차양도증명서) ===== */
+/* 두 장(앞쪽/뒤쪽)이 이어지는 서식 — 화면에서는 위아래로, 인쇄에서는 페이지를 나눕니다 */
+@media screen {
+  .paper-wrap-multi .paper + .paper {
+    margin-top: 18px;
+  }
+}
+
+@media print {
+  .paper-wrap-multi .paper {
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .paper-wrap-multi .paper:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .gov-input:empty::before {
+    content: "";
+  }
+}
+
+.gov-paper {
+  padding: 12mm 14mm 8mm;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--editor-font);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.gov-formno {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 10px;
+  color: #111827;
+}
+
+.gov-side-mark {
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.gov-title {
+  margin: 4mm 0 1mm;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-indent: 0.22em;
+}
+
+.gov-subtitle {
+  margin: 1mm 0 0;
+  text-align: center;
+  font-size: 11.5px;
+  color: #374151;
+}
+
+.gov-notice {
+  margin: 2.5mm 0 1.5mm;
+  font-size: 10px;
+  color: #374151;
+}
+
+.gov-box-sample {
+  display: inline-block;
+  width: 3mm;
+  height: 3mm;
+  border: 0.3mm solid var(--line-strong);
+  vertical-align: -0.3mm;
+}
+
+/* ----- 표 ----- */
+.gov-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  border-top: 0.45mm solid var(--line-strong);
+  border-bottom: 0.45mm solid var(--line-strong);
+}
+
+.gov-table + .gov-table {
+  border-top: none;
+}
+
+.gov-table th,
+.gov-table td {
+  border: 0.22mm solid #4b5563;
+  padding: 0;
+  height: 11mm;
+  vertical-align: middle;
+}
+
+.gov-table th {
+  background: #f1f5f9;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  padding: 0 1mm;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.gov-sub {
+  font-weight: 500;
+  font-size: 9px;
+  color: #4b5563;
+}
+
+.gov-rowhead {
+  width: 17mm;
+}
+
+.gov-center {
+  text-align: center;
+}
+
+/* 관청이 적는 음영 칸 */
+.gov-shade {
+  background: #e5e7eb;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+  font-size: 10px;
+  text-align: center;
+}
+
+.gov-receipt th {
+  width: 17mm;
+}
+
+.gov-input {
+  min-height: 10.4mm;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 2mm;
+  font-size: 12.5px;
+  outline: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-align: left;
+}
+
+.gov-input:empty::before {
+  content: attr(data-placeholder);
+  color: #b6bcc6;
+}
+
+.gov-input:focus {
+  background: var(--brand-soft);
+}
+
+.gov-input-multi {
+  white-space: normal;
+  align-items: flex-start;
+  padding-top: 1.2mm;
+  min-height: 14mm;
+}
+
+.gov-center-input {
+  justify-content: center;
+  text-align: center;
+}
+
+/* ----- 체크 항목 ----- */
+.gov-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5mm 6mm;
+  padding: 1.5mm 2mm;
+}
+
+.gov-checks-col {
+  flex-direction: column;
+  gap: 1.5mm;
+}
+
+.gov-check {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 1.5mm;
+  font-size: 11px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.gov-check input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.gov-check-box {
+  flex: 0 0 auto;
+  width: 3.4mm;
+  height: 3.4mm;
+  margin-top: 0.5mm;
+  border: 0.28mm solid var(--line-strong);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.gov-check input:checked + .gov-check-box::after {
+  content: "√";
+}
+
+.gov-check input:focus-visible + .gov-check-box {
+  outline: 2px solid var(--brand);
+}
+
+/* ----- 근거 문장·날짜·서명 ----- */
+.gov-basis {
+  margin: 7mm 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.gov-dateline {
+  margin: 7mm 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1mm;
+}
+
+.gov-dateline .gov-date {
+  min-width: 46mm;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.gov-signblock {
+  margin: 3mm 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3mm;
+  padding-right: 6mm;
+}
+
+.gov-signrow {
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.gov-signlab {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-size: 12px;
+  color: #111827;
+}
+
+.gov-signname {
+  min-width: 34mm;
+  border-bottom: 0.2mm solid #9ca3af;
+}
+
+.gov-signblock .cert-seal,
+.gov-consent-sign .cert-seal {
+  min-width: 22mm;
+  height: 9mm;
+}
+
+.gov-signblock .cert-seal .seal-img,
+.gov-consent-sign .cert-seal .seal-img {
+  max-width: 20mm;
+  max-height: 10mm;
+}
+
+.gov-to {
+  margin: 7mm 0 0;
+  font-size: 12.5px;
+}
+
+/* ----- 행정정보 공동이용 동의서 ----- */
+.gov-consent {
+  margin: 7mm 0 0;
+  border: 0.3mm solid var(--line-strong);
+}
+
+.gov-consent-head {
+  padding: 1.2mm 2mm;
+  background: #f1f5f9;
+  border-bottom: 0.22mm solid #4b5563;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-align: center;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.gov-consent-body {
+  margin: 0;
+  padding: 2.5mm;
+  font-size: 10.5px;
+  line-height: 1.6;
+}
+
+.gov-consent-sign {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2mm;
+  padding: 0 4mm 2mm;
+}
+
+.gov-paper-spec {
+  margin: auto 0 0;
+  padding-top: 2mm;
+  text-align: right;
+  font-size: 9px;
+  color: #4b5563;
+}
+
+/* ----- 뒤쪽: 제출서류·확인사항·유의사항 ----- */
+.gov-docs th,
+.gov-docs td {
+  height: auto;
+  vertical-align: top;
+}
+
+.gov-docs-head {
+  width: 22mm;
+  vertical-align: middle !important;
+}
+
+.gov-fee-head {
+  width: 16mm;
+  vertical-align: middle !important;
+}
+
+.gov-fee {
+  width: 30mm;
+}
+
+.gov-fee-input {
+  justify-content: center;
+  white-space: normal;
+  text-align: center;
+}
+
+.gov-list {
+  margin: 0;
+  padding: 1.5mm 2mm 1.5mm 6mm;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.gov-list li + li {
+  margin-top: 0.8mm;
+}
+
+.gov-block {
+  margin-top: 4mm;
+  border: 0.3mm solid var(--line-strong);
+}
+
+.gov-block-grow {
+  display: flex;
+  flex-direction: column;
+}
+
+.gov-block-head {
+  padding: 1.2mm 2mm;
+  background: #f1f5f9;
+  border-bottom: 0.22mm solid #4b5563;
+  font-size: 10.5px;
+  font-weight: 700;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.gov-block-body {
+  padding: 1.5mm 1mm;
+}
+
+/* ----- 양도증명서 조항 ----- */
+.gov-clauses {
+  list-style: none;
+  margin: 3mm 0 0;
+  padding: 0;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.gov-clauses li {
+  display: grid;
+  grid-template-columns: 44mm 1fr;
+  column-gap: 2mm;
+}
+
+.gov-clauses li + li {
+  margin-top: 0.6mm;
+}
+
+.gov-clause-no {
+  font-weight: 700;
+}
+
+.gov-special {
+  margin-top: 3mm;
+}
+
+.gov-special th {
+  width: 17mm;
+}
+
+.gov-stamp-head {
+  width: 14mm;
+}
+
+.gov-stamp {
+  width: 26mm;
+  text-align: center;
+}
+
+.gov-stamp-hint {
+  font-size: 9px;
+  color: #6b7280;
+}
+
+.gov-datecell {
+  position: relative;
+}
+
+.gov-datecell .date-pick {
+  position: absolute;
+  right: 1mm;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gov-signblock-two {
+  gap: 2mm;
+}
+
+.gov-joint th {
+  height: 8mm;
+}
+
+.gov-joint td {
+  height: 11mm;
+}
+
+.gov-joint-seal {
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.gov-joint-role {
+  font-size: 11px;
+}
+
+/* 양도증명서 뒤쪽 — 남는 자리를 특약사항 이어적는 칸으로 */
+.gov-block-fill {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.gov-block-fill .gov-block-body {
+  flex: 1 1 auto;
+  display: flex;
+  padding: 0;
+}
+
+.gov-ruled-input {
+  flex: 1 1 auto;
+  padding: 2mm 3mm;
+  font-size: 12px;
+  line-height: 9mm;
+  outline: none;
+  overflow: hidden;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(9mm - 0.2mm),
+    #d8dee8 calc(9mm - 0.2mm),
+    #d8dee8 9mm
+  );
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.gov-ruled-input:empty::before {
+  content: attr(data-placeholder);
+  color: #b6bcc6;
+}
+
+.gov-ruled-input:focus {
+  background-color: var(--brand-soft);
+}

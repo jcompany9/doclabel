@@ -30,6 +30,13 @@ export const navCategories: NavCategory[] = [
     ],
   },
   {
+    name: "자동차",
+    items: [
+      { slug: "vehicle-transfer", name: "자동차 이전등록 신청서", desc: "명의이전 법정서식(별지 제14호서식) 앞·뒤 2면" },
+      { slug: "vehicle-deed", name: "자동차양도증명서", desc: "개인 간 직접 거래용 법정서식(별지 제15호서식)" },
+    ],
+  },
+  {
     name: "위임·확인",
     items: [
       {

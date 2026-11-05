@@ -1,0 +1,317 @@
+---
+// 자동차 이전등록 신청서 — 「자동차등록규칙」 별지 제14호서식 구조를 따른 2면(앞쪽/뒤쪽) A4 시트.
+// 음영 칸(접수번호 등)은 관청이 적는 자리라 입력 칸으로 만들지 않습니다.
+import FieldToolbar from "./FieldToolbar.astro";
+import MiniToolbar from "./MiniToolbar.astro";
+import FormDrawer from "./FormDrawer.astro";
+import SiteMenu from "./SiteMenu.astro";
+
+// 등록원인 — 서식의 [ ] 선택 항목
+const causes = ["매매", "증여", "촉탁", "상속", "기타"];
+
+// 뒤쪽 제출서류
+const documents = [
+  "자동차양도증명서(매매의 경우만 해당합니다)",
+  "양도인의 인감증명서 또는 본인서명사실확인서·전자본인서명확인서 발급증(매매로 인한 이전등록의 경우만 해당합니다)",
+  "증여증서(증여의 경우만 해당합니다)",
+  "매각결정서(「자동차관리법」 제26조제3항에 따라 매각된 경우만 해당합니다)",
+  "확정판결 등본(판결에 따라 소유권을 이전하는 경우만 해당합니다)",
+  "대리인이 신청하는 경우 위임장 및 대리인의 신분증 사본(법인은 법인인감증명서를 말하며, 사용인감계로 확인할 수 있는 경우에는 생략합니다)",
+  "가족관계기록사항에 관한 증명서(상속의 경우만 해당하며, 공증을 받은 서면 등으로 갈음할 수 있습니다)",
+];
+
+// 뒤쪽 담당 공무원 확인사항
+const confirmations = [
+  "소유자가 개인인 경우: 주민등록표 초본, 운전면허증, 외국인등록사실증명 중 하나(사용 본거지 확인용)",
+  "비사업용 자동차를 등록하는 법인인 경우: 사업자등록증 또는 법인 등기사항증명서",
+  "자동차등록원부",
+];
+
+// 뒤쪽 취득세 감면 대상 여부(「지방세특례제한법」)
+const taxExemptions = [
+  "「장애인복지법」에 따른 장애등급 1급부터 3급까지에 해당하는 사람",
+  "「국가유공자 등 예우 및 지원에 관한 법률」 등에 따라 상이등급 1급부터 7급까지의 판정을 받은 사람",
+  "5·18민주화운동부상자로서 신체장애등급 1급부터 14급까지의 판정을 받은 사람",
+  "고엽제후유의증환자로서 경도 장애 이상의 판정을 받은 사람",
+];
+
+// 뒤쪽 유의사항
+const notes = [
+  "등록된 자동차매매업자를 통하여 중고자동차를 매매한 경우에는 자동차매매업자가 이전등록을 신청하여야 합니다. 다만, 양수인이 직접 이전등록을 신청하려는 경우에는 그러하지 아니합니다(「자동차관리법」 제12조제2항).",
+  "양수인이 이전등록을 신청하지 않는 경우에는 양도인이 이전등록을 신청할 수 있습니다(「자동차관리법」 제12조제4항).",
+  "정해진 기간(매매는 15일, 증여는 20일, 상속은 상속 개시일이 속하는 달의 말일부터 6개월, 그 밖의 사유는 15일) 안에 이전등록을 신청하지 않으면 과태료가 부과됩니다(「자동차관리법」 제81조제2호 및 제85조제1항).",
+  "전화번호와 전자우편 주소는 리콜 등 자동차 관리에 관한 사항을 안내받기 위한 것으로, 원하지 않으면 적지 않아도 됩니다. 바뀐 경우에는 등록관청에 알려 주시기 바랍니다.",
+];
+---
+
+<header class="top-toolbar screen-only">
+  <SiteMenu />
+  <div class="toolbar-title">자동차 이전등록 신청서</div>
+  <button class="print-button" type="button" data-action="print" aria-label="인쇄하기">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 3h10v4H7V3zm10 14v4H7v-4h10zm2-8H5a2 2 0 0 0-2 2v5h4v-3h10v3h4v-5a2 2 0 0 0-2-2zm-3 3H8V9h8v3z"></path>
+    </svg>
+    <span>인쇄</span>
+  </button>
+</header>
+
+<FieldToolbar />
+<MiniToolbar />
+
+<main class="page-body">
+  <FormDrawer />
+
+  <section class="paper-wrap paper-wrap-multi">
+    {/* ===================== 앞쪽 ===================== */}
+    <article class="paper gov-paper template-vehicle-transfer" id="printSheet" data-template="single">
+      <div class="gov-formno">
+        <span>「자동차등록규칙」 [별지 제14호서식]</span>
+        <span class="gov-side-mark">(앞쪽)</span>
+      </div>
+
+      <h2 class="gov-title">이전등록 신청서</h2>
+
+      <p class="gov-notice">
+        ※ 음영으로 표시된 란은 신청인이 적지 않으며, <span class="gov-box-sample" aria-hidden="true"></span> 칸에는 해당되는 곳에 √ 표시를 합니다.
+      </p>
+
+      {/* 접수란 — 관청이 적는 자리(음영) */}
+      <table class="gov-table gov-receipt">
+        <colgroup>
+          <col style="width: 20mm" /><col /><col style="width: 18mm" /><col />
+          <col style="width: 18mm" /><col /><col style="width: 18mm" /><col style="width: 16mm" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th>접수번호</th>
+            <td class="gov-shade"></td>
+            <th>접수일시</th>
+            <td class="gov-shade"></td>
+            <th>발급일시</th>
+            <td class="gov-shade"></td>
+            <th>처리기간</th>
+            <td class="gov-shade gov-center">즉시</td>
+          </tr>
+        </tbody>
+      </table>
+
+      {/* 당사자 */}
+      <table class="gov-table gov-party">
+        <colgroup>
+          <col style="width: 18mm" /><col style="width: 26mm" /><col />
+          <col style="width: 28mm" /><col style="width: 44mm" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th rowspan="2" class="gov-rowhead">구 소유자<br /><span class="gov-sub">(양도인)</span></th>
+            <th>성명(명칭)</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="sellerName" data-placeholder="홍길동" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>주민등록번호<br /><span class="gov-sub">(법인등록번호)</span></th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="sellerId" data-placeholder="000000-0000000" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th>사용 본거지<br /><span class="gov-sub">(차고지)</span></th>
+            <td colspan="3">
+              <div class="sheet-edit gov-input" data-field="sellerBase" data-placeholder="서울특별시 ○○구 ○○로 00" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+
+          <tr>
+            <th rowspan="3" class="gov-rowhead">신 소유자<br /><span class="gov-sub">(양수인)</span></th>
+            <th>성명(명칭)</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="buyerName" data-placeholder="김철수" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>주민등록번호<br /><span class="gov-sub">(법인등록번호)</span></th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="buyerId" data-placeholder="000000-0000000" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th>사용 본거지<br /><span class="gov-sub">(차고지)</span></th>
+            <td colspan="3">
+              <div class="sheet-edit gov-input" data-field="buyerBase" data-placeholder="서울특별시 ○○구 ○○로 00" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th>전자우편</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="buyerEmail" data-placeholder="name@example.com" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>(휴대)전화번호</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="buyerPhone" data-placeholder="010-0000-0000" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      {/* 자동차 표시 */}
+      <table class="gov-table gov-car">
+        <colgroup>
+          <col style="width: 18mm" /><col style="width: 26mm" /><col />
+          <col style="width: 28mm" /><col style="width: 44mm" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th rowspan="2" class="gov-rowhead">자동차</th>
+            <th>자동차등록번호</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="carNumber" data-placeholder="12가 3456" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>주행거리(km)</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="mileage" data-placeholder="00,000" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th>신 자동차등록번호</th>
+            <td colspan="3">
+              <div class="sheet-edit gov-input" data-field="newCarNumber" data-placeholder="번호를 새로 받는 경우에만" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th colspan="2" class="gov-rowhead">등록원인</th>
+            <td colspan="3">
+              <div class="gov-checks">
+                {
+                  causes.map((cause, i) => (
+                    <label class="gov-check">
+                      <input type="checkbox" data-check={`cause-${i}`} />
+                      <span class="gov-check-box" aria-hidden="true"></span>
+                      <span class="gov-check-text">{cause}</span>
+                    </label>
+                  ))
+                }
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="gov-basis">
+        「자동차관리법」 제12조제1항, 「자동차등록령」 제26조제1항 및 「자동차등록규칙」 제33조제1항에 따라 위와 같이 이전등록을 신청합니다.
+      </p>
+
+      <div class="gov-dateline">
+        <span
+          class="sheet-edit gov-input gov-date"
+          data-field="applyDate"
+          data-placeholder="0000년 00월 00일"
+          data-print-blank="        년        월        일"
+          contenteditable="plaintext-only"
+          spellcheck="false"></span>
+        <button type="button" class="date-pick screen-only" data-target="applyDate" aria-label="신청일 선택">📅</button>
+        <input type="date" class="date-input-hidden" data-target="applyDate" data-format="korean" tabindex="-1" aria-hidden="true" />
+      </div>
+
+      <div class="gov-signblock">
+        <div class="gov-signrow">
+          <span class="gov-signlab">신청인</span>
+          <span class="sheet-edit gov-input gov-signname" data-field="applicantName" data-placeholder="성명" contenteditable="plaintext-only" spellcheck="false"></span>
+          <span class="cert-seal" data-seal title="클릭해서 도장 이미지를 올리세요">
+            <img class="seal-img" alt="도장 이미지" />
+            <span class="seal-label">(서명 또는 인)</span>
+            <button type="button" class="seal-remove screen-only" aria-label="도장 이미지 삭제">✕</button>
+            <input type="file" class="seal-file" accept="image/*" hidden />
+          </span>
+        </div>
+        <div class="gov-signrow">
+          <span class="gov-signlab">생년월일</span>
+          <span class="sheet-edit gov-input gov-signname" data-field="applicantBirth" data-placeholder="0000년 00월 00일" contenteditable="plaintext-only" spellcheck="false"></span>
+          <button type="button" class="date-pick screen-only" data-target="applicantBirth" aria-label="생년월일 선택">📅</button>
+          <input type="date" class="date-input-hidden" data-target="applicantBirth" data-format="korean" tabindex="-1" aria-hidden="true" />
+        </div>
+      </div>
+
+      <p class="gov-to">특별시장·광역시장·특별자치시장·도지사·특별자치도지사 또는 시장·군수·구청장 <strong>귀하</strong></p>
+
+      <div class="gov-consent">
+        <div class="gov-consent-head">행정정보 공동이용 동의서</div>
+        <p class="gov-consent-body">
+          본인은 이 건 업무처리와 관련하여 담당 공무원이 「전자정부법」 제36조제1항에 따른 행정정보의 공동이용을 통하여 뒤쪽의 확인사항을 확인하는 것에 동의합니다.
+          동의하지 않는 경우에는 신청인이 직접 관련 서류(법인 등기사항증명서는 제외합니다)를 제출하여야 합니다.
+        </p>
+        <div class="gov-consent-sign">
+          <span class="gov-signlab">신청인(대표자)</span>
+          <span class="sheet-edit gov-input gov-signname" data-field="consentName" data-placeholder="성명" contenteditable="plaintext-only" spellcheck="false"></span>
+          <span class="cert-seal" data-seal title="클릭해서 도장 이미지를 올리세요">
+            <img class="seal-img" alt="도장 이미지" />
+            <span class="seal-label">(서명 또는 인)</span>
+            <button type="button" class="seal-remove screen-only" aria-label="도장 이미지 삭제">✕</button>
+            <input type="file" class="seal-file" accept="image/*" hidden />
+          </span>
+        </div>
+      </div>
+
+      <p class="gov-paper-spec">210㎜×297㎜[백상지 80g/㎡]</p>
+    </article>
+
+    {/* ===================== 뒤쪽 ===================== */}
+    <article class="paper gov-paper template-vehicle-transfer gov-paper-back">
+      <div class="gov-formno">
+        <span class="gov-side-mark">(뒤쪽)</span>
+      </div>
+
+      <table class="gov-table gov-docs">
+        <colgroup>
+          <col style="width: 22mm" /><col /><col style="width: 16mm" /><col style="width: 30mm" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th class="gov-rowhead gov-docs-head">신청인<br />제출서류</th>
+            <td>
+              <ol class="gov-list">
+                {documents.map((doc) => <li>{doc}</li>)}
+              </ol>
+            </td>
+            <th class="gov-rowhead gov-fee-head">수수료</th>
+            <td class="gov-fee">
+              <div class="sheet-edit gov-input gov-fee-input" data-field="fee" data-placeholder="등록관청 고시 금액" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th class="gov-rowhead gov-docs-head">담당 공무원<br />확인사항</th>
+            <td colspan="3">
+              <ol class="gov-list">
+                {confirmations.map((item) => <li>{item}</li>)}
+              </ol>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="gov-block">
+        <div class="gov-block-head">취득세 감면 대상 여부 (「지방세특례제한법」에 따라 해당되는 곳에 √ 표시를 합니다)</div>
+        <div class="gov-block-body">
+          <div class="gov-checks gov-checks-col">
+            {
+              taxExemptions.map((item, i) => (
+                <label class="gov-check">
+                  <input type="checkbox" data-check={`tax-${i}`} />
+                  <span class="gov-check-box" aria-hidden="true"></span>
+                  <span class="gov-check-text">{item}</span>
+                </label>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="gov-block">
+        <div class="gov-block-head">유의사항</div>
+        <div class="gov-block-body">
+          <ol class="gov-list">
+            {notes.map((note) => <li>{note}</li>)}
+          </ol>
+        </div>
+      </div>
+
+      <p class="gov-paper-spec">210㎜×297㎜[백상지 80g/㎡]</p>
+    </article>
+  </section>
+</main>

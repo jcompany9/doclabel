@@ -9,6 +9,8 @@ import quote from "./quote";
 import transactionStatement from "./transaction-statement";
 import resume from "./resume";
 import employmentContract from "./employment-contract";
+import vehicleTransfer from "./vehicle-transfer";
+import vehicleDeed from "./vehicle-deed";
 
 // 모든 서식 등록소. 새 서식을 추가하려면 데이터 파일을 만들고 여기에 등록하면
 // 메타·구조화데이터·사이트맵·내부링크가 자동으로 따라옵니다.
@@ -23,6 +25,8 @@ export const forms: FormDef[] = [
   transactionStatement,
   resume,
   employmentContract,
+  vehicleTransfer,
+  vehicleDeed,
 ];
 
 export const formsBySlug: Record<string, FormDef> = Object.fromEntries(

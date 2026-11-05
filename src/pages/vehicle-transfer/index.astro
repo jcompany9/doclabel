@@ -1,0 +1,14 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import VehicleTransferSheet from "../../components/VehicleTransferSheet.astro";
+import form from "../../data/forms/vehicle-transfer";
+---
+
+<BaseLayout form={form}>
+  <div class="simple-app">
+    <VehicleTransferSheet />
+  </div>
+  <script>
+    import "../../scripts/editor.js";
+  </script>
+</BaseLayout>

@@ -1,0 +1,324 @@
+---
+// 자동차양도증명서(양도인·양수인 직접 거래용) — 「자동차등록규칙」 별지 제15호서식 구조를 따른 A4 시트.
+import FieldToolbar from "./FieldToolbar.astro";
+import MiniToolbar from "./MiniToolbar.astro";
+import FormDrawer from "./FormDrawer.astro";
+import SiteMenu from "./SiteMenu.astro";
+
+const clauses = [
+  { no: "제1조", title: "당사자의 표시", text: "이 증명서에서 양도인은 \"갑\", 양수인은 \"을\"이라 한다." },
+  { no: "제2조", title: "동시이행", text: "\"갑\"은 \"을\"로부터 잔금을 받음과 동시에 자동차에 설정된 채권·채무를 정리한 후 자동차와 이전등록에 필요한 서류를 \"을\"에게 인도한다." },
+  { no: "제3조", title: "공과금의 부담", text: "자동차에 관하여 부과되는 자동차세 등 제세공과금은 자동차 인도일을 기준으로 그 전일까지는 \"갑\"이, 인도일부터는 \"을\"이 부담한다." },
+  { no: "제4조", title: "사고의 책임", text: "자동차 인도일 이후 자동차의 운행으로 발생한 사고에 대한 책임은 \"을\"이 진다." },
+  { no: "제5조", title: "법률상의 하자책임", text: "자동차 인도일 이전의 행정처분·압류 등 법률상의 하자에 대한 책임은 \"갑\"이 진다." },
+  { no: "제6조", title: "등록 지체의 책임", text: "\"을\"이 정해진 기간 안에 이전등록을 하지 않아 발생하는 모든 책임은 \"을\"이 진다." },
+  { no: "제7조", title: "할부금 승계 특약", text: "자동차에 할부금이 남아 있는 경우 그 승계 여부와 조건은 아래 특약사항란에 적은 바에 따른다." },
+  { no: "제8조", title: "양도증명서의 작성·제출", text: "이 증명서는 2통을 작성하여 \"갑\"과 \"을\"이 각각 1통씩 보관하고, 잔금지급일부터 15일 이내에 등록관청에 제출한다." },
+  { no: "제9조", title: "대표자", text: "공동명의인 경우 대표 양도인·대표 양수인은 각 공동명의자의 합의로 정한다." },
+];
+
+const notes = [
+  "양도인은 양수인의 인적사항을 반드시 적어야 무단 전매 등으로 인한 피해를 막을 수 있습니다.",
+  "양수인은 자동차세 등 제세공과금의 납부 여부, 압류·저당권 등록 여부, 배출가스저감장치 자기부담금 납부 여부를 반드시 확인하시기 바랍니다.",
+  "직접 거래의 당사자가 아닌 자(자동차매매업자를 포함합니다)가 이 증명서를 작성한 경우에는 자동차관리법령에 따라 처벌받을 수 있습니다.",
+  "정당한 사유 없이 주행거리를 변경한 경우에는 「자동차관리법」에 따라 징역 또는 벌금에 처해질 수 있습니다.",
+  "정비·검사·주행거리 이력, 자동차세, 압류, 배출가스저감장치 부담금 등은 「마이카정보」 앱 또는 자동차민원 대국민포털(www.car365.go.kr)에서 조회할 수 있습니다.",
+  "양도인이 서명한 경우에는 본인서명사실확인서 또는 전자본인서명확인서 발급증을, 날인한 경우에는 인감증명서를 첨부하여야 합니다.",
+];
+---
+
+<header class="top-toolbar screen-only">
+  <SiteMenu />
+  <div class="toolbar-title">자동차양도증명서</div>
+  <button class="print-button" type="button" data-action="print" aria-label="인쇄하기">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 3h10v4H7V3zm10 14v4H7v-4h10zm2-8H5a2 2 0 0 0-2 2v5h4v-3h10v3h4v-5a2 2 0 0 0-2-2zm-3 3H8V9h8v3z"></path>
+    </svg>
+    <span>인쇄</span>
+  </button>
+</header>
+
+<FieldToolbar />
+<MiniToolbar />
+
+<main class="page-body">
+  <FormDrawer />
+
+  <section class="paper-wrap paper-wrap-multi">
+    <article class="paper gov-paper template-vehicle-deed" id="printSheet" data-template="single">
+      <div class="gov-formno">
+        <span>「자동차등록규칙」 [별지 제15호서식]</span>
+        <span class="gov-side-mark">(앞쪽)</span>
+      </div>
+
+      <h2 class="gov-title">자동차양도증명서</h2>
+      <p class="gov-subtitle">(양도인·양수인 직접 거래용)</p>
+
+      <table class="gov-table gov-receipt">
+        <colgroup>
+          <col style="width: 20mm" /><col /><col style="width: 20mm" /><col />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th>접수번호</th>
+            <td class="gov-shade"></td>
+            <th>접수일자</th>
+            <td class="gov-shade"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="gov-table gov-party">
+        <colgroup>
+          <col style="width: 16mm" /><col style="width: 20mm" /><col />
+          <col style="width: 20mm" /><col style="width: 33mm" />
+          <col style="width: 17mm" /><col style="width: 33mm" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th rowspan="2" class="gov-rowhead">양도인<br /><span class="gov-sub">(갑)</span></th>
+            <th>성명(명칭)</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="sellerName" data-placeholder="홍길동" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>주민(법인)<br />등록번호</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="sellerId" data-placeholder="000000-0000000" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>전화번호</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="sellerPhone" data-placeholder="010-0000-0000" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th>주소</th>
+            <td colspan="5">
+              <div class="sheet-edit gov-input" data-field="sellerAddr" data-placeholder="서울특별시 ○○구 ○○로 00" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th rowspan="2" class="gov-rowhead">양수인<br /><span class="gov-sub">(을)</span></th>
+            <th>성명(명칭)</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="buyerName" data-placeholder="김철수" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>주민(법인)<br />등록번호</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="buyerId" data-placeholder="000000-0000000" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>전화번호</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="buyerPhone" data-placeholder="010-0000-0000" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th>주소</th>
+            <td colspan="3">
+              <div class="sheet-edit gov-input" data-field="buyerAddr" data-placeholder="서울특별시 ○○구 ○○로 00" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>지분율(%)</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="buyerShare" data-placeholder="100" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="gov-table gov-car">
+        <colgroup>
+          <col style="width: 16mm" /><col style="width: 24mm" /><col />
+          <col style="width: 24mm" /><col style="width: 40mm" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th rowspan="4" class="gov-rowhead">자동차<br />및 거래</th>
+            <th>자동차등록번호</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="carNumber" data-placeholder="12가 3456" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>차종 및 차명</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="carName" data-placeholder="승용 / 아반떼" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th>차대번호</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="carVin" data-placeholder="차대번호 17자리" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>주행거리(km)</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="mileage" data-placeholder="00,000" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+          </tr>
+          <tr>
+            <th>매매금액</th>
+            <td>
+              <div class="sheet-edit gov-input" data-field="price" data-placeholder="000,000,000 원" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th>매매일</th>
+            <td class="gov-datecell">
+              <div class="sheet-edit gov-input" data-field="tradeDate" data-placeholder="0000.00.00" contenteditable="plaintext-only" spellcheck="false"></div>
+              <button type="button" class="date-pick screen-only" data-target="tradeDate" aria-label="매매일 선택">📅</button>
+              <input type="date" class="date-input-hidden" data-target="tradeDate" data-format="dot" tabindex="-1" aria-hidden="true" />
+            </td>
+          </tr>
+          <tr>
+            <th>잔금지급일</th>
+            <td class="gov-datecell">
+              <div class="sheet-edit gov-input" data-field="balanceDate" data-placeholder="0000.00.00" contenteditable="plaintext-only" spellcheck="false"></div>
+              <button type="button" class="date-pick screen-only" data-target="balanceDate" aria-label="잔금지급일 선택">📅</button>
+              <input type="date" class="date-input-hidden" data-target="balanceDate" data-format="dot" tabindex="-1" aria-hidden="true" />
+            </td>
+            <th>자동차 인도일</th>
+            <td class="gov-datecell">
+              <div class="sheet-edit gov-input" data-field="handoverDate" data-placeholder="0000.00.00" contenteditable="plaintext-only" spellcheck="false"></div>
+              <button type="button" class="date-pick screen-only" data-target="handoverDate" aria-label="인도일 선택">📅</button>
+              <input type="date" class="date-input-hidden" data-target="handoverDate" data-format="dot" tabindex="-1" aria-hidden="true" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ol class="gov-clauses">
+        {
+          clauses.map((clause) => (
+            <li>
+              <span class="gov-clause-no">
+                {clause.no}({clause.title})
+              </span>
+              <span class="gov-clause-text">{clause.text}</span>
+            </li>
+          ))
+        }
+      </ol>
+
+      <table class="gov-table gov-special">
+        <colgroup>
+          <col style="width: 18mm" /><col /><col style="width: 16mm" /><col style="width: 26mm" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <th class="gov-rowhead">특약사항</th>
+            <td>
+              <div class="sheet-edit gov-input gov-input-multi" data-field="special" data-placeholder="할부금 승계 등 따로 정한 사항" contenteditable="plaintext-only" spellcheck="false"></div>
+            </td>
+            <th class="gov-rowhead gov-stamp-head">수입인지</th>
+            <td class="gov-stamp"><span class="gov-stamp-hint">「인지세법」에 따름</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="gov-basis">
+        위 자동차를 자동차매매사업자를 거치지 않고 당사자가 직접 거래하여 양도하였음을 「자동차등록규칙」 제33조제2항제1호에 따라 증명합니다.
+      </p>
+
+      <div class="gov-dateline">
+        <span
+          class="sheet-edit gov-input gov-date"
+          data-field="issueDate"
+          data-placeholder="0000년 00월 00일"
+          data-print-blank="        년        월        일"
+          contenteditable="plaintext-only"
+          spellcheck="false"></span>
+        <button type="button" class="date-pick screen-only" data-target="issueDate" aria-label="작성일 선택">📅</button>
+        <input type="date" class="date-input-hidden" data-target="issueDate" data-format="korean" tabindex="-1" aria-hidden="true" />
+      </div>
+
+      <div class="gov-signblock gov-signblock-two">
+        <div class="gov-signrow">
+          <span class="gov-signlab">양도인(대표)</span>
+          <span class="sheet-edit gov-input gov-signname" data-field="signSeller" data-placeholder="성명" contenteditable="plaintext-only" spellcheck="false"></span>
+          <span class="cert-seal" data-seal title="클릭해서 도장 이미지를 올리세요">
+            <img class="seal-img" alt="도장 이미지" />
+            <span class="seal-label">(서명 또는 인)</span>
+            <button type="button" class="seal-remove screen-only" aria-label="도장 이미지 삭제">✕</button>
+            <input type="file" class="seal-file" accept="image/*" hidden />
+          </span>
+        </div>
+        <div class="gov-signrow">
+          <span class="gov-signlab">양수인(대표)</span>
+          <span class="sheet-edit gov-input gov-signname" data-field="signBuyer" data-placeholder="성명" contenteditable="plaintext-only" spellcheck="false"></span>
+          <span class="cert-seal" data-seal title="클릭해서 도장 이미지를 올리세요">
+            <img class="seal-img" alt="도장 이미지" />
+            <span class="seal-label">(서명 또는 인)</span>
+            <button type="button" class="seal-remove screen-only" aria-label="도장 이미지 삭제">✕</button>
+            <input type="file" class="seal-file" accept="image/*" hidden />
+          </span>
+        </div>
+      </div>
+
+      <p class="gov-paper-spec">210㎜×297㎜[백상지 80g/㎡]</p>
+    </article>
+
+    <article class="paper gov-paper template-vehicle-deed gov-paper-back">
+      <div class="gov-formno">
+        <span class="gov-side-mark">(뒤쪽)</span>
+      </div>
+
+      <div class="gov-block">
+        <div class="gov-block-head">유의사항</div>
+        <div class="gov-block-body">
+          <ol class="gov-list">
+            {notes.map((note) => <li>{note}</li>)}
+          </ol>
+        </div>
+      </div>
+
+      <div class="gov-block gov-block-grow">
+        <div class="gov-block-head">공동명의자</div>
+        <div class="gov-block-body">
+          <table class="gov-table gov-joint">
+            <colgroup>
+              <col style="width: 20mm" /><col /><col style="width: 40mm" />
+              <col style="width: 20mm" /><col style="width: 26mm" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>구분</th>
+                <th>성명(명칭)</th>
+                <th>주민(법인)등록번호</th>
+                <th>지분율(%)</th>
+                <th>서명 또는 인</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                [0, 1, 2, 3].map((i) => (
+                  <tr>
+                    <td class="gov-center gov-joint-role">{i < 2 ? "양도인" : "양수인"}</td>
+                    <td>
+                      <div class="sheet-edit gov-input" data-field={`jointName${i}`} contenteditable="plaintext-only" spellcheck="false" />
+                    </td>
+                    <td>
+                      <div class="sheet-edit gov-input" data-field={`jointId${i}`} contenteditable="plaintext-only" spellcheck="false" />
+                    </td>
+                    <td>
+                      <div class="sheet-edit gov-input gov-center-input" data-field={`jointShare${i}`} contenteditable="plaintext-only" spellcheck="false" />
+                    </td>
+                    <td class="gov-center gov-joint-seal">(인)</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="gov-block gov-block-fill">
+        <div class="gov-block-head">특약사항 이어 적는 곳</div>
+        <div class="gov-block-body gov-ruled">
+          <div
+            class="sheet-edit gov-ruled-input"
+            data-field="specialMore"
+            data-placeholder="앞쪽 특약사항란이 모자랄 때 이어서 적습니다"
+            contenteditable="plaintext-only"
+            spellcheck="false">
+          </div>
+        </div>
+      </div>
+
+      <p class="gov-paper-spec">210㎜×297㎜[백상지 80g/㎡]</p>
+    </article>
+  </section>
+</main>

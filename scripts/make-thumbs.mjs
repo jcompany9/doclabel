@@ -35,6 +35,8 @@ const SLUGS = [
   "power-of-attorney/business",
   "fact-confirmation",
   "incident-report",
+  "vehicle-transfer",
+  "vehicle-deed",
 ];
 
 const PAPER_W = 794; // 210mm @96dpi
@@ -58,12 +60,15 @@ const wrapperHtml = `<!doctype html><meta charset="utf-8">
     const d = f.contentDocument;
     const s = d.createElement("style");
     s.textContent = \`
-      .top-toolbar,.field-panel,.seo-content,.site-footer{display:none!important}
+      .top-toolbar,.field-panel,.seo-content,.site-footer,
+      .ribbon,.mini-toolbar,.form-drawer,.screen-only{display:none!important}
       .simple-app{padding:0!important;max-width:none!important}
       .page-body{display:block!important;min-height:0!important}
       .paper-wrap{padding:0!important;overflow:visible!important;display:block!important}
       html,body{background:#fff!important}
-      .paper{box-shadow:none!important;margin:0!important;transform:none!important}
+      .paper{box-shadow:none!important;margin:0!important;transform:none!important;zoom:1!important}
+      /* 2면 서식은 첫 장(앞쪽)만 썸네일로 */
+      .paper-wrap .paper:not(:first-of-type){display:none!important}
     \`;
     d.head.appendChild(s);
     document.title = "READY";
