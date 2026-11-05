@@ -2342,8 +2342,8 @@ input {
   align-items: center;
   justify-content: center;
   /* 도장이 띄워져 있어도 들어갈 자리를 남겨 둡니다 */
-  min-height: 18mm;
-  padding: 1.5mm 3mm;
+  min-height: 10mm;
+  padding: 1mm 3mm;
   font-weight: 700;
   background: #eef2f7;
   -webkit-print-color-adjust: exact;
@@ -2358,13 +2358,13 @@ input {
 }
 
 .trade-seal-wrap .cert-seal {
-  min-width: 16mm;
-  height: 16mm;
+  min-width: 12mm;
+  height: 8mm;
 }
 
 .trade-seal-wrap .cert-seal .seal-img {
-  max-width: 18mm;
-  max-height: 16mm;
+  max-width: 16mm;
+  max-height: 9mm;
 }
 
 .trade-supplier-table {
