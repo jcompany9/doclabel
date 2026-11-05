@@ -2,6 +2,7 @@
 // 견적서 / 거래명세서 공용 A4 시트. 품목표(수량×단가=금액)와 합계를 trade.js가 자동계산합니다.
 import type { FormDef } from "../data/site";
 import FieldToolbar from "./FieldToolbar.astro";
+import MiniToolbar from "./MiniToolbar.astro";
 import FormDrawer from "./FormDrawer.astro";
 
 interface Props {
@@ -36,6 +37,7 @@ import SiteMenu from "./SiteMenu.astro";
 </header>
 
 <FieldToolbar />
+<MiniToolbar />
 
 <main class="page-body">
   <FormDrawer />

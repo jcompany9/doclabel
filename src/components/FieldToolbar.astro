@@ -7,7 +7,7 @@
   <div class="ribbon-inner">
     <div class="ribbon-group">
       <span class="ribbon-label">글꼴</span>
-      <select id="fontFamilySelect" class="ribbon-select">
+      <select id="fontFamilySelect" class="ribbon-select" data-style="fontFamily">
         <option value="'Pretendard', sans-serif">Pretendard</option>
         <option value="'Gowun Batang', serif">고운바탕</option>
         <option value="'Black Han Sans', sans-serif">검은고딕</option>
@@ -19,18 +19,18 @@
 
     <div class="ribbon-group">
       <span class="ribbon-label">크기</span>
-      <input id="fontSizeInput" class="ribbon-num" type="number" min="8" max="120" step="1" value="42" />
+      <input id="fontSizeInput" class="ribbon-num" type="number" min="8" max="120" step="1" value="42" data-style="fontSize" />
     </div>
 
     <div class="ribbon-group">
       <span class="ribbon-label">자간</span>
-      <input id="letterSpacingInput" class="ribbon-num" type="number" min="-10" max="40" step="0.5" value="8" />
+      <input id="letterSpacingInput" class="ribbon-num" type="number" min="-10" max="40" step="0.5" value="8" data-style="letterSpacing" />
     </div>
 
     <span class="ribbon-sep" aria-hidden="true"></span>
 
     <label class="ribbon-toggle" title="굵게">
-      <input id="boldToggle" type="checkbox" />
+      <input id="boldToggle" type="checkbox" data-style="bold" />
       <span>가</span>
     </label>
 

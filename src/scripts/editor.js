@@ -7,10 +7,15 @@ const printSheet = document.getElementById("printSheet");
 
 if (printSheet && fields.length) {
   const fieldToolbar = document.getElementById("fieldToolbar");
-  const fontFamilySelect = document.getElementById("fontFamilySelect");
-  const boldToggle = document.getElementById("boldToggle");
-  const fontSizeInput = document.getElementById("fontSizeInput");
-  const letterSpacingInput = document.getElementById("letterSpacingInput");
+  const miniToolbar = document.getElementById("miniToolbar");
+
+  // 같은 스타일 항목이 상단 리본과 미니 막대 두 곳에 있으므로 묶어서 다룹니다.
+  const controls = (name) => [...document.querySelectorAll(`[data-style="${name}"]`)];
+  const fontFamilyInputs = controls("fontFamily");
+  const boldInputs = controls("bold");
+  const fontSizeInputs = controls("fontSize");
+  const letterSpacingInputs = controls("letterSpacing");
+  const allStyleInputs = [...fontFamilyInputs, ...boldInputs, ...fontSizeInputs, ...letterSpacingInputs];
   const printButton = document.querySelector('[data-action="print"]');
   const templateTabs = [...document.querySelectorAll("[data-template-tab]")];
 
@@ -120,26 +125,60 @@ if (printSheet && fields.length) {
 
   function updateTextControls() {
     const disabled = !activeField;
-    // 사이드 패널은 늘 보이고, 선택된 칸이 없을 때는 컨트롤만 잠급니다.
+    // 리본은 늘 보이고, 선택된 칸이 없을 때는 컨트롤만 잠급니다.
     fieldToolbar.classList.toggle("is-idle", disabled);
-    fontFamilySelect.disabled = disabled;
-    boldToggle.disabled = disabled;
-    fontSizeInput.disabled = disabled;
-    letterSpacingInput.disabled = disabled;
+    allStyleInputs.forEach((input) => {
+      input.disabled = disabled;
+    });
+
+    if (miniToolbar) {
+      miniToolbar.hidden = disabled;
+    }
 
     if (disabled) {
       return;
     }
 
     const style = getFieldStyle(activeField);
-    fontFamilySelect.value = style.fontFamily;
-    boldToggle.checked = style.fontWeight === "700";
-    fontSizeInput.value = style.fontSize;
-    letterSpacingInput.value = style.letterSpacing;
+    fontFamilyInputs.forEach((input) => {
+      input.value = style.fontFamily;
+    });
+    boldInputs.forEach((input) => {
+      input.checked = style.fontWeight === "700";
+    });
+    fontSizeInputs.forEach((input) => {
+      input.value = style.fontSize;
+    });
+    letterSpacingInputs.forEach((input) => {
+      input.value = style.letterSpacing;
+    });
   }
 
-  // 패널이 화면 오른쪽에 고정돼 있어 따라다닐 필요가 없습니다(기존 호출부 유지용 빈 함수).
-  function positionFieldToolbar() {}
+  // 미니 막대를 선택한 칸 바로 위에 띄웁니다(화면 밖으로 나가지 않게 가둠).
+  function positionFieldToolbar() {
+    if (!miniToolbar || miniToolbar.hidden || !activeField) {
+      return;
+    }
+
+    const field = activeField.getBoundingClientRect();
+    const bar = miniToolbar.getBoundingClientRect();
+    const gap = 8;
+    // 상단 바 + 리본 아래로는 올라가지 않게
+    const chrome = (document.querySelector(".ribbon")?.getBoundingClientRect().bottom ?? 0) + 6;
+
+    let top = field.top - bar.height - gap;
+    if (top < chrome) {
+      top = Math.min(field.bottom + gap, window.innerHeight - bar.height - 8);
+    }
+
+    const left = Math.min(
+      Math.max(8, field.left + field.width / 2 - bar.width / 2),
+      window.innerWidth - bar.width - 8,
+    );
+
+    miniToolbar.style.top = `${Math.max(8, top)}px`;
+    miniToolbar.style.left = `${left}px`;
+  }
 
   function setActiveField(field) {
     activeField = field;
@@ -228,38 +267,57 @@ if (printSheet && fields.length) {
     field.addEventListener("click", () => setActiveField(field));
   });
 
-  fontFamilySelect.addEventListener("change", () => {
-    updateActiveFieldStyle((style) => {
-      style.fontFamily = fontFamilySelect.value;
+  // 한쪽에서 바꾸면 값 적용 후 양쪽 컨트롤을 다시 맞춥니다.
+  function syncGroup(inputs, source, prop) {
+    inputs.forEach((input) => {
+      if (input !== source) {
+        input[prop] = source[prop];
+      }
     });
-    track("style_change", { style_type: "font_family", value: fontFamilySelect.value, field: activeFieldKey() });
-  });
+  }
 
-  boldToggle.addEventListener("change", () => {
-    updateActiveFieldStyle((style) => {
-      style.fontWeight = boldToggle.checked ? "700" : "500";
-    });
-    track("style_change", { style_type: "bold", value: boldToggle.checked ? "on" : "off", field: activeFieldKey() });
-  });
-
-  fontSizeInput.addEventListener("input", () => {
-    updateActiveFieldStyle((style) => {
-      style.fontSize = fontSizeInput.value;
-    });
-  });
-
-  fontSizeInput.addEventListener("change", () => {
-    track("style_change", { style_type: "font_size", value: fontSizeInput.value, field: activeFieldKey() });
-  });
-
-  letterSpacingInput.addEventListener("input", () => {
-    updateActiveFieldStyle((style) => {
-      style.letterSpacing = letterSpacingInput.value;
+  fontFamilyInputs.forEach((select) => {
+    select.addEventListener("change", () => {
+      updateActiveFieldStyle((style) => {
+        style.fontFamily = select.value;
+      });
+      syncGroup(fontFamilyInputs, select, "value");
+      track("style_change", { style_type: "font_family", value: select.value, field: activeFieldKey() });
     });
   });
 
-  letterSpacingInput.addEventListener("change", () => {
-    track("style_change", { style_type: "letter_spacing", value: letterSpacingInput.value, field: activeFieldKey() });
+  boldInputs.forEach((toggle) => {
+    toggle.addEventListener("change", () => {
+      updateActiveFieldStyle((style) => {
+        style.fontWeight = toggle.checked ? "700" : "500";
+      });
+      syncGroup(boldInputs, toggle, "checked");
+      track("style_change", { style_type: "bold", value: toggle.checked ? "on" : "off", field: activeFieldKey() });
+    });
+  });
+
+  fontSizeInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      updateActiveFieldStyle((style) => {
+        style.fontSize = input.value;
+      });
+      syncGroup(fontSizeInputs, input, "value");
+    });
+    input.addEventListener("change", () => {
+      track("style_change", { style_type: "font_size", value: input.value, field: activeFieldKey() });
+    });
+  });
+
+  letterSpacingInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      updateActiveFieldStyle((style) => {
+        style.letterSpacing = input.value;
+      });
+      syncGroup(letterSpacingInputs, input, "value");
+    });
+    input.addEventListener("change", () => {
+      track("style_change", { style_type: "letter_spacing", value: input.value, field: activeFieldKey() });
+    });
   });
 
   templateTabs.forEach((tab) => {
@@ -288,7 +346,7 @@ if (printSheet && fields.length) {
 
   document.addEventListener("click", (event) => {
     const clickedField = event.target.closest("[data-field]");
-    const clickedToolbar = event.target.closest("#fieldToolbar");
+    const clickedToolbar = event.target.closest("#fieldToolbar, #miniToolbar");
 
     if (!clickedField && !clickedToolbar) {
       setActiveField(null);

@@ -2,6 +2,7 @@
 // 이력서 A4 시트 — 증명사진 + 인적사항 + 학력/경력/자격(행 추가·삭제 가능, 다중 페이지 지원).
 import type { FormDef } from "../data/site";
 import FieldToolbar from "./FieldToolbar.astro";
+import MiniToolbar from "./MiniToolbar.astro";
 import FormDrawer from "./FormDrawer.astro";
 
 interface Props {
@@ -29,6 +30,7 @@ import SiteMenu from "./SiteMenu.astro";
 </header>
 
 <FieldToolbar />
+<MiniToolbar />
 
 <main class="page-body">
   <FormDrawer />

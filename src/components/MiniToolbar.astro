@@ -1,0 +1,32 @@
+---
+// 커서 위에 뜨는 미니 글자 서식 막대. 상단 리본과 같은 값을 공유합니다
+// (editor.js 가 data-style 속성으로 두 곳의 컨트롤을 함께 다룹니다).
+---
+
+<div id="miniToolbar" class="mini-toolbar screen-only" hidden>
+  <select class="mini-select" data-style="fontFamily" aria-label="글꼴">
+    <option value="'Pretendard', sans-serif">Pretendard</option>
+    <option value="'Gowun Batang', serif">고운바탕</option>
+    <option value="'Black Han Sans', sans-serif">검은고딕</option>
+    <option value="'Noto Serif KR', serif">본명조</option>
+  </select>
+
+  <span class="mini-sep" aria-hidden="true"></span>
+
+  <label class="mini-num">
+    <span>크기</span>
+    <input type="number" min="8" max="120" step="1" data-style="fontSize" aria-label="글자 크기" />
+  </label>
+
+  <label class="mini-num">
+    <span>자간</span>
+    <input type="number" min="-10" max="40" step="0.5" data-style="letterSpacing" aria-label="자간" />
+  </label>
+
+  <span class="mini-sep" aria-hidden="true"></span>
+
+  <label class="mini-bold" title="굵게">
+    <input type="checkbox" data-style="bold" aria-label="굵게" />
+    <span>가</span>
+  </label>
+</div>
