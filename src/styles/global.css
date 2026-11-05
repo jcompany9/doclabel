@@ -2292,7 +2292,8 @@ input {
   display: flex;
   flex-direction: column;
   gap: 2mm;
-  padding-top: 2mm;
+  align-self: end; /* 공급자 박스 아래쪽에 맞춰 내려 배치 */
+  padding-bottom: 1mm;
 }
 
 .trade-meta-row {
@@ -2336,14 +2337,24 @@ input {
 }
 
 .trade-supplier-title {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  /* 도장이 띄워져 있어도 들어갈 자리를 남겨 둡니다 */
+  min-height: 18mm;
   padding: 1.5mm 3mm;
   font-weight: 700;
   background: #eef2f7;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+}
+
+.trade-seal-wrap {
+  position: absolute;
+  right: 3mm;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .trade-seal-wrap .cert-seal {
