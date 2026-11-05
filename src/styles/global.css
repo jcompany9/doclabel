@@ -912,7 +912,7 @@ input {
 }
 
 .cert-issuer {
-  width: 120mm;
+  width: 150mm;
   margin: 0 auto; /* 발급기관 블록을 용지 가운데로 */
   display: flex;
   flex-direction: column;
@@ -921,9 +921,10 @@ input {
 
 .cert-issuer-line {
   display: grid;
-  grid-template-columns: 24mm 1fr;
+  /* 항목명은 글자폭만큼만, 나머지는 입력칸이 전부 차지 */
+  grid-template-columns: 16mm 1fr;
   align-items: center;
-  column-gap: 3mm;
+  column-gap: 2mm;
   min-height: 11mm;
 }
 
@@ -2240,6 +2241,13 @@ input {
 /* ===== 견적서 / 거래명세서 (TradeSheet) ===== */
 .template-trade {
   font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 비고는 용지 맨 아래에 붙여 아래 여백을 남기지 않습니다 */
+.template-trade .trade-note {
+  margin-top: auto;
 }
 
 .trade-head {
